@@ -23,6 +23,16 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // backgroundColor: rgbBahgaPurple1,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back_ios),
+            color: primaryColor),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: Container(
           child: Column(

@@ -12,7 +12,7 @@ Widget buildFormFieldText({
   String? hintText,
   TextInputType? keyboardType,
   IconData? prefixIcon,
-  Color prefixIconColor = Colors.black,
+  Color prefixIconColor = primaryColor,
   String? Function(String?)? validate,
   IconData? suffix,
   Color? suffixColor = Colors.black,
@@ -24,7 +24,7 @@ Widget buildFormFieldText({
   bool isClickable = true,
   Color backgroundOfTextFeild = Colors.white,
   Color notFocusedBorderColor = Colors.white,
-  Color focusedBorderColor = Colors.black,
+  Color focusedBorderColor = primaryColor,
 }) =>
     TextFormField(
         obscureText: isSecure,
@@ -39,7 +39,7 @@ Widget buildFormFieldText({
               fontSize: 20),
           fillColor: backgroundOfTextFeild,
           border: const OutlineInputBorder(
-              // borderSide: BorderSide(width: 3, color: Colors.yellowAccent),
+              borderSide: BorderSide(width: 3, color: Colors.yellowAccent),
               borderRadius: BorderRadius.all(Radius.circular(16))),
           enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 0, color: notFocusedBorderColor),

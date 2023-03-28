@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'components/app_routes.dart';
+import 'screens/home_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/signIn_screen.dart';
 
