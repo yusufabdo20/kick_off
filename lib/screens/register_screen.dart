@@ -26,6 +26,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool isPassword2 = true;
 
   late var checkPasswordCorrect;
+  List<String> items = [
+    'Item 1',
+    'Item 2',
+    'Item 3',
+    'Item 4',
+    'Item 5',
+  ];
+  String? selectedItem = "Item 1";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +56,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         //mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const SizedBox(height: 50),
-                          Text(
-                            'Sign Up',
+                          buildHeadLine1Text(
+                            text: "Sign Up",
                           ),
                           const SizedBox(
                             height: 20,
@@ -188,7 +197,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          
+                          Container(
+                            width: 200,
+                            // color: Colors.red,
+                            child: DropdownButtonFormField<String>(
+                              value: selectedItem,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16.0),
+                                  borderSide:
+                                      BorderSide(color: primaryColor, width: 2),
+                                ),
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        width: 3, color: Colors.grey),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(16))),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                    borderSide: BorderSide(
+                                        width: 3, color: Colors.grey)),
+                              ),
+                              onChanged: (item) {
+                                setState(() {
+                                  selectedItem = item;
+                                });
+                              },
+                              items: items.map((String item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              }).toList(),
+                            ),
+                          ),
                           Container(
                             width: double.infinity,
                             child: buildElevatedTextButton(

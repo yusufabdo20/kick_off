@@ -327,6 +327,28 @@ buildIconButton({
   );
 }
 
+buildHeadLine1Text({
+  required String text,
+  context,
+  Color textColor = Colors.black,
+  int? maxLines,
+  FontWeight textWeight = FontWeight.bold,
+  TextOverflow? overflow,
+  TextAlign textAlign = TextAlign.center,
+  TextDecoration? lineThrough,
+}) =>
+    Text(
+      "$text",
+      style: TextStyle(
+        fontWeight: textWeight,
+        fontSize: 25,
+        color: textColor,
+        decoration: lineThrough,
+      ),
+      textAlign: textAlign,
+      maxLines: maxLines,
+      overflow: overflow,
+    );
 buildDrawerButton({
   context,
   required List<Widget> drawerWidgetItemsList,
