@@ -4,6 +4,7 @@ import 'components/app_routes.dart';
 import 'screens/onBoarding_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/signIn_screen.dart';
+import 'screens/splash_screen.dart';
 import 'services/local/cash.dart';
 
 void main() async {
@@ -31,7 +32,8 @@ class KickOff extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SignUpScreen.id,
+      debugShowCheckedModeBanner: false,
+      initialRoute: SplashScreen.id,
       routes: appRoutes,
       // home: MySelector(items: ["Items" , "Items" , "Items"]),
     );

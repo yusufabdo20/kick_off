@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../components/components.dart';
 import '../components/constants.dart';
+import '../services/network/signUpServices.dart';
 import 'signIn_screen.dart';
 
 // import 'package:hexcolor/hexcolor.dart';
@@ -27,13 +28,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   late var checkPasswordCorrect;
   List<String> items = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
+    'Owner',
+    'User',
   ];
-  String? selectedItem = "Item 1";
+  String? selectedItem = "Owner";
 
   @override
   Widget build(BuildContext context) {
@@ -161,62 +159,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   isPassword = !isPassword;
                                 });
                               }),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          buildFormFieldText(
-                              // validate: (value) {
-                              //   if (value.isEmpty) {
-                              //     return 'Must not Empty';
-                              //   }
-
-                              //   if (value != checkPasswordCorrect) {
-                              //     return 'not correct password';
-                              //   }
-                              // },
-
-                              onChange: (value) {
-                                if (formKey.currentState!.validate()) {
-                                  value = passwordController2.text;
-                                }
-                              },
-                              controller: passwordController2,
-                              labelText: "Confirm Password",
-                              hintText: "* * * * * * * *",
-                              prefixIcon: Icons.lock,
-                              keyboardType: TextInputType.visiblePassword,
-                              isSecure: isPassword2,
-                              suffix: isPassword2
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              suffixPressed: () {
-                                setState(() {
-                                  isPassword2 = !isPassword2;
-                                });
-                              }),
+                         
                           const SizedBox(
                             height: 20,
                           ),
                           Container(
-                            width: 200,
+                            // width: 200,
                             // color: Colors.red,
                             child: DropdownButtonFormField<String>(
                               value: selectedItem,
                               decoration: InputDecoration(
+                                
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16.0),
                                   borderSide:
-                                      BorderSide(color: primaryColor, width: 2),
+                                      BorderSide(color: primaryColor, width:3),
                                 ),
                                 border: const OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        width: 3, color: Colors.grey),
+                                        width: 2, color: Colors.grey),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(16))),
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(16),
                                     borderSide: BorderSide(
-                                        width: 3, color: Colors.grey)),
+                                        width: 2, color: Colors.grey)),
                               ),
                               onChanged: (item) {
                                 setState(() {
@@ -236,25 +203,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: buildElevatedTextButton(
                                 onPressedFunction: () async {
                                   navigateTO(context, SignInScreen());
-                                  // try {
-                                  //   if (formKey.currentState!.validate()) {
-                                  //     email:
-                                  //     emailController.text;
-                                  //     password:
-                                  //     passwordController.text;
-                                  //     var userDataSignUp =
-                                  //         await SignUpService().register(
-                                  //       email: emailController.text,
-                                  //       password: passwordController2.text,
-                                  //       name: usernameController.text,
-                                  //       mobile: mobilePhoneController.text,
-                                  //       birthDate: birthDateController.text,
-                                  //     );
-                                  //     if (userDataSignUp['code'] == 201) {
-                                  //       buildFlutterToast(
-                                  //           message:
-                                  //               "Thank you for your Registration",
-                                  //           state: ToastStates.SUCCESS);
+                                  try {
+                                    if (formKey.currentState!.validate()) {
+                                      email:
+                                      emailController.text;
+                                      password:
+                                      passwordController.text;
+                                      var userDataSignUp =
+                                          await SignUpService().register(
+                                        email: emailController.text,
+                                        password: passwordController2.text,
+                                        name: usernameController.text,
+                                        mobile: mobilePhoneController.text,
+                                        roll_id: selectedItem=='Owner'? 1 : 2 //1 for Owner 2 for user
+                                      );
+                                      if (userDataSignUp['code'] == 201) {
+                                        buildFlutterToast(
+                                            message:
+                                                "Thank you for your Registration",
+                                            state: ToastStates.SUCCESS);
                                   //       Cash.saveData(
                                   //         key: 'token',
                                   //         value: userDataSignUp['data']['token'],
@@ -262,17 +229,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   //         navigateTOAndReplacement(
                                   //             context, PreferredDataScreen());
                                   //       });
-                                  //     } else {
-                                  //       buildFlutterToast(
-                                  //           message:
-                                  //               "${userDataSignUp['data']['password']}",
-                                  //           state: ToastStates.ERROR);
-                                  //     }
-                                  //     print(userDataSignUp.toString());
-                                  //   }
-                                  // } catch (e) {
-                                  //   print("rror in Register Method ++>> $e");
-                                  // }
+                                      } else {
+                                        buildFlutterToast(
+                                            message:
+                                                "${userDataSignUp['data']['password']}",
+                                            state: ToastStates.ERROR);
+                                      }
+                                      print(userDataSignUp.toString());
+                                    }
+                                  } catch (e) {
+                                    print("Error in Register Method ++>> $e");
+                                  }
                                 },
                                 titleOfButton: "Register"),
                           ),

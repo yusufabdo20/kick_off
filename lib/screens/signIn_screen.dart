@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../components/components.dart';
 import '../components/constants.dart';
+import '../services/network/signInServices.dart';
 
 // import 'package:hexcolor/hexcolor.dart';
 
@@ -33,9 +34,9 @@ class _SignInScreenState extends State<SignInScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 50),
-              buildHeadLine1Text(
-                    text: "Sign In",
-                  ),
+                buildHeadLine1Text(
+                  text: "Sign In",
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -45,8 +46,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       return "Please Enter email";
                     }
 
-                    if (!RegExp(patterns[1]['emailPattern'])
-                        .hasMatch(value)) {
+                    if (!RegExp(patterns[1]['emailPattern']).hasMatch(value)) {
                       return "Please Enter a valid email address.";
                     }
                   },
@@ -62,7 +62,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   },
                   controller: emailController,
                   labelText: "Email",
-                  hintText: "Enter new email address",
+                  hintText: "email123@kickoff.com",
                   prefixIcon: Icons.email,
                   keyboardType: TextInputType.emailAddress,
                 ),
@@ -86,9 +86,8 @@ class _SignInScreenState extends State<SignInScreen> {
                     prefixIcon: Icons.lock,
                     keyboardType: TextInputType.visiblePassword,
                     isSecure: isPassword,
-                    suffix: isPassword
-                        ? Icons.visibility_off
-                        : Icons.visibility,
+                    suffix:
+                        isPassword ? Icons.visibility_off : Icons.visibility,
                     suffixPressed: () {
                       setState(() {
                         isPassword = !isPassword;
@@ -98,43 +97,38 @@ class _SignInScreenState extends State<SignInScreen> {
                   width: double.infinity,
                   child: buildElevatedTextButton(
                       onPressedFunction: () async {
-                        // try {
-                        //   if (formKey.currentState!.validate()) {
-                        //     email:
-                        //     emailController.text;
-                        //     password:
-                        //     passwordController.text;
-                        //     var userDataSignUp =
-                        //         await SignUpService().register(
-                        //       email: emailController.text,
-                        //       password: passwordController2.text,
-                        //       name: usernameController.text,
-                        //       mobile: mobilePhoneController.text,
-                        //       birthDate: birthDateController.text,
-                        //     );
-                        //     if (userDataSignUp['code'] == 201) {
-                        //       buildFlutterToast(
-                        //           message:
-                        //               "Thank you for your Registration",
-                        //           state: ToastStates.SUCCESS);
-                        //       Cash.saveData(
-                        //         key: 'token',
-                        //         value: userDataSignUp['data']['token'],
-                        //       ).then((value) {
-                        //         navigateTOAndReplacement(
-                        //             context, PreferredDataScreen());
-                        //       });
-                        //     } else {
-                        //       buildFlutterToast(
-                        //           message:
-                        //               "${userDataSignUp['data']['password']}",
-                        //           state: ToastStates.ERROR);
-                        //     }
-                        //     print(userDataSignUp.toString());
-                        //   }
-                        // } catch (e) {
-                        //   print("rror in Register Method ++>> $e");
-                        // }
+                        try {
+                          if (formKey.currentState!.validate()) {
+                            email:
+                            emailController.text;
+                            password:
+                            passwordController.text;
+                            final userDataSignIn = await SignInService().login(
+                              emailController.text,
+                              passwordController.text,
+                            );
+                            if (userDataSignIn['code'] == 201) {
+                              buildFlutterToast(
+                                  message: "Thank you for your Registration",
+                                  state: ToastStates.SUCCESS);
+                              // Cash.saveData(
+                              //   key: 'token',
+                              //   value: userDataSignIn['data']['token'],
+                              // ).then((value) {
+                              //   navigateTOAndReplacement(
+                              //       context, PreferredDataScreen());
+                              // });
+                            } else {
+                              buildFlutterToast(
+                                  message:
+                                      "${userDataSignIn['data']['password']}",
+                                  state: ToastStates.ERROR);
+                            }
+                            print(userDataSignIn.toString());
+                          }
+                        } catch (e) {
+                          print("Error in Register Method ++>> $e");
+                        }
                       },
                       titleOfButton: "Sign in"),
                 ),

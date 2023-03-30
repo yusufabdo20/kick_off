@@ -51,7 +51,6 @@ Widget buildFormFieldText({
           labelText: labelText,
           labelStyle: const TextStyle(
             fontSize: 16,
-            fontFamily: "JostBold",
           ),
           hintText: hintText,
           prefixIcon: Icon(prefixIcon, color: prefixIconColor),
