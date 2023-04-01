@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kick_off/screens/admin_pannel.dart';
 
 import 'components/app_routes.dart';
 import 'screens/onBoarding_screen.dart';
@@ -33,9 +34,9 @@ class KickOff extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: SplashScreen.id,
-      routes: appRoutes,
-      // home: MySelector(items: ["Items" , "Items" , "Items"]),
+      // initialRoute: SplashScreen.id,
+      // routes: appRoutes,
+      home: SignUpScreen(),
     );
   }
 }

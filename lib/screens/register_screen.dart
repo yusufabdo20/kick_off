@@ -19,7 +19,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var usernameController = TextEditingController();
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
-  var passwordController2 = TextEditingController();
   var mobilePhoneController = TextEditingController();
   var birthDateController = TextEditingController();
   var formKey = GlobalKey<FormState>();
@@ -159,7 +158,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   isPassword = !isPassword;
                                 });
                               }),
-                         
                           const SizedBox(
                             height: 20,
                           ),
@@ -169,11 +167,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: DropdownButtonFormField<String>(
                               value: selectedItem,
                               decoration: InputDecoration(
-                                
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(16.0),
                                   borderSide:
-                                      BorderSide(color: primaryColor, width:3),
+                                      BorderSide(color: primaryColor, width: 3),
                                 ),
                                 border: const OutlineInputBorder(
                                     borderSide: BorderSide(
@@ -205,30 +202,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   navigateTO(context, SignInScreen());
                                   try {
                                     if (formKey.currentState!.validate()) {
-                                      email:
                                       emailController.text;
-                                      password:
                                       passwordController.text;
-                                      var userDataSignUp =
-                                          await SignUpService().register(
-                                        email: emailController.text,
-                                        password: passwordController2.text,
-                                        name: usernameController.text,
-                                        mobile: mobilePhoneController.text,
-                                        roll_id: selectedItem=='Owner'? 1 : 2 //1 for Owner 2 for user
-                                      );
+                                      var userDataSignUp = await SignUpService()
+                                          .register(
+                                              email: emailController.text,
+                                              password: passwordController.text,
+                                              name: usernameController.text,
+                                              phone: mobilePhoneController.text,
+                                              roll_id: selectedItem == 'Owner'
+                                                  ? "1"
+                                                  : "2" //1 for Owner 2 for user
+                                              );
+                                              print(userDataSignUp);
                                       if (userDataSignUp['code'] == 201) {
                                         buildFlutterToast(
                                             message:
                                                 "Thank you for your Registration",
                                             state: ToastStates.SUCCESS);
-                                  //       Cash.saveData(
-                                  //         key: 'token',
-                                  //         value: userDataSignUp['data']['token'],
-                                  //       ).then((value) {
-                                  //         navigateTOAndReplacement(
-                                  //             context, PreferredDataScreen());
-                                  //       });
+                                        //       Cash.saveData(
+                                        //         key: 'token',
+                                        //         value: userDataSignUp['data']['token'],
+                                        //       ).then((value) {
+                                        //         navigateTOAndReplacement(
+                                        //             context, PreferredDataScreen());
+                                        //       });
                                       } else {
                                         buildFlutterToast(
                                             message:

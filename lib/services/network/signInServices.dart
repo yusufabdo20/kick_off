@@ -9,19 +9,35 @@ class SignInService {
     String email,
     String password,
   ) async {
-    final url = 'http://127.0.0.1:8000/api/login';
-
-    Map<String, dynamic> data = await Api().post(
-      apiUrl: url,   
-      body: {
+    final url = 'http://197.60.240.5/api/login';
+    print(url);
+    // Map<String, dynamic> data = await Api().post(
+    //   apiUrl: url,
+    //   body: {
+    //     'email': email,
+    //     'password': password,
+    //   },
+    // );
+    // print("Login Method ---- GOOD");
+    // print(data);
+    // return data;
+    
+    http.Response response = await http.post(
+      Uri.parse(url),
+ body: {
         'email': email,
         'password': password,
-      
-
-      },
-      // token: token
+      },   
     );
-    return data;
+    if (response.statusCode == 200) {
+      print("Respone ===== 200");
+      Map<String, dynamic> data = jsonDecode(response.body);
+      print("Data $data");
+      return data;
+    } else {
+      return throw Exception(
+          "There is PROBLEM in Status Code in POST Method is =! 200 ====>>>>>${response.statusCode} ,,,,,  ");
+    }
   }
 
   // Future<http.Response> loginToApp(String email, String password) async {

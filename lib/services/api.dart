@@ -4,8 +4,6 @@ import 'package:http/http.dart' as http;
 // import 'package:http/http.dart' ;
 
 class Api {
-  // String baseUrl ='http://170.64.178.132:30465/api/' ;
-
   // This Method GET data from Api and Decode the source
   //and put it in Map<String ,dynamic> data  , return data
   Future<dynamic> get({required String apiUrl, String? token}) async {
@@ -36,19 +34,22 @@ class Api {
   }) async {
     Map<String, String> headers = {};
     if (token != null) {
-      headers.addAll({'Authorization': 'Bearer $token'});
+      headers.addAll({'Authorization': '$token'});
     }
+
     http.Response response = await http.post(
       Uri.parse(apiUrl),
       body: body,
       headers: headers,
     );
     if (response.statusCode == 200) {
+      print("Respone ===== 200");
       Map<String, dynamic> data = jsonDecode(response.body);
+      print("Data $data");
       return data;
     } else {
       return throw Exception(
-          "There is PROBLEM in Status Code in POST Method is =! 200 ====>>>>>${response.statusCode} ,,,,, ${jsonDecode(response.body)} ");
+          "There is PROBLEM in Status Code in POST Method is =! 200 ====>>>>>${response.statusCode} ,,,,,  ");
     }
   }
 

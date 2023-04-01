@@ -97,16 +97,17 @@ class _SignInScreenState extends State<SignInScreen> {
                   width: double.infinity,
                   child: buildElevatedTextButton(
                       onPressedFunction: () async {
-                        try {
+                        // try {
                           if (formKey.currentState!.validate()) {
-                            email:
                             emailController.text;
-                            password:
                             passwordController.text;
+                            print("Validate Checked ");
                             final userDataSignIn = await SignInService().login(
                               emailController.text,
                               passwordController.text,
                             );
+                            print(emailController.text);
+                            print(passwordController.text);
                             if (userDataSignIn['code'] == 201) {
                               buildFlutterToast(
                                   message: "Thank you for your Registration",
@@ -126,9 +127,9 @@ class _SignInScreenState extends State<SignInScreen> {
                             }
                             print(userDataSignIn.toString());
                           }
-                        } catch (e) {
-                          print("Error in Register Method ++>> $e");
-                        }
+                        // } catch (e) {
+                        //   print("Error in LOGIN Method ++>> $e");
+                        // }
                       },
                       titleOfButton: "Sign in"),
                 ),
