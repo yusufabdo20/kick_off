@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:kick_off/screens/home.dart';
 import 'components/app_routes.dart';
-import 'screens/register_screen.dart';
-import 'screens/signIn_screen.dart';
 
 void main() {
   runApp(KickOff());
@@ -14,7 +12,8 @@ class KickOff extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SignUpScreen.id,
+      debugShowCheckedModeBanner: false,
+      initialRoute: Home.id,
       routes: appRoutes,
     );
   }
