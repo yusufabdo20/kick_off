@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:kick_off/screens/admin_pannel.dart';
+import 'package:kick_off/screens/admin_screens/admin_pannel.dart';
+import 'package:kick_off/state_management/userProvider.dart';
+import 'package:provider/provider.dart';
 
 import 'components/app_routes.dart';
+import 'screens/admin_screens/add_playground_screen.dart';
+import 'screens/admin_screens/adminPannelScreen.dart';
 import 'screens/onBoarding_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/signIn_screen.dart';
@@ -13,7 +17,7 @@ void main() async {
 
   await Cash.init();
   bool? onBoarding = Cash.getData(key: "onBoarding");
-  String? token = Cash.getData(key: "token");
+  String? token = Cash.getData(key: "userToken");
   Widget widget;
 
   if (onBoarding != null) {
@@ -25,7 +29,12 @@ void main() async {
   } else {
     widget = OnBoardingScreen();
   }
-  runApp(KickOff());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => USerProvider(),
+      child: KickOff(),
+    ),
+  );
 }
 
 class KickOff extends StatelessWidget {
@@ -36,7 +45,7 @@ class KickOff extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: SplashScreen.id,
       // routes: appRoutes,
-      home: SignUpScreen(),
+      home: OnBoardingScreen(),
     );
   }
 }

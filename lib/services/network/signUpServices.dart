@@ -12,8 +12,9 @@ class SignUpService {
       required String phone,
       required String roll_id,
    }) async {
-    final url = 'http://197.60.240.5/api/register/';
-
+    // final url = 'http://197.60.240.5/api/register/';
+ final url = 'http://127.0.0.1:8000/api/login';
+    print(url);
     Map<String, dynamic> data = await Api().post(
       apiUrl: url,
       body: {

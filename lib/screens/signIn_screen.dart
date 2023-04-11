@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kick_off/screens/admin_screens/admin_pannel.dart';
+import 'package:kick_off/screens/home_screen.dart';
 
 import '../components/components.dart';
 import '../components/constants.dart';
+import '../services/local/cash.dart';
 import '../services/network/signInServices.dart';
 
 // import 'package:hexcolor/hexcolor.dart';
@@ -25,79 +28,82 @@ class _SignInScreenState extends State<SignInScreen> {
       resizeToAvoidBottomInset: false,
       // backgroundColor: rgbBahgaPurple1,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 50),
-                buildHeadLine1Text(
-                  text: "Sign In",
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                buildFormFieldText(
-                  validate: (value) {
-                    if (value!.isEmpty) {
-                      return "Please Enter email";
-                    }
-
-                    if (!RegExp(patterns[1]['emailPattern']).hasMatch(value)) {
-                      return "Please Enter a valid email address.";
-                    }
-                  },
-                  onSubmit: (value) {
-                    if (formKey.currentState!.validate()) {
-                      value = emailController.text;
-                    }
-                  },
-                  onChange: (value) {
-                    if (formKey.currentState!.validate()) {
-                      value = emailController.text;
-                    }
-                  },
-                  controller: emailController,
-                  labelText: "Email",
-                  hintText: "email123@kickoff.com",
-                  prefixIcon: Icons.email,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                buildFormFieldText(
-                    hintText: "* * * * * * * *",
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: formKey,
+              child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("assets/images/Card.png"),
+                  const SizedBox(height: 50),
+                  buildHeadLine1Text(
+                    text: "Sign In",
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  buildFormFieldText(
                     validate: (value) {
                       if (value!.isEmpty) {
-                        return 'please enter a valid password ';
+                        return "Please Enter email";
+                      }
+
+                      if (!RegExp(patterns[1]['emailPattern'])
+                          .hasMatch(value)) {
+                        return "Please Enter a valid email address.";
                       }
                     },
                     onSubmit: (value) {
                       if (formKey.currentState!.validate()) {
-                        value = passwordController.text;
+                        value = emailController.text;
                       }
                     },
-                    controller: passwordController,
-                    labelText: "Password",
-                    prefixIcon: Icons.lock,
-                    keyboardType: TextInputType.visiblePassword,
-                    isSecure: isPassword,
-                    suffix:
-                        isPassword ? Icons.visibility_off : Icons.visibility,
-                    suffixPressed: () {
-                      setState(() {
-                        isPassword = !isPassword;
-                      });
-                    }),
-                Container(
-                  width: double.infinity,
-                  child: buildElevatedTextButton(
-                      onPressedFunction: () async {
-                        // try {
+                    onChange: (value) {
+                      if (formKey.currentState!.validate()) {
+                        value = emailController.text;
+                      }
+                    },
+                    controller: emailController,
+                    labelText: "Email",
+                    hintText: "email123@kickoff.com",
+                    prefixIcon: Icons.email,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  buildFormFieldText(
+                      hintText: "* * * * * * * *",
+                      validate: (value) {
+                        if (value!.isEmpty) {
+                          return 'please enter a valid password ';
+                        }
+                      },
+                      onSubmit: (value) {
+                        if (formKey.currentState!.validate()) {
+                          value = passwordController.text;
+                        }
+                      },
+                      controller: passwordController,
+                      labelText: "Password",
+                      prefixIcon: Icons.lock,
+                      keyboardType: TextInputType.visiblePassword,
+                      isSecure: isPassword,
+                      suffix:
+                          isPassword ? Icons.visibility_off : Icons.visibility,
+                      suffixPressed: () {
+                        setState(() {
+                          isPassword = !isPassword;
+                        });
+                      }),
+                  Container(
+                    width: double.infinity,
+                    child: buildElevatedTextButton(
+                        onPressedFunction: () async {
+                          // try {
                           if (formKey.currentState!.validate()) {
                             emailController.text;
                             passwordController.text;
@@ -109,16 +115,18 @@ class _SignInScreenState extends State<SignInScreen> {
                             print(emailController.text);
                             print(passwordController.text);
                             if (userDataSignIn['code'] == 201) {
+                              if (userDataSignIn['data']['roll_id'] == 1) {
+                                navigateTO(context, AdminHomeScreen());
+                              } else {
+                                navigateTO(context, HomeScreen());
+                              }
                               buildFlutterToast(
                                   message: "Thank you for your Registration",
                                   state: ToastStates.SUCCESS);
-                              // Cash.saveData(
-                              //   key: 'token',
-                              //   value: userDataSignIn['data']['token'],
-                              // ).then((value) {
-                              //   navigateTOAndReplacement(
-                              //       context, PreferredDataScreen());
-                              // });
+                              _saveToken(userDataSignIn['data']['token'])
+                                  .then((value) {
+                                navigateTOAndReplacement(context, HomeScreen());
+                              });
                             } else {
                               buildFlutterToast(
                                   message:
@@ -127,18 +135,26 @@ class _SignInScreenState extends State<SignInScreen> {
                             }
                             print(userDataSignIn.toString());
                           }
-                        // } catch (e) {
-                        //   print("Error in LOGIN Method ++>> $e");
-                        // }
-                      },
-                      titleOfButton: "Sign in"),
-                ),
-                const SizedBox(height: 10),
-              ],
+                          // } catch (e) {
+                          //   print("Error in LOGIN Method ++>> $e");
+                          // }
+                        },
+                        titleOfButton: "Sign in"),
+                  ),
+                  const SizedBox(height: 10),
+                ],
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  _saveToken(tokenValue) {
+    Cash.saveData(
+      key: 'userToken',
+      value: tokenValue,
     );
   }
 }

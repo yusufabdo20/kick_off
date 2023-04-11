@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../screens/signIn_screen.dart';
 import '../services/local/cash.dart';
 import 'components.dart';
-
+final userToken='' ;
 const primaryColor = Color.fromRGBO(6, 41, 70, 1);
 var primary  = Colors.transparent;
 var logoImage = "asset s/images/logo.jpeg";

@@ -20,7 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var mobilePhoneController = TextEditingController();
-  var birthDateController = TextEditingController();
+  // var birthDateController = TextEditingController();
   var formKey = GlobalKey<FormState>();
   bool isPassword = true;
   bool isPassword2 = true;
@@ -52,7 +52,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         // crossAxisAlignment: CrossAxisAlignment.stretch,
                         //mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const SizedBox(height: 50),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Image.asset("assets/images/Card.png", fit:BoxFit.cover,),
+                          ),
+                          const SizedBox(height: 20),
                           buildHeadLine1Text(
                             text: "Sign Up",
                           ),
@@ -214,7 +218,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                   ? "1"
                                                   : "2" //1 for Owner 2 for user
                                               );
-                                              print(userDataSignUp);
+                                      print(userDataSignUp);
                                       if (userDataSignUp['code'] == 201) {
                                         buildFlutterToast(
                                             message:
