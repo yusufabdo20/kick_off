@@ -31,9 +31,9 @@ class OwnerScreen extends StatelessWidget {
         Column(
           children: [
             OwnerPlaygrounds(
-              nameOnwer: 'El-Salam fileld ',
-              nameArea: "Cairo",
-              price: 150,
+              nameOnwer: 'El-Turky fileld ',
+              nameArea: "Giza",
+              price: 180,
             ),
             OwnerPlaygrounds(
               nameOnwer: 'El-Salam fileld ',

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kick_off/components/components.dart';
-import 'package:kick_off/screens/notifications_screen.dart';
 import 'package:kick_off/screens/owner_screen.dart';
 
 class PlaygroundsCategories extends StatelessWidget {
@@ -40,15 +39,24 @@ class PlaygroundsCategories extends StatelessWidget {
                     color: Color(0xff496179).withOpacity(0.9),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      nameArea,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.location_on_outlined,
+                         color: Colors.
+                         white,size: 15,
+                         ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          nameArea,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
                 RatingBar.builder(

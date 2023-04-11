@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kick_off/components/home_component/Search_field.dart';
 import 'package:kick_off/components/home_component/areas_categories.dart';
 import 'package:kick_off/components/home_component/playgrounds_categories.dart';
-
 import '../components/components.dart';
 import 'notifications_screen.dart';
 

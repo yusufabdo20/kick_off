@@ -1,5 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kick_off">
+    <queries>
+      <intent>
+    <action android:name="android.intent.action.VIEW" />
+    <data android:scheme="whatsapp" />
+     </intent>
+      <intent>
+    <action android:name="android.intent.action.VIEW" />
+    <data android:scheme="tel" />
+     </intent>
+    </queries>
    <application
         android:label="kick_off"
         android:name="${applicationName}"
