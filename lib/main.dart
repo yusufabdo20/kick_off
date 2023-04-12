@@ -12,6 +12,7 @@ import 'screens/register_screen.dart';
 import 'screens/signIn_screen.dart';
 import 'screens/splash_screen.dart';
 import 'services/local/cash.dart';
+import 'components/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

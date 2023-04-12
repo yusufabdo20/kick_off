@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kick_off/screens/admin_screens/admin_pannel.dart';
-import 'package:kick_off/screens/home_screen.dart';
 
 import '../components/components.dart';
 import '../components/constants.dart';
 import '../services/local/cash.dart';
 import '../services/network/signInServices.dart';
+import 'user_screens/home_screen.dart';
 
 // import 'package:hexcolor/hexcolor.dart';
 
@@ -27,6 +27,16 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // backgroundColor: rgbBahgaPurple1,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back_ios),
+            color: primaryColor),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

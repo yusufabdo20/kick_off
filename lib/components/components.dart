@@ -12,7 +12,7 @@ Widget buildFormFieldText({
   String? hintText,
   TextInputType? keyboardType,
   IconData? prefixIcon,
-  Color prefixIconColor = Colors.black,
+  Color prefixIconColor = primaryColor,
   String? Function(String?)? validate,
   IconData? suffix,
   Color? suffixColor = Colors.black,
@@ -24,7 +24,7 @@ Widget buildFormFieldText({
   bool isClickable = true,
   Color backgroundOfTextFeild = Colors.white,
   Color notFocusedBorderColor = Colors.white,
-  Color focusedBorderColor = Colors.black,
+  Color focusedBorderColor = primaryColor,
 }) =>
     Container(
       decoration: BoxDecoration(
