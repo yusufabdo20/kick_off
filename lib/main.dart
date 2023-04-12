@@ -4,7 +4,8 @@ import 'package:kick_off/state_management/userProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'components/app_routes.dart';
-import 'screens/admin_screens/add_playground_screen.dart';
+import 'screens/admin_screens/ImagePicker.dart';
+import 'screens/admin_screens/add_soccer_field.dart';
 import 'screens/admin_screens/adminPannelScreen.dart';
 import 'screens/onBoarding_screen.dart';
 import 'screens/register_screen.dart';
@@ -45,7 +46,7 @@ class KickOff extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: SplashScreen.id,
       // routes: appRoutes,
-      home: OnBoardingScreen(),
+      home: AddSoccerFieldScreen(),
     );
   }
 }

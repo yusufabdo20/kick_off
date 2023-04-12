@@ -54,7 +54,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(20.0),
-                            child: Image.asset("assets/images/Card.png", fit:BoxFit.cover,),
+                            child: Image.asset(
+                              "assets/images/Card.png",
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           const SizedBox(height: 20),
                           buildHeadLine1Text(
@@ -165,39 +168,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Container(
-                            // width: 200,
-                            // color: Colors.red,
-                            child: DropdownButtonFormField<String>(
-                              value: selectedItem,
-                              decoration: InputDecoration(
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(16.0),
-                                  borderSide:
-                                      BorderSide(color: primaryColor, width: 3),
-                                ),
-                                border: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        width: 2, color: Colors.grey),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(16))),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16),
-                                    borderSide: BorderSide(
-                                        width: 2, color: Colors.grey)),
-                              ),
-                              onChanged: (item) {
-                                setState(() {
-                                  selectedItem = item;
-                                });
-                              },
-                              items: items.map((String item) {
-                                return DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(item),
-                                );
-                              }).toList(),
-                            ),
+                          buildDropdownButtonFormField(
+                            items: items,
+                            selectValue: selectedItem!,
+                            borderColor: primaryColor,
                           ),
                           Container(
                             width: double.infinity,

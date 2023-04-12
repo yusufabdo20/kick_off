@@ -3,7 +3,9 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:kick_off/components/constants.dart';
-import 'package:kick_off/screens/admin_screens/add_playground_screen.dart';
+import 'package:kick_off/screens/admin_screens/ImagePicker.dart';
+import 'package:kick_off/screens/admin_screens/add_services.dart';
+import 'package:kick_off/screens/admin_screens/add_soccer_field.dart';
 import 'package:kick_off/screens/signIn_screen.dart';
 
 import '../register_screen.dart';
@@ -20,7 +22,7 @@ class _AdminPannelScreenState extends State<AdminHomeScreen> {
   final List<Widget> _widgetOptions = [
     Text("Setting Screen"),
     Text("Reports Screen"),
-  ImagePickerScreen(),
+    AddSoccerFieldScreen(),
     Text("Fields Screen"),
     AdminPannelScreen(),
   ];
@@ -46,7 +48,7 @@ class _AdminPannelScreenState extends State<AdminHomeScreen> {
             // curve: Curves.easeInOut,
             activeColor: primaryColor,
             tabBackgroundColor: Colors.white,
-            tabMargin: EdgeInsets.symmetric(vertical: 15,horizontal: 10),
+            tabMargin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             padding: EdgeInsets.all(10),
             gap: 5,
             selectedIndex: _selectedIndex,

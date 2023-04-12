@@ -17,110 +17,119 @@ class _AdminPannelScreenState extends State<AdminPannelScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  const Text(
-                    "Welcome \n Admin",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.notifications_active_outlined,
-                          color: Colors.black,
-                          size: 30,
-                          shadows: [
-                            Shadow(
-                              color: Colors.black,
-                              offset: Offset.fromDirection(1.0),
-                              blurRadius: 6.0,
-                            ),
-                          ],
-                        ),
-                      ),
-                      CircleAvatar(
-                        child: const Text("2",
-                            style: TextStyle(color: Colors.white)),
-                        maxRadius: 10,
-                        backgroundColor: Colors.yellow[800],
-                      )
-                    ],
-                  )
-                ],
-              ),
-              const SizedBox(height: 20),
-              Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(40),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.7),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Row(
+        child: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("assets/images/back33.png"),
+            fit: BoxFit.cover,
+          )),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          const Icon(Icons.receipt),
-                          const Text(
-                            'Requests',
-                            style: TextStyle(
-                                // color: Colors.red,
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
                     const Text(
-                      "2",
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold),
+                      "Welcome \n Admin",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.notifications_active_outlined,
+                            color: Colors.black,
+                            size: 30,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black,
+                                offset: Offset.fromDirection(1.0),
+                                blurRadius: 6.0,
+                              ),
+                            ],
+                          ),
+                        ),
+                        CircleAvatar(
+                          child: const Text("2",
+                              style: TextStyle(color: Colors.white)),
+                          maxRadius: 10,
+                          backgroundColor: Colors.yellow[800],
+                        )
+                      ],
                     )
                   ],
                 ),
-              ),
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 30.0,
-                  crossAxisSpacing: 15.0,
-                  childAspectRatio: 1,
-                  padding: const EdgeInsets.all(10.0),
-                  children: items,
+                const SizedBox(height: 20),
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(40),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: const BorderRadius.all(Radius.circular(16)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            const Icon(Icons.receipt),
+                            const Text(
+                              'Requests',
+                              style: TextStyle(
+                                  // color: Colors.red,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        ),
+                      ),
+                      const Text(
+                        "2",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              // GridView.builder(
-              //   itemCount: items.length,
-              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //     crossAxisCount: 2,
-              //     mainAxisSpacing: 5.0,
-              //     crossAxisSpacing: 5.0,
-              //     childAspectRatio: 1.0,
-              //   ),
-              //   itemBuilder: (BuildContext context, int index) {
-              //     return items[index];
-              //   },
-              // )
-            ],
+                Expanded(
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 30.0,
+                    crossAxisSpacing: 15.0,
+                    childAspectRatio: 1,
+                    padding: const EdgeInsets.all(10.0),
+                    children: items,
+                  ),
+                ),
+                // GridView.builder(
+                //   itemCount: items.length,
+                //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //     crossAxisCount: 2,
+                //     mainAxisSpacing: 5.0,
+                //     crossAxisSpacing: 5.0,
+                //     childAspectRatio: 1.0,
+                //   ),
+                //   itemBuilder: (BuildContext context, int index) {
+                //     return items[index];
+                //   },
+                // )
+              ],
+            ),
           ),
         ),
       ),

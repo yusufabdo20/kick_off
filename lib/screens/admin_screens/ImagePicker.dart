@@ -13,10 +13,10 @@ class ImagePickerScreen extends StatefulWidget {
 class _ImagePickerScreenState extends State<ImagePickerScreen> {
   File? _image;
 
-  final picker = ImagePicker();
+  var picker = ImagePicker();
 
   Future getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    var pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
@@ -41,31 +41,6 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Image Picker'),
-      ),
-      body: Center(
-        child: _image == null
-            ? Text('No image selected')
-            : Image.file(_image!),
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: getImage,
-            tooltip: 'Pick Image',
-            child: Icon(Icons.image),
-          ),
-          SizedBox(height: 16),
-          FloatingActionButton(
-            onPressed: uploadImage,
-            tooltip: 'Upload Image',
-            child: Icon(Icons.cloud_upload),
-          ),
-        ],
-      ),
-    );
+    return Container();
   }
 }

@@ -8,7 +8,7 @@ import 'constants.dart';
 
 Widget buildFormFieldText({
   TextEditingController? controller,
-  required String labelText,
+  String? labelText,
   String? hintText,
   TextInputType? keyboardType,
   IconData? prefixIcon,
@@ -26,44 +26,57 @@ Widget buildFormFieldText({
   Color notFocusedBorderColor = Colors.white,
   Color focusedBorderColor = Colors.black,
 }) =>
-    TextFormField(
-        obscureText: isSecure,
-        validator: validate,
-        controller: controller,
-        decoration: InputDecoration(
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          filled: true,
-          floatingLabelStyle: TextStyle(
-              color: focusedBorderColor,
-              fontWeight: FontWeight.bold,
-              fontSize: 20),
-          fillColor: backgroundOfTextFeild,
-          border: const OutlineInputBorder(
-              // borderSide: BorderSide(width: 3, color: Colors.yellowAccent),
-              borderRadius: BorderRadius.all(Radius.circular(16))),
-          enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 0, color: notFocusedBorderColor),
-              borderRadius: BorderRadius.all(Radius.circular(16))),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16.0),
-            borderSide: BorderSide(color: focusedBorderColor, width: 2),
+    Container(
+      decoration: BoxDecoration(
+        // color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
           ),
-          labelText: labelText,
-          labelStyle: const TextStyle(
-            fontSize: 16,
+        ],
+      ),
+      child: TextFormField(
+          obscureText: isSecure,
+          validator: validate,
+          controller: controller,
+          decoration: InputDecoration(
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            filled: true,
+            floatingLabelStyle: TextStyle(
+                color: focusedBorderColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 20),
+            fillColor: backgroundOfTextFeild,
+            border: const OutlineInputBorder(
+                // borderSide: BorderSide(width: 3, color: Colors.yellowAccent),
+                borderRadius: BorderRadius.all(Radius.circular(16))),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(width: 0, color: notFocusedBorderColor),
+                borderRadius: BorderRadius.all(Radius.circular(16))),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16.0),
+              borderSide: BorderSide(color: focusedBorderColor, width: 2),
+            ),
+            labelText: labelText,
+            labelStyle: const TextStyle(
+              fontSize: 16,
+            ),
+            hintText: hintText,
+            prefixIcon: Icon(prefixIcon, color: prefixIconColor),
+            suffixIcon: IconButton(
+              onPressed: suffixPressed,
+              icon: Icon(suffix, color: suffixColor),
+            ),
           ),
-          hintText: hintText,
-          prefixIcon: Icon(prefixIcon, color: prefixIconColor),
-          suffixIcon: IconButton(
-            onPressed: suffixPressed,
-            icon: Icon(suffix, color: suffixColor),
-          ),
-        ),
-        keyboardType: keyboardType,
-        onFieldSubmitted: onSubmit,
-        onChanged: onChange,
-        onTap: onTap,
-        enabled: isClickable);
+          keyboardType: keyboardType,
+          onFieldSubmitted: onSubmit,
+          onChanged: onChange,
+          onTap: onTap,
+          enabled: isClickable),
+    );
 
 Widget buildElevatedTextButton({
   Color backgroundColor = primaryColor,
@@ -72,7 +85,7 @@ Widget buildElevatedTextButton({
   Color titleOfButtonColor = Colors.white,
   required String titleOfButton,
   Color borderColor = Colors.black,
-  double borderColorOpacity = 1,
+  double borderColorOpacity = 0,
   double widthOfBorder = 0.0,
   double textSize = 16.00,
   double? buttonWidth,
@@ -122,17 +135,13 @@ Widget buildDatePickerTextField(
       ),
       child: TextFormField(
         controller: controller,
-        validator: validator,
-        //editing controller of this TextField
         decoration: InputDecoration(
             icon: Icon(
               Icons.calendar_today,
               color: calenderIconColor,
             ),
-            //icon of text field
             hintText: hint,
             labelText: lable,
-            //label text of field
             labelStyle: TextStyle(fontFamily: 'JostBold', color: Colors.black)),
         readOnly: true,
         //set it true, so that user will not able to edit text
@@ -140,20 +149,13 @@ Widget buildDatePickerTextField(
           DateTime? pickedDate = await showDatePicker(
               context: context,
               initialDate: DateTime.now(),
-              firstDate: DateTime(1950),
+              firstDate: DateTime(2023),
               //DateTime.now() - not to allow to choose before today.
               lastDate: DateTime(2100));
-
           if (pickedDate != null) {
-            print(
-                pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
             String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-            print(
-                formattedDate); //formatted date output using intl package =>  2021-03-16
             controller.text =
                 formattedDate; //set output date to TextField value.
-          } else {
-            print("object >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
           }
         },
       ),
@@ -364,4 +366,33 @@ buildDrawerButton({
           ),
         ),
       ),
+    );
+buildDropdownButtonFormField({
+  required String selectValue,
+  Color borderColor = Colors.black,
+  required List<String> items,
+}) =>
+    DropdownButtonFormField<String>(
+      value: selectValue,
+      decoration: InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16.0),
+          borderSide: BorderSide(color: borderColor, width: 3),
+        ),
+        border: const OutlineInputBorder(
+            borderSide: BorderSide(width: 2, color: Colors.grey),
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide(width: 2, color: Colors.grey)),
+      ),
+      onChanged: (item) {
+        selectValue = item!;
+      },
+      items: items.map((String item) {
+        return DropdownMenuItem<String>(
+          value: item,
+          child: Text(item),
+        );
+      }).toList(),
     );
