@@ -1,5 +1,7 @@
 
-class Data {
+import 'package:kick_off/models/personModel.dart';
+
+class ClubModel {
   int? id;
   int? price;
   String? name;
@@ -10,9 +12,9 @@ class Data {
   String? image;
   int? adminId;
   int? areaId;
-  // Admin? admin;
+  User? admin;
 
-  Data(
+  ClubModel(
       {this.id,
       this.price,
       this.name,
@@ -23,10 +25,10 @@ class Data {
       this.image,
       this.adminId,
       this.areaId,
-      // this.admin
+      this.admin
       });
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ClubModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     price = json['price'];
     name = json['name'];
@@ -37,6 +39,6 @@ class Data {
     image = json['image'];
     adminId = json['admin_id'];
     areaId = json['area_id'];
-    // admin = json['admin'] != null ? new Admin.fromJson(json['admin']) : null;
+    admin = json['admin'] != null ? User.fromJson(json['admin']) : null;
   }
 }

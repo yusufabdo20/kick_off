@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kick_off/screens/admin_screens/admin_pannel.dart';
+import 'package:kick_off/screens/register_screen.dart';
+import 'package:kick_off/screens/user_screens/home.dart';
 
 import '../components/components.dart';
 import '../components/constants.dart';
@@ -77,8 +79,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
                     },
                     controller: emailController,
-                    labelText: "Email",
-                    hintText: "email123@kickoff.com",
+                    // labelText: "Email",
+                    hintText: "Email",
                     prefixIcon: Icons.email,
                     keyboardType: TextInputType.emailAddress,
                   ),
@@ -86,7 +88,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     height: 15,
                   ),
                   buildFormFieldText(
-                      hintText: "* * * * * * * *",
+                      hintText: "Password",
                       validate: (value) {
                         if (value!.isEmpty) {
                           return 'please enter a valid password ';
@@ -98,7 +100,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         }
                       },
                       controller: passwordController,
-                      labelText: "Password",
+                      // labelText: "Password",
                       prefixIcon: Icons.lock,
                       keyboardType: TextInputType.visiblePassword,
                       isSecure: isPassword,
@@ -114,37 +116,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: buildElevatedTextButton(
                         onPressedFunction: () async {
                           // try {
-                          if (formKey.currentState!.validate()) {
-                            emailController.text;
-                            passwordController.text;
-                            print("Validate Checked ");
-                            final userDataSignIn = await SignInService().login(
-                              emailController.text,
-                              passwordController.text,
-                            );
-                            print(emailController.text);
-                            print(passwordController.text);
-                            if (userDataSignIn['code'] == 201) {
-                              if (userDataSignIn['data']['roll_id'] == 1) {
-                                navigateTO(context, AdminHomeScreen());
-                              } else {
-                                navigateTO(context, HomeScreen());
-                              }
-                              buildFlutterToast(
-                                  message: "Thank you for your Registration",
-                                  state: ToastStates.SUCCESS);
-                              _saveToken(userDataSignIn['data']['token'])
-                                  .then((value) {
-                                navigateTOAndReplacement(context, HomeScreen());
-                              });
-                            } else {
-                              buildFlutterToast(
-                                  message:
-                                      "${userDataSignIn['data']['password']}",
-                                  state: ToastStates.ERROR);
-                            }
-                            print(userDataSignIn.toString());
-                          }
+                          await _signInValidator();
                           // } catch (e) {
                           //   print("Error in LOGIN Method ++>> $e");
                           // }
@@ -152,6 +124,11 @@ class _SignInScreenState extends State<SignInScreen> {
                         titleOfButton: "Sign in"),
                   ),
                   const SizedBox(height: 10),
+                  TextButton(onPressed: () {
+
+                    navigateTOAndReplacement(context,SignUpScreen(),);
+                  },
+                  child: Text("Dont have an account ? | Join us now"),)
                 ],
               ),
             ),
@@ -166,5 +143,38 @@ class _SignInScreenState extends State<SignInScreen> {
       key: 'userToken',
       value: tokenValue,
     );
+  }
+
+  _signInValidator() async {
+    if (formKey.currentState!.validate()) {
+      emailController.text;
+      passwordController.text;
+      print("Validate Checked ");
+      final userDataSignIn = await SignInService().login(
+        emailController.text,
+        passwordController.text,
+      );
+      _checkStatusCodeAndUserType(userDataSignIn);
+    }
+  }
+
+  void _checkStatusCodeAndUserType(Map<String, dynamic> userDataSignIn) {
+    if (userDataSignIn['code'] == 201) {
+      if (userDataSignIn['data']['roll_id'] == 1) {
+        navigateTO(context, AdminHomeScreen());
+      } else {
+        navigateTO(context, Home());
+      }
+      buildFlutterToast(
+          message: "Thank you for your Registration",
+          state: ToastStates.SUCCESS);
+      _saveToken(userDataSignIn['data']['token']).then((value) {
+        navigateTOAndReplacement(context, Home());
+      });
+    } else {
+      buildFlutterToast(
+          message: "${userDataSignIn['data']['password']}",
+          state: ToastStates.ERROR);
+    }
   }
 }

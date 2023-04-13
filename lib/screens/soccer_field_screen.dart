@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kick_off/components/components.dart';
 import 'package:kick_off/components/owner_playgrounds.dart';
+import 'package:kick_off/screens/user_screens/booking_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -204,20 +206,22 @@ class _SoccerFieldScreenState extends State<SoccerFieldScreen> {
                 ),
               ),
               ElevatedButton.icon(
-                onPressed: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(2023),
-                      //DateTime.now() - not to allow to choose before today.
-                      lastDate: DateTime(2100));
-                  if (pickedDate != null) {
-                    String formattedDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                    // controller.text = formattedDate; //set output date to TextField value.
-                    print(formattedDate);
-                  }
+                onPressed: ()  {
+                  // DateTime? pickedDate = await showDatePicker(
+                  //     context: context,
+                  //     initialDate: DateTime.now(),
+                  //     firstDate: DateTime(2023),
+                  //     //DateTime.now() - not to allow to choose before today.
+                  //     lastDate: DateTime(2100));
+                  // if (pickedDate != null) {
+                  //   String formattedDate =
+                  //       DateFormat('yyyy-MM-dd').format(pickedDate);
+                  //   // controller.text = formattedDate; //set output date to TextField value.
+                  //   print(formattedDate);
+                  // }
+                  navigateTO(context, BookingScreen());
                 },
+                
                 icon: Icon(
                   Icons.book_online,
                 ),

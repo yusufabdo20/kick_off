@@ -64,46 +64,55 @@ class _AdminPannelScreenState extends State<AdminPannelScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  padding: const EdgeInsets.all(40),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: const BorderRadius.all(Radius.circular(16)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.7),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                        offset:
-                            const Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            const Icon(Icons.receipt),
-                            const Text(
-                              'Requests',
-                              style: TextStyle(
-                                  // color: Colors.red,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold),
-                            )
-                          ],
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(40),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      image: DecorationImage(
+                        image: AssetImage(
+                          "assets/images/back1.png",
                         ),
+                        fit: BoxFit.cover,
                       ),
-                      const Text(
-                        "2",
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
+                      borderRadius: const BorderRadius.all(Radius.circular(16)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.7),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Row(
+                            children: [
+                              const Icon(Icons.receipt),
+                              const Text(
+                                'Requests',
+                                style: TextStyle(
+                                    // color: Colors.red,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ),
+                        const Text(
+                          "2",
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Expanded(
@@ -170,61 +179,70 @@ class AdminPannelComponent extends StatelessWidget {
   int? number;
   String? report;
   Function()? reportFunction;
+  Function()? onTapFunction;
   AdminPannelComponent(
       {required this.icon,
       required this.title,
       required this.number,
+      this.onTapFunction,
       this.report,
-      this.reportFunction});
+      this.reportFunction,});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: const BorderRadius.all(Radius.circular(16)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.7),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Icon(
-            icon,
-            size: 25,
-            color: primaryColor,
-          ),
-          Text(
-            title!,
-            style: const TextStyle(
-                color: primaryColor, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          Text(
-            "$number",
-            style: const TextStyle(
-                color: primaryColor, fontSize: 25, fontWeight: FontWeight.bold),
-          ),
-          report != null
-              ? TextButton(
-                  onPressed: reportFunction,
-                  child: Text(
-                    report!,
-                    style: TextStyle(
-                      // decoration:TextDecoration.underline ,
-                      color: Colors.black54,
-                      fontSize: 14,
-                      // fontWeight: FontWeight.w600
+    return InkWell(
+      onTap: onTapFunction,
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.7),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(
+              icon,
+              size: 25,
+              color: primaryColor,
+            ),
+            Text(
+              title!,
+              style: const TextStyle(
+                  color: primaryColor,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "$number",
+              style: const TextStyle(
+                  color: primaryColor,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+            ),
+            report != null
+                ? TextButton(
+                    onPressed: reportFunction,
+                    child: Text(
+                      report!,
+                      style: TextStyle(
+                        // decoration:TextDecoration.underline ,
+                        color: Colors.black54,
+                        fontSize: 14,
+                        // fontWeight: FontWeight.w600
+                      ),
                     ),
-                  ),
-                )
-              : Container(),
-        ],
+                  )
+                : Container(),
+          ],
+        ),
       ),
     );
   }

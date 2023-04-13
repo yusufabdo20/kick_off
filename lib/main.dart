@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kick_off/screens/admin_screens/admin_pannel.dart';
+import 'package:kick_off/screens/user_screens/home.dart';
 import 'package:kick_off/state_management/userProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +11,9 @@ import 'screens/admin_screens/adminPannelScreen.dart';
 import 'screens/onBoarding_screen.dart';
 import 'screens/register_screen.dart';
 import 'screens/signIn_screen.dart';
+import 'screens/soccer_field_screen.dart';
 import 'screens/splash_screen.dart';
+import 'screens/user_screens/booking_screen.dart';
 import 'services/local/cash.dart';
 import 'components/app_routes.dart';
 
@@ -24,9 +27,9 @@ void main() async {
 
   if (onBoarding != null) {
     if (token != null) {
-      widget = SignUpScreen();
+      widget = Home();
     } else {
-      widget = SignInScreen();
+      widget = SignUpScreen();
     }
   } else {
     widget = OnBoardingScreen();
@@ -34,20 +37,21 @@ void main() async {
   runApp(
     ChangeNotifierProvider(
       create: (_) => USerProvider(),
-      child: KickOff(),
+      child: KickOff(startWidget: widget),
     ),
   );
 }
 
 class KickOff extends StatelessWidget {
-  const KickOff({super.key});
+  Widget? startWidget;
+  KickOff({required this.startWidget});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       // initialRoute: SplashScreen.id,
       // routes: appRoutes,
-      home: AddSoccerFieldScreen(),
+      home: BookingScreen(),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kick_off/screens/user_screens/home.dart';
 
 import '../components/components.dart';
 import '../components/constants.dart';
@@ -52,13 +53,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         // crossAxisAlignment: CrossAxisAlignment.stretch,
                         //mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Image.asset(
-                              "assets/images/Card.png",
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(20.0),
+                          //   child: Image.asset(
+                          //     "assets/images/Card.png",
+                          //     fit: BoxFit.cover,
+                          //   ),
+                          // ),
                           const SizedBox(height: 20),
                           buildHeadLine1Text(
                             text: "Sign Up",
@@ -73,10 +74,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               }
                             },
                             controller: usernameController,
-                            labelText: "Username",
+                            // labelText: "Username",
                             prefixIcon: Icons.person,
                             keyboardType: TextInputType.text,
-                            hintText: "Enter a username",
+                            hintText: "Name",
                           ),
                           const SizedBox(
                             height: 15,
@@ -103,8 +104,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               }
                             },
                             controller: emailController,
-                            labelText: "Email",
-                            hintText: "Enter new email address",
+                            // labelText: "Email",
+                            hintText: "Email",
                             prefixIcon: Icons.email,
                             keyboardType: TextInputType.emailAddress,
                           ),
@@ -112,7 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             height: 15,
                           ),
                           buildFormFieldText(
-                            hintText: "0123456789",
+                            hintText: "Mobile phone",
                             validate: (value) {
                               if (value!.isEmpty) {
                                 return 'please enter a valid mobile phone ';
@@ -133,7 +134,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               }
                             },
                             controller: mobilePhoneController,
-                            labelText: "Mobile Phone",
+                            // labelText: "Mobile Phone",
                             prefixIcon: Icons.phone_android_outlined,
                             keyboardType: TextInputType.number,
                           ),
@@ -141,7 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             height: 15,
                           ),
                           buildFormFieldText(
-                              hintText: "* * * * * * * *",
+                              hintText: "Password",
                               validate: (value) {
                                 if (value!.isEmpty) {
                                   return 'please enter a valid password ';
@@ -153,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 }
                               },
                               controller: passwordController,
-                              labelText: "Password",
+                              // labelText: "Password",
                               prefixIcon: Icons.lock,
                               keyboardType: TextInputType.visiblePassword,
                               isSecure: isPassword,
@@ -168,6 +169,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(
                             height: 20,
                           ),
+                          // Text("Who are you ?"),
                           buildDropdownButtonFormField(
                             items: items,
                             selectValue: selectedItem!,
@@ -177,7 +179,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: double.infinity,
                             child: buildElevatedTextButton(
                                 onPressedFunction: () async {
-                                  navigateTO(context, SignInScreen());
+                                  navigateTO(context, Home());
                                   try {
                                     if (formKey.currentState!.validate()) {
                                       emailController.text;
@@ -205,6 +207,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         //         navigateTOAndReplacement(
                                         //             context, PreferredDataScreen());
                                         //       });
+
                                       } else {
                                         buildFlutterToast(
                                             message:
@@ -213,6 +216,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       }
                                       print(userDataSignUp.toString());
                                     }
+                             
                                   } catch (e) {
                                     print("Error in Register Method ++>> $e");
                                   }
@@ -220,6 +224,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 titleOfButton: "Register"),
                           ),
                           const SizedBox(height: 10),
+                           TextButton(onPressed: () {
+
+                    navigateTOAndReplacement(context,SignInScreen(),);
+                  },
+                  child: Text("Have an account ? | Sign in now"),)
+
                         ],
                       ),
                     ),

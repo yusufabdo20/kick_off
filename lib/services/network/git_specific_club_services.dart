@@ -3,9 +3,9 @@ import 'package:kick_off/models/clubModel.dart';
 
 import '../api.dart';
 
-class GetAreaService {
-  Future<List<ClubModel>> getAllArea() async {
-    final url = 'http://127.0.0.1:8000/api/clubs';
+class GetSpecificClubService {
+  Future<List<ClubModel>> getAllArea(int clubID) async {
+    final url = 'http://127.0.0.1:8000/api/clubs/$clubID';
 
     Map<String, dynamic> data = await Api().get(
       apiUrl: url,
