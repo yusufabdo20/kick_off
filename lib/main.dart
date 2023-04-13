@@ -16,6 +16,7 @@ import 'screens/splash_screen.dart';
 import 'screens/user_screens/booking_screen.dart';
 import 'services/local/cash.dart';
 import 'components/app_routes.dart';
+import 'state_management/clubProvider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,10 +36,16 @@ void main() async {
     widget = OnBoardingScreen();
   }
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => USerProvider(),
-      child: KickOff(startWidget: widget),
-    ),
+    MultiProvider(providers: [
+      ChangeNotifierProvider(
+        create: (_) => UserProvider(),
+        child: KickOff(startWidget: widget),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => ClubProvider(),
+        child: KickOff(startWidget: widget),
+      ),
+    ]),
   );
 }
 

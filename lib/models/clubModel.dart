@@ -1,5 +1,5 @@
 
-import 'package:kick_off/models/personModel.dart';
+import 'package:kick_off/models/userModel.dart';
 
 class ClubModel {
   int? id;
@@ -12,7 +12,7 @@ class ClubModel {
   String? image;
   int? adminId;
   int? areaId;
-  User? admin;
+  UserModel? admin;
 
   ClubModel(
       {this.id,
@@ -39,6 +39,6 @@ class ClubModel {
     image = json['image'];
     adminId = json['admin_id'];
     areaId = json['area_id'];
-    admin = json['admin'] != null ? User.fromJson(json['admin']) : null;
+    admin = json['admin'] != null ? UserModel.fromJson(json['admin']) : null;
   }
 }

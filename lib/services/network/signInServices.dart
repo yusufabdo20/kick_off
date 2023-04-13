@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../components/constants.dart';
-import '../../models/personModel.dart';
+import '../../models/userModel.dart';
 import '../api.dart';
 
 class SignInService {

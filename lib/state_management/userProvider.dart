@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../models/personModel.dart';
+import '../models/userModel.dart';
 
-class USerProvider extends ChangeNotifier {
-  User? currentUser;
+class UserProvider with ChangeNotifier {
+  UserModel? _user;
 
-  void updateUser(User user) {
-    currentUser = user;
+  UserModel? get user => _user;
+
+  void setUser(Map<String, dynamic> json) {
+    _user = UserModel.fromJson(json);
     notifyListeners();
   }
 }
