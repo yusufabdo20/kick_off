@@ -28,7 +28,7 @@ class _SignInScreenState extends State<SignInScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      // backgroundColor: rgbBahgaPurple1,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
@@ -41,12 +41,12 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
       body: Container(
         height: double.infinity,
-          decoration: BoxDecoration(
-    image: DecorationImage(
-      image: AssetImage('assets/images/back22.png'),
-      fit: BoxFit.cover,
-    ),
-  ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/back22.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: SafeArea(
           child: SingleChildScrollView(
             child: Padding(
@@ -112,8 +112,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         prefixIcon: Icons.lock,
                         keyboardType: TextInputType.visiblePassword,
                         isSecure: isPassword,
-                        suffix:
-                            isPassword ? Icons.visibility_off : Icons.visibility,
+                        suffix: isPassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
                         suffixPressed: () {
                           setState(() {
                             isPassword = !isPassword;
@@ -123,11 +124,11 @@ class _SignInScreenState extends State<SignInScreen> {
                       width: double.infinity,
                       child: buildElevatedTextButton(
                           onPressedFunction: () async {
-                            try {
-                              await _signInValidator();
-                            } catch (e) {
-                              print("Error in LOGIN Method ++>> $e");
-                            }
+                            // try {
+                            await _signInValidator();
+                            // } catch (e) {
+                            //   print("Error in LOGIN Method ++>> $e");
+                            // }
                           },
                           titleOfButton: "Sign in"),
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kick_off/components/components.dart';
+import 'package:kick_off/components/constants.dart';
 import 'package:kick_off/components/owner_playgrounds.dart';
 import 'package:kick_off/screens/user_screens/booking_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -68,7 +69,7 @@ class _SoccerFieldScreenState extends State<SoccerFieldScreen> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                     decoration: BoxDecoration(
-                      color: Color(0xff072948),
+                      color:primaryColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(

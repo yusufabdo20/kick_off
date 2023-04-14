@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kick_off/components/constants.dart';
 import 'package:kick_off/components/home_component/Search_field.dart';
 import 'package:kick_off/components/home_component/areas_categories.dart';
 import 'package:kick_off/components/home_component/playgrounds_categories.dart';
@@ -84,13 +85,13 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Text(
                               "Area",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 16),
                             ),
                             TextButton(
                               onPressed: () {},
                               child: const Text(
                                 "Select all",
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 16 , color: primaryColor),
                               ),
                             ),
                           ],

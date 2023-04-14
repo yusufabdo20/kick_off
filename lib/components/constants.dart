@@ -3,7 +3,7 @@ import '../screens/signIn_screen.dart';
 import '../services/local/cash.dart';
 import 'components.dart';
 final userToken='' ;
-final baseUrl='http://127.0.0.1:8000/api'; 
+final baseUrl='http://192.168.1.13/api'; 
 const primaryColor = Color.fromRGBO(6, 41, 70, 1);
 var primary  = Colors.transparent;
 var logoImage = "asset s/images/logo.jpeg";

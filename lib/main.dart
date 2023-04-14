@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kick_off/screens/admin_screens/admin_pannel.dart';
 import 'package:kick_off/screens/user_screens/home.dart';
+import 'package:kick_off/state_management/areaProvider.dart';
 import 'package:kick_off/state_management/userProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,7 @@ import 'screens/signIn_screen.dart';
 import 'screens/soccer_field_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/user_screens/booking_screen.dart';
+import 'screens/user_screens/owner_clubs_screen.dart';
 import 'services/local/cash.dart';
 import 'components/app_routes.dart';
 import 'state_management/clubProvider.dart';
@@ -37,7 +39,7 @@ void main() async {
   }
   runApp(
        ChangeNotifierProvider(
-        create: (_) => UserProvider(),
+        create: (_) => AreaProvider(),
         child: KickOff(startWidget: widget),
       ),
     // MultiProvider(providers: [
@@ -62,7 +64,7 @@ class KickOff extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: SplashScreen.id,
       // routes: appRoutes,
-      home: SignInScreen(),
+      home: SoccerFieldScreen(),
     );
   }
 }
