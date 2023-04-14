@@ -115,11 +115,11 @@ class _SignInScreenState extends State<SignInScreen> {
                     width: double.infinity,
                     child: buildElevatedTextButton(
                         onPressedFunction: () async {
-                          // try {
+                          try {
                           await _signInValidator();
-                          // } catch (e) {
-                          //   print("Error in LOGIN Method ++>> $e");
-                          // }
+                          } catch (e) {
+                            print("Error in LOGIN Method ++>> $e");
+                          }
                         },
                         titleOfButton: "Sign in"),
                   ),

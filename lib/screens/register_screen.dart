@@ -4,6 +4,7 @@ import 'package:kick_off/screens/user_screens/home.dart';
 import '../components/components.dart';
 import '../components/constants.dart';
 import '../services/network/signUpServices.dart';
+import 'admin_screens/admin_pannel.dart';
 import 'signIn_screen.dart';
 
 // import 'package:hexcolor/hexcolor.dart';
