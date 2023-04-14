@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 import '../api.dart';
 
 class SignUpService {
+  get baseUrl => null;
+
   Future<Map<String, dynamic>> register({
     required String name,
     required String email,
@@ -13,7 +15,7 @@ class SignUpService {
     required String roll_id,
   }) async {
     // final url = 'http://197.60.240.5/api/register/';
-    final url = 'http://192.168.1.13/api/login';
+    final url = '$baseUrl/api/login';
     print(url);
     Map<String, dynamic> data = await Api().post(
       apiUrl: url,

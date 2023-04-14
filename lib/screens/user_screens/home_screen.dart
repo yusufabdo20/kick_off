@@ -7,17 +7,19 @@ import 'notifications_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: Colors.white,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
           "Home",
-          style: TextStyle(color: Colors.black, fontSize: 22),
+          style: TextStyle(
+            color: Colors.black,
+          ),
         ),
         centerTitle: true,
         actions: [
@@ -56,9 +58,12 @@ class HomeScreen extends StatelessWidget {
                               "Area",
                               style: TextStyle(fontSize: 20),
                             ),
-                            Text(
-                              "View all",
-                              style: TextStyle(fontSize: 20),
+                            TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                "Select all",
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ),
                           ],
                         ),
@@ -112,22 +117,22 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                    PlaygroundsCategories( 
-                      nameOnwer: "El-salam fields",
-                      nameArea: "Cairo",
-                    ),    
-                    PlaygroundsCategories( 
-                      nameOnwer: "El-Turky fields",
-                      nameArea: "Alex",
-                    ),    
-                    PlaygroundsCategories( 
-                      nameOnwer: "abo elnawer fields",
-                      nameArea: "Matro",
-                    ),    
-                    PlaygroundsCategories( 
-                      nameOnwer: "El-salam fields",
-                      nameArea: "Giza",
-                    ),    
+                  PlaygroundsCategories(
+                    nameOnwer: "El-salam fields",
+                    nameArea: "Cairo",
+                  ),
+                  PlaygroundsCategories(
+                    nameOnwer: "El-Turky fields",
+                    nameArea: "Alex",
+                  ),
+                  PlaygroundsCategories(
+                    nameOnwer: "abo elnawer fields",
+                    nameArea: "Matro",
+                  ),
+                  PlaygroundsCategories(
+                    nameOnwer: "El-salam fields",
+                    nameArea: "Giza",
+                  ),
                 ],
               ),
             ),

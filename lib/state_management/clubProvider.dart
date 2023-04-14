@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:kick_off/services/network/get_all_clubs_for_home_services.dart';
 
 import '../models/areaModel.dart';
 import '../models/clubModel.dart';

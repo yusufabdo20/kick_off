@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../../components/constants.dart';
 import '../../models/areaModel.dart';
 import '../api.dart';
 
 class GetAreaService {
   Future<List<Area>> getAllArea() async {
-    const url = 'http://197.60.240.5/api/area';
+    final url = '$baseUrl/api/area';
 
     Map<String, dynamic> data = await Api().get(
       apiUrl: url,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kick_off/components/components.dart';
 
-import '../../screens/user_screens/owner_screen.dart';
+import '../../screens/user_screens/owner_clubs_screen.dart';
 
 class PlaygroundsCategories extends StatelessWidget {
   PlaygroundsCategories(
