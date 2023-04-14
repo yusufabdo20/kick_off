@@ -116,7 +116,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: buildElevatedTextButton(
                         onPressedFunction: () async {
                           try {
-                          await _signInValidator();
+                            await _signInValidator();
                           } catch (e) {
                             print("Error in LOGIN Method ++>> $e");
                           }
@@ -124,11 +124,15 @@ class _SignInScreenState extends State<SignInScreen> {
                         titleOfButton: "Sign in"),
                   ),
                   const SizedBox(height: 10),
-                  TextButton(onPressed: () {
-
-                    navigateTOAndReplacement(context,SignUpScreen(),);
-                  },
-                  child: Text("Dont have an account ? | Join us now"),)
+                  TextButton(
+                    onPressed: () {
+                      navigateTOAndReplacement(
+                        context,
+                        SignUpScreen(),
+                      );
+                    },
+                    child: Text("Dont have an account ? | Join us now"),
+                  )
                 ],
               ),
             ),
@@ -165,12 +169,12 @@ class _SignInScreenState extends State<SignInScreen> {
       } else {
         navigateTO(context, Home());
       }
+      _saveToken(userDataSignIn['data']['token']).then((value) {
+        print(userDataSignIn['data']['token']);
+      });
       buildFlutterToast(
           message: "Thank you for your Registration",
           state: ToastStates.SUCCESS);
-      _saveToken(userDataSignIn['data']['token']).then((value) {
-        navigateTOAndReplacement(context, Home());
-      });
     } else {
       buildFlutterToast(
           message: "${userDataSignIn['data']['password']}",

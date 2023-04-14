@@ -8,7 +8,7 @@ class ClubModel {
   int? wc;
   int? cafe;
   String? creationDate;
-  int? rate;
+  String? rate;
   String? image;
   int? adminId;
   int? areaId;

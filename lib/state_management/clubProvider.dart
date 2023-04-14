@@ -10,19 +10,8 @@ class ClubProvider extends ChangeNotifier {
   List<ClubModel> _clubs = [];
   List<ClubModel> get clubsList => [..._clubs];
 
-  Future<void> getAllClubsForHome() async {
-    final url = 'http://127.0.0.1:8000/api/clubs';
+   getAllClubsForHome() async {
 
-    Map<String, dynamic> data = await Api().get(
-      apiUrl: url,
-    ); // NOTE :: in UI will use FutureBuilder
-    List<ClubModel> _clubsList = [];
-    for (int i = 0; i < data['data'].length; i++) {
-      _clubsList.add(ClubModel.fromJson(data['data'][i]));
-    }
-    _clubs = clubsList;
-    notifyListeners();
-    // return _clubs;
   }
 
   List<ClubModel> _specificClubs = [];

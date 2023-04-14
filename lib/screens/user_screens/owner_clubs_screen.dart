@@ -4,15 +4,20 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:kick_off/models/clubModel.dart';
 import 'package:kick_off/services/network/areaService.dart';
 import 'package:kick_off/services/network/get_owner_clubs.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/owner_playgrounds.dart';
 import '../../models/areaModel.dart';
+import '../../state_management/areaProvider.dart';
 
 class OwnerScreen extends StatelessWidget {
-  const OwnerScreen({super.key});
+  OwnerScreen({super.key});
+  List<Area> areasModel = [];
 
   @override
   Widget build(BuildContext context) {
+    areasModel = Provider.of<AreaProvider>(context).areas;
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -42,12 +47,10 @@ class OwnerScreen extends StatelessWidget {
                 itemCount: ownerClubs.length,
                 itemBuilder: (context, index) {
                   final ownerClub = ownerClubs[index];
-                  // var areasList = GetAreaService().getAllArea();  
-                  // var areaName =
-                  //     areasList.where((area) => area['id'] == 2).toList();
+                  final areaID = ownerClub.areaId;
                   return OwnerPlaygrounds(
                     nameOnwer: "${ownerClub.name}",
-                    nameArea: "S",
+                    nameArea: "${areasModel[areaID!].name}",
                     price: ownerClub.price!,
                   );
                 },

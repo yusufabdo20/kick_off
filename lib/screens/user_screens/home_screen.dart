@@ -1,15 +1,45 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:kick_off/components/home_component/Search_field.dart';
 import 'package:kick_off/components/home_component/areas_categories.dart';
 import 'package:kick_off/components/home_component/playgrounds_categories.dart';
+import 'package:kick_off/models/areaModel.dart';
+import 'package:kick_off/services/network/areaService.dart';
+import 'package:kick_off/services/network/get_all_clubs_for_home_sevice.dart';
+import 'package:kick_off/state_management/areaProvider.dart';
+import 'package:provider/provider.dart';
 import '../../components/components.dart';
 import 'notifications_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+  List<Area> areasModel = [];
 
   @override
   Widget build(BuildContext context) {
+    areasModel = Provider.of<AreaProvider>(context).areas;
+
+// [
+//         {
+//             "id": 1,
+//             "name": "Maadi",
+//             "created_at": "2023-03-27T21:51:18.000000Z",
+//             "updated_at": "2023-03-27T21:51:18.000000Z"
+//         },
+//         {
+//             "id": 2,
+//             "name": "Cairo",
+//             "created_at": "2023-03-27T21:51:18.000000Z",
+//             "updated_at": "2023-03-27T21:51:18.000000Z"
+//         },
+//         {
+//             "id": 3,
+//             "name": "Giza",
+//             "created_at": "2023-03-27T21:51:18.000000Z",
+//             "updated_at": "2023-03-27T21:51:18.000000Z"
+//         }
+//     ]
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -70,36 +100,28 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(
                           height: 20,
                         ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              children: [
-                                AreasCategories(
-                                  name: "Cairo",
-                                ),
-                                AreasCategories(
-                                  name: "Alex",
-                                ),
-                                AreasCategories(
-                                  name: "Matro",
-                                ),
-                                AreasCategories(
-                                  name: "Giza",
-                                ),
-                                AreasCategories(
-                                  name: "Giza",
-                                ),
-                                AreasCategories(
-                                  name: "Giza",
-                                ),
-                                AreasCategories(
-                                  name: "Giza",
-                                ),
-                              ],
-                            ),
-                          ),
+                        FutureBuilder(
+                          future: GetAreaService().getAllArea(),
+                          builder: (context, snapshot) {
+                            final areasList = snapshot.data;
+
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  final area = areasList![index];
+                                  return AreasCategories(
+                                    name: "${area.name}",
+                                  );
+                                },
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(child: Text('${snapshot.error}'));
+                            } else {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                          },
                         ),
                       ],
                     ),
@@ -117,21 +139,31 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  PlaygroundsCategories(
-                    nameOnwer: "El-salam fields",
-                    nameArea: "Cairo",
-                  ),
-                  PlaygroundsCategories(
-                    nameOnwer: "El-Turky fields",
-                    nameArea: "Alex",
-                  ),
-                  PlaygroundsCategories(
-                    nameOnwer: "abo elnawer fields",
-                    nameArea: "Matro",
-                  ),
-                  PlaygroundsCategories(
-                    nameOnwer: "El-salam fields",
-                    nameArea: "Giza",
+                  FutureBuilder(
+                    future: GetAllClubsForHome().getAllClubsForHome(),
+                    builder: (context, snapshot) {
+                      final clubsList = snapshot.data;
+
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final club = clubsList![index];
+                            int? areaID = clubsList[index].areaId;
+                            return PlaygroundsCategories(
+                              nameOnwer: "${club.name}",
+                              nameArea: "${areasModel[areaID!].name}",
+                              image: "${club.image}",
+                              rate: "${club.rate}",
+                            );
+                          },
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('${snapshot.error}'));
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    },
                   ),
                 ],
               ),

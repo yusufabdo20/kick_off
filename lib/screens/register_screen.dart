@@ -105,7 +105,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               }
                             },
                             controller: emailController,
-                            // labelText: "Email",
                             hintText: "Email",
                             prefixIcon: Icons.email,
                             keyboardType: TextInputType.emailAddress,
@@ -135,7 +134,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               }
                             },
                             controller: mobilePhoneController,
-                            // labelText: "Mobile Phone",
                             prefixIcon: Icons.phone_android_outlined,
                             keyboardType: TextInputType.number,
                           ),
@@ -170,7 +168,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          // Text("Who are you ?"),
                           buildDropdownButtonFormField(
                             items: items,
                             selectValue: selectedItem!,
@@ -180,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: double.infinity,
                             child: buildElevatedTextButton(
                                 onPressedFunction: () async {
-                                  navigateTO(context, Home());
+                                  // navigateTO(context, Home());
                                   try {
                                     if (formKey.currentState!.validate()) {
                                       emailController.text;
@@ -192,8 +189,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               name: usernameController.text,
                                               phone: mobilePhoneController.text,
                                               roll_id: selectedItem == 'Owner'
-                                                  ? "1"
-                                                  : "2" //1 for Owner 2 for user
+                                                  ? 1
+                                                  : 2 //1 for Owner 2 for user
                                               );
                                       print(userDataSignUp);
                                       if (userDataSignUp['code'] == 201) {
@@ -201,23 +198,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                             message:
                                                 "Thank you for your Registration",
                                             state: ToastStates.SUCCESS);
-                                        //       Cash.saveData(
-                                        //         key: 'token',
-                                        //         value: userDataSignUp['data']['token'],
-                                        //       ).then((value) {
-                                        //         navigateTOAndReplacement(
-                                        //             context, PreferredDataScreen());
-                                        //       });
-
+                                        navigateTO(context, SignInScreen());
                                       } else {
                                         buildFlutterToast(
                                             message:
-                                                "${userDataSignUp['data']['password']}",
+                                                "${userDataSignUp['data']}",
                                             state: ToastStates.ERROR);
                                       }
                                       print(userDataSignUp.toString());
                                     }
-                             
                                   } catch (e) {
                                     print("Error in Register Method ++>> $e");
                                   }
@@ -225,12 +214,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 titleOfButton: "Register"),
                           ),
                           const SizedBox(height: 10),
-                           TextButton(onPressed: () {
-
-                    navigateTOAndReplacement(context,SignInScreen(),);
-                  },
-                  child: Text("Have an account ? | Sign in now"),)
-
+                          TextButton(
+                            onPressed: () {
+                              navigateTOAndReplacement(
+                                context,
+                                SignInScreen(),
+                              );
+                            },
+                            child: Text("Have an account ? | Sign in now"),
+                          )
                         ],
                       ),
                     ),
