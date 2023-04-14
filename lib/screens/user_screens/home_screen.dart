@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:kick_off/components/home_component/Search_field.dart';
 import 'package:kick_off/components/home_component/areas_categories.dart';

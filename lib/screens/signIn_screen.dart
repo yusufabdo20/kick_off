@@ -39,101 +39,110 @@ class _SignInScreenState extends State<SignInScreen> {
             color: primaryColor),
         elevation: 0,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: formKey,
-              child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.stretch,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset("assets/images/Card.png"),
-                  const SizedBox(height: 50),
-                  buildHeadLine1Text(
-                    text: "Sign In",
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  buildFormFieldText(
-                    validate: (value) {
-                      if (value!.isEmpty) {
-                        return "Please Enter email";
-                      }
-
-                      if (!RegExp(patterns[1]['emailPattern'])
-                          .hasMatch(value)) {
-                        return "Please Enter a valid email address.";
-                      }
-                    },
-                    onSubmit: (value) {
-                      if (formKey.currentState!.validate()) {
-                        value = emailController.text;
-                      }
-                    },
-                    onChange: (value) {
-                      if (formKey.currentState!.validate()) {
-                        value = emailController.text;
-                      }
-                    },
-                    controller: emailController,
-                    // labelText: "Email",
-                    hintText: "Email",
-                    prefixIcon: Icons.email,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  buildFormFieldText(
-                      hintText: "Password",
+      body: Container(
+        height: double.infinity,
+          decoration: BoxDecoration(
+    image: DecorationImage(
+      image: AssetImage('assets/images/back22.png'),
+      fit: BoxFit.cover,
+    ),
+  ),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Form(
+                key: formKey,
+                child: Column(
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset("assets/images/Card.png"),
+                    const SizedBox(height: 50),
+                    buildHeadLine1Text(
+                      text: "Sign In",
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    buildFormFieldText(
                       validate: (value) {
                         if (value!.isEmpty) {
-                          return 'please enter a valid password ';
+                          return "Please Enter email";
+                        }
+
+                        if (!RegExp(patterns[1]['emailPattern'])
+                            .hasMatch(value)) {
+                          return "Please Enter a valid email address.";
                         }
                       },
                       onSubmit: (value) {
                         if (formKey.currentState!.validate()) {
-                          value = passwordController.text;
+                          value = emailController.text;
                         }
                       },
-                      controller: passwordController,
-                      // labelText: "Password",
-                      prefixIcon: Icons.lock,
-                      keyboardType: TextInputType.visiblePassword,
-                      isSecure: isPassword,
-                      suffix:
-                          isPassword ? Icons.visibility_off : Icons.visibility,
-                      suffixPressed: () {
-                        setState(() {
-                          isPassword = !isPassword;
-                        });
-                      }),
-                  Container(
-                    width: double.infinity,
-                    child: buildElevatedTextButton(
-                        onPressedFunction: () async {
-                          try {
-                            await _signInValidator();
-                          } catch (e) {
-                            print("Error in LOGIN Method ++>> $e");
+                      onChange: (value) {
+                        if (formKey.currentState!.validate()) {
+                          value = emailController.text;
+                        }
+                      },
+                      controller: emailController,
+                      // labelText: "Email",
+                      hintText: "Email",
+                      prefixIcon: Icons.email,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    buildFormFieldText(
+                        hintText: "Password",
+                        validate: (value) {
+                          if (value!.isEmpty) {
+                            return 'please enter a valid password ';
                           }
                         },
-                        titleOfButton: "Sign in"),
-                  ),
-                  const SizedBox(height: 10),
-                  TextButton(
-                    onPressed: () {
-                      navigateTOAndReplacement(
-                        context,
-                        SignUpScreen(),
-                      );
-                    },
-                    child: Text("Dont have an account ? | Join us now"),
-                  )
-                ],
+                        onSubmit: (value) {
+                          if (formKey.currentState!.validate()) {
+                            value = passwordController.text;
+                          }
+                        },
+                        controller: passwordController,
+                        // labelText: "Password",
+                        prefixIcon: Icons.lock,
+                        keyboardType: TextInputType.visiblePassword,
+                        isSecure: isPassword,
+                        suffix:
+                            isPassword ? Icons.visibility_off : Icons.visibility,
+                        suffixPressed: () {
+                          setState(() {
+                            isPassword = !isPassword;
+                          });
+                        }),
+                    Container(
+                      width: double.infinity,
+                      child: buildElevatedTextButton(
+                          onPressedFunction: () async {
+                            try {
+                              await _signInValidator();
+                            } catch (e) {
+                              print("Error in LOGIN Method ++>> $e");
+                            }
+                          },
+                          titleOfButton: "Sign in"),
+                    ),
+                    const SizedBox(height: 10),
+                    TextButton(
+                      onPressed: () {
+                        navigateTOAndReplacement(
+                          context,
+                          SignUpScreen(),
+                        );
+                      },
+                      child: Text("Dont have an account ? | Join us now"),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
