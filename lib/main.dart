@@ -36,16 +36,20 @@ void main() async {
     widget = OnBoardingScreen();
   }
   runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider(
+       ChangeNotifierProvider(
         create: (_) => UserProvider(),
         child: KickOff(startWidget: widget),
       ),
-      ChangeNotifierProvider(
-        create: (_) => ClubProvider(),
-        child: KickOff(startWidget: widget),
-      ),
-    ]),
+    // MultiProvider(providers: [
+    //   ChangeNotifierProvider(
+    //     create: (_) => UserProvider(),
+    //     child: KickOff(startWidget: widget),
+    //   ),
+    //   ChangeNotifierProvider(
+    //     create: (_) => ClubProvider(),
+    //     child: KickOff(startWidget: widget),
+    //   ),
+    // ]),
   );
 }
 
@@ -58,7 +62,7 @@ class KickOff extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: SplashScreen.id,
       // routes: appRoutes,
-      home: BookingScreen(),
+      home: SignInScreen(),
     );
   }
 }

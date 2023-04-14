@@ -8,7 +8,7 @@ import 'package:kick_off/screens/user_screens/home.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../soccer_field_screen.dart';
-import 'owner_screen.dart';
+import 'owner_clubs_screen.dart';
 
 class BookingScreen extends StatefulWidget {
   BookingScreen({super.key});

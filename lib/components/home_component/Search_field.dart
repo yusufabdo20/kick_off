@@ -12,6 +12,9 @@ class SearchTextField extends StatelessWidget {
         horizontal: 20,
       ),
       child: TextFormField(
+        onChanged: (value) {
+          
+        },
         decoration: InputDecoration(
           border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(16))),

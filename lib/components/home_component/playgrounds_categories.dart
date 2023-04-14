@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kick_off/components/components.dart';
 
-import '../../screens/user_screens/owner_screen.dart';
+import '../../screens/user_screens/owner_clubs_screen.dart';
 
 class PlaygroundsCategories extends StatelessWidget {
-  PlaygroundsCategories(
-      {super.key, required this.nameOnwer, required this.nameArea});
   String nameOnwer;
   String nameArea;
+  String image;
+  String rate;
+
+  PlaygroundsCategories(
+      {super.key,
+      required this.nameOnwer,
+      required this.nameArea,
+      required this.image,
+      required this.rate});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +29,7 @@ class PlaygroundsCategories extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/Playgrounds.png"),
+            image: NetworkImage('$image'),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(20),
@@ -44,9 +51,9 @@ class PlaygroundsCategories extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.location_on_outlined,
-                         color: Colors.
-                         white,size: 15,
-                         ),
+                        color: Colors.white,
+                        size: 15,
+                      ),
                       Align(
                         alignment: Alignment.center,
                         child: Text(
@@ -61,10 +68,11 @@ class PlaygroundsCategories extends StatelessWidget {
                   ),
                 ),
                 RatingBar.builder(
-                  initialRating: 3,
-                  minRating: 1,
+                  tapOnlyMode: true,
+                  initialRating: double.parse(rate),
+                  minRating: 0,
                   direction: Axis.horizontal,
-                  allowHalfRating: true,
+                  // allowHalfRating: true,
                   itemSize: 20,
                   itemCount: 5,
                   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
@@ -73,7 +81,8 @@ class PlaygroundsCategories extends StatelessWidget {
                     color: Colors.amber,
                   ),
                   onRatingUpdate: (rating) {
-                    print(rating);
+                    // double.parse(rate) = rating;
+                    print(rate);
                   },
                 ),
               ],

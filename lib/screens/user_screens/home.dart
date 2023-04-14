@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:kick_off/components/constants.dart';
 
 import 'favorites_screen.dart';
 import 'home_screen.dart';
@@ -44,7 +45,7 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-            color: Color(0xff05223D),
+            color: primaryColor,
             boxShadow: [
               BoxShadow(
                 blurRadius: 20,
