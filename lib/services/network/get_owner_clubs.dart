@@ -3,7 +3,7 @@ import 'package:kick_off/models/clubModel.dart';
 import '../../components/constants.dart';
 import '../api.dart';
 
-class GetOwnerClubs {
+class GetOwnerClubsService {
   Future<List<ClubModel>> getOwnerClubs() async {
     final url = '$baseUrl/clubs/admin';
 
