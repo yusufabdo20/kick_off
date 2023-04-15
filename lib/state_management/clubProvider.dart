@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:kick_off/services/network/get_all_clubs_for_home_sevice.dart';
-import 'package:kick_off/services/network/get_owner_clubs.dart';
-import 'package:kick_off/services/network/git_specific_club_services.dart';
+import 'package:kick_off/services/network/user_services/get_all_clubs_for_home_sevice.dart';
+import 'package:kick_off/services/network/user_services/get_owner_clubs.dart';
+import 'package:kick_off/services/network/user_services/git_specific_club_services.dart';
 
 import '../models/areaModel.dart';
 import '../models/clubModel.dart';

@@ -1,11 +1,11 @@
 import 'package:kick_off/models/clubModel.dart';
 
-import '../../components/constants.dart';
-import '../api.dart';
+import '../../../components/constants.dart';
+import '../../api.dart';
 
-class GetAllClubsForHome {
-  Future<List<ClubModel>> getAllClubsForHome() async {
-    final url = '$baseUrl/api/clubs';
+class GetOwnerClubsService {
+  Future<List<ClubModel>> getOwnerClubs() async {
+    final url = '$baseUrl/clubs/admin';
 
     Map<String, dynamic> data = await Api().get(
       apiUrl: url,
