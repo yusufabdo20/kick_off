@@ -39,7 +39,7 @@ class OwnerScreen extends StatelessWidget {
           centerTitle: true,
         ),
         body: FutureBuilder<List<ClubModel>>(
-          future: GetOwnerClubs().getOwnerClubs(),
+          future: GetOwnerClubsService().getOwnerClubs(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final ownerClubs = snapshot.data!;
