@@ -64,7 +64,7 @@ class KickOff extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: SplashScreen.id,
       // routes: appRoutes,
-      home: SoccerFieldScreen(),
+      home: startWidget,
     );
   }
 }

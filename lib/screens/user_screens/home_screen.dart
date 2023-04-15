@@ -103,7 +103,6 @@ class HomeScreen extends StatelessWidget {
                           future: GetAreaService().getAllArea(),
                           builder: (context, snapshot) {
                             final areasList = snapshot.data;
-
                             if (snapshot.hasData) {
                               return ListView.builder(
                                 scrollDirection: Axis.horizontal,
