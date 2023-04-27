@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kick_off/components/constants.dart';
 import 'package:kick_off/components/home_component/Search_field.dart';
 import 'package:kick_off/components/home_component/areas_categories.dart';
 import 'package:kick_off/components/home_component/playgrounds_categories.dart';
 import 'package:kick_off/models/areaModel.dart';
-import 'package:kick_off/services/network/areaService.dart';
-import 'package:kick_off/services/network/get_all_clubs_for_home_sevice.dart';
+import 'package:kick_off/services/network/user_services/areaService.dart';
+import 'package:kick_off/services/network/user_services/get_all_clubs_for_home_sevice.dart';
 import 'package:kick_off/state_management/areaProvider.dart';
 import 'package:provider/provider.dart';
 import '../../components/components.dart';
@@ -84,13 +85,13 @@ class HomeScreen extends StatelessWidget {
                           children: [
                             Text(
                               "Area",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 16),
                             ),
                             TextButton(
                               onPressed: () {},
                               child: const Text(
                                 "Select all",
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 16 , color: primaryColor),
                               ),
                             ),
                           ],
@@ -102,7 +103,6 @@ class HomeScreen extends StatelessWidget {
                           future: GetAreaService().getAllArea(),
                           builder: (context, snapshot) {
                             final areasList = snapshot.data;
-
                             if (snapshot.hasData) {
                               return ListView.builder(
                                 scrollDirection: Axis.horizontal,

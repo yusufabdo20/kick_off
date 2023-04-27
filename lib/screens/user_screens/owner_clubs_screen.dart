@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:kick_off/models/clubModel.dart';
-import 'package:kick_off/services/network/areaService.dart';
-import 'package:kick_off/services/network/get_owner_clubs.dart';
+import 'package:kick_off/services/network/user_services/areaService.dart';
+import 'package:kick_off/services/network/user_services/get_owner_clubs.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/owner_playgrounds.dart';
@@ -39,7 +39,7 @@ class OwnerScreen extends StatelessWidget {
           centerTitle: true,
         ),
         body: FutureBuilder<List<ClubModel>>(
-          future: GetOwnerClubs().getOwnerClubs(),
+          future: GetOwnerClubsService().getOwnerClubs(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final ownerClubs = snapshot.data!;

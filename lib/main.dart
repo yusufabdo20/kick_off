@@ -20,6 +20,7 @@ import 'screens/signIn_screen.dart';
 import 'screens/soccer_field_screen.dart';
 import 'screens/splash_screen.dart';
 import 'screens/user_screens/booking_screen.dart';
+import 'screens/user_screens/owner_clubs_screen.dart';
 import 'services/local/cash.dart';
 import 'components/app_routes.dart';
 import 'state_management/clubProvider.dart';

@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../components/constants.dart';
-import '../../models/areaModel.dart';
-import '../api.dart';
+import '../../../components/constants.dart';
+import '../../../models/areaModel.dart';
+import '../../api.dart';
 
 class GetAreaService {
   Future<List<Area>> getAllArea() async {

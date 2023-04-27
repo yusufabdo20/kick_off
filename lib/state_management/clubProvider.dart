@@ -1,34 +1,36 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:kick_off/services/network/user_services/get_all_clubs_for_home_sevice.dart';
+import 'package:kick_off/services/network/user_services/get_owner_clubs.dart';
+import 'package:kick_off/services/network/user_services/git_specific_club_services.dart';
 
 import '../models/areaModel.dart';
 import '../models/clubModel.dart';
 import '../services/api.dart';
 
 class ClubProvider extends ChangeNotifier {
-  List<ClubModel> _clubs = [];
-  List<ClubModel> get clubsList => [..._clubs];
+  List<ClubModel> allClubs = [];
+  List<ClubModel> get clubsList => [...allClubs];
+  List<ClubModel> specificClubs = [];
+  List<ClubModel> get specificClubsList => [...specificClubs];
 
-   getAllClubsForHome() async {
+  List<ClubModel> ownerClubs = [];
 
+  List<ClubModel> get ownerClubsList => [...ownerClubs];
+
+  getAllClubsForHome() async {
+    allClubs = await GetAllClubsForHome().getAllClubsForHome();
+    notifyListeners();
   }
 
-  List<ClubModel> _specificClubs = [];
+  getSpecificClub(int clubID) async {
+    specificClubs = await GetSpecificClubService().getSpecificClub(clubID);
+    notifyListeners();
+  }
 
-  List<ClubModel> get specificClubsList => [..._clubs];
-
-  Future<void> getSpecificClub(int clubID) async {
-    final url = 'http://127.0.0.1:8000/api/clubs/$clubID';
-
-    Map<String, dynamic> data = await Api().get(
-      apiUrl: url,
-    ); // NOTE :: in UI will use FutureBuilder
-    List<ClubModel> _clubsList = [];
-    for (int i = 0; i < data['data'].length; i++) {
-      _clubsList.add(ClubModel.fromJson(data['data'][i]));
-    }
-    _specificClubs = _clubsList;
+  getOwnerClubs() async {
+    specificClubs = await GetOwnerClubsService().getOwnerClubs();
     notifyListeners();
   }
 }

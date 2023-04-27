@@ -189,11 +189,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               name: usernameController.text,
                                               phone: mobilePhoneController.text,
                                               roll_id: selectedItem == 'Owner'
-                                                  ? 1
-                                                  : 2 //1 for Owner 2 for user
+                                                  ? '1'
+                                                  : '2' //1 for Owner 2 for user
                                               );
                                       print(userDataSignUp);
                                       if (userDataSignUp['code'] == 201) {
+                                        
                                         buildFlutterToast(
                                             message:
                                                 "Thank you for your Registration",
@@ -208,7 +209,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       print(userDataSignUp.toString());
                                     }
                                   } catch (e) {
-                                    print("Error in Register Method ++>> $e");
+                                    print("Error in Register Method In UI ++>> $e");
                                   }
                                 },
                                 titleOfButton: "Register"),

@@ -1,7 +1,7 @@
 import 'package:kick_off/models/clubModel.dart';
 
-import '../../components/constants.dart';
-import '../api.dart';
+import '../../../components/constants.dart';
+import '../../api.dart';
 
 class GetSpecificClubService {
   Future<List<ClubModel>> getSpecificClub(int clubID) async {
