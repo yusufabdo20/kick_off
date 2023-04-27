@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:kick_off/components/components.dart';
+import 'package:kick_off/screens/admin_screens/number_of_calls_screen.dart';
 
 import '../../components/constants.dart';
 
@@ -18,7 +20,7 @@ class _AdminPannelScreenState extends State<AdminPannelScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
               image: DecorationImage(
             image: AssetImage("assets/images/back33.png"),
             fit: BoxFit.cover,
@@ -71,7 +73,7 @@ class _AdminPannelScreenState extends State<AdminPannelScreen> {
                     padding: const EdgeInsets.all(40),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      image: DecorationImage(
+                      image: const DecorationImage(
                         image: AssetImage(
                           "assets/images/back1.png",
                         ),
@@ -153,6 +155,7 @@ List<AdminPannelComponent> items = [
     title: "Number of calls",
     report: "Reports",
     reportFunction: () {},
+    onTapFunction: () {},
   ),
   AdminPannelComponent(
     icon: Icons.remove_red_eye_outlined,
@@ -180,13 +183,14 @@ class AdminPannelComponent extends StatelessWidget {
   String? report;
   Function()? reportFunction;
   Function()? onTapFunction;
-  AdminPannelComponent(
-      {required this.icon,
-      required this.title,
-      required this.number,
-      this.onTapFunction,
-      this.report,
-      this.reportFunction,});
+  AdminPannelComponent({
+    required this.icon,
+    required this.title,
+    required this.number,
+    this.onTapFunction,
+    this.report,
+    this.reportFunction,
+  });
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -232,7 +236,7 @@ class AdminPannelComponent extends StatelessWidget {
                     onPressed: reportFunction,
                     child: Text(
                       report!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         // decoration:TextDecoration.underline ,
                         color: Colors.black54,
                         fontSize: 14,

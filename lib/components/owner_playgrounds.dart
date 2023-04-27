@@ -44,7 +44,8 @@ class OwnerPlaygrounds extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     margin: EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Color(0xff496179).withOpacity(0.7),
+                      color:
+                      Color(0xff496179).withOpacity(0.7),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Column(

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kick_off/components/admin_component/Requests.dart';
+import 'package:kick_off/screens/admin_screens/Requests_screen.dart';
 import 'package:kick_off/screens/admin_screens/admin_pannel.dart';
+import 'package:kick_off/screens/admin_screens/number_of_views_screen.dart';
+import 'package:kick_off/screens/admin_screens/test.dart';
 import 'package:kick_off/screens/user_screens/home.dart';
+import 'package:kick_off/screens/admin_screens/number_of_calls_screen.dart';
+import 'package:kick_off/state_management/areaProvider.dart';
 import 'package:kick_off/state_management/userProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +43,7 @@ void main() async {
   }
   runApp(
        ChangeNotifierProvider(
-        create: (_) => UserProvider(),
+        create: (_) => AreaProvider(),
         child: KickOff(startWidget: widget),
       ),
     // MultiProvider(providers: [
@@ -62,7 +68,7 @@ class KickOff extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: SplashScreen.id,
       // routes: appRoutes,
-      home: SignInScreen(),
+      home: RequestsScreen(),
     );
   }
 }
