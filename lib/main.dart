@@ -1,28 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:kick_off/components/admin_component/Requests.dart';
-import 'package:kick_off/screens/admin_screens/Requests_screen.dart';
-import 'package:kick_off/screens/admin_screens/admin_pannel.dart';
-import 'package:kick_off/screens/admin_screens/number_of_views_screen.dart';
-import 'package:kick_off/screens/admin_screens/test.dart';
+import 'package:kick_off/components/constants.dart';
+import 'package:kick_off/screens/soccer_field_screen.dart';
+
 import 'package:kick_off/screens/user_screens/home.dart';
-import 'package:kick_off/screens/admin_screens/number_of_calls_screen.dart';
+
 import 'package:kick_off/state_management/areaProvider.dart';
-import 'package:kick_off/state_management/userProvider.dart';
+import 'package:kick_off/z.dart';
 import 'package:provider/provider.dart';
 
-import 'components/app_routes.dart';
-import 'screens/admin_screens/ImagePicker.dart';
-import 'screens/admin_screens/add_soccer_field.dart';
-import 'screens/admin_screens/adminPannelScreen.dart';
 import 'screens/onBoarding_screen.dart';
 import 'screens/register_screen.dart';
-import 'screens/signIn_screen.dart';
-import 'screens/soccer_field_screen.dart';
-import 'screens/splash_screen.dart';
-import 'screens/user_screens/booking_screen.dart';
-import 'screens/user_screens/owner_clubs_screen.dart';
+
 import 'services/local/cash.dart';
-import 'components/app_routes.dart';
+
 import 'state_management/clubProvider.dart';
 
 void main() async {
@@ -42,22 +32,15 @@ void main() async {
   } else {
     widget = OnBoardingScreen();
   }
-  runApp(
-       ChangeNotifierProvider(
-        create: (_) => AreaProvider(),
-        child: KickOff(startWidget: widget),
-      ),
-    // MultiProvider(providers: [
-    //   ChangeNotifierProvider(
-    //     create: (_) => UserProvider(),
-    //     child: KickOff(startWidget: widget),
-    //   ),
-    //   ChangeNotifierProvider(
-    //     create: (_) => ClubProvider(),
-    //     child: KickOff(startWidget: widget),
-    //   ),
-    // ]),
-  );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<AreaProvider>(create: (_) => AreaProvider()),
+      ChangeNotifierProvider<ClubProvider>(create: (_) => ClubProvider()),
+      // ChangeNotifierProvider<CitiesProvider>(create: (_) => CitiesProvider()),
+      // ChangeNotifierProvider(create: (_) => AreaProvider()),
+    ],
+    child: KickOff(startWidget:widget),
+  ));
 }
 
 class KickOff extends StatelessWidget {
@@ -69,7 +52,7 @@ class KickOff extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: SplashScreen.id,
       // routes: appRoutes,
-      home: RequestsScreen(),
+      home:startWidget,
     );
   }
 }

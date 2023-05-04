@@ -1,28 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:kick_off/models/ownerClubsModel.dart';
+import 'package:provider/provider.dart';
+
 import 'package:kick_off/models/clubModel.dart';
 import 'package:kick_off/services/network/user_services/areaService.dart';
 import 'package:kick_off/services/network/user_services/get_owner_clubs.dart';
-import 'package:provider/provider.dart';
+import 'package:kick_off/state_management/clubProvider.dart';
 
 import '../../components/owner_playgrounds.dart';
 import '../../models/areaModel.dart';
 import '../../state_management/areaProvider.dart';
 
-class OwnerScreen extends StatelessWidget {
-  OwnerScreen({super.key});
-  List<Area> areasModel = [];
+class OwnerScreen extends StatefulWidget {
+  final int adminId;
+  OwnerScreen({required this.adminId});
+  @override
+  State<OwnerScreen> createState() => _OwnerScreenState();
+}
+
+class _OwnerScreenState extends State<OwnerScreen> {
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _isLoading = true;
+    });
+    Provider.of<ClubProvider>(context, listen: false)
+        .getOwnerClubs(widget.adminId)
+        .then((_) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    areasModel = Provider.of<AreaProvider>(context).areas;
-
+    final ownerClubsData = Provider.of<ClubProvider>(context);
+    final ownerClubs = ownerClubsData.ownerClubs;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back_ios_outlined,
               color: Colors.black,
             ),
@@ -32,38 +55,72 @@ class OwnerScreen extends StatelessWidget {
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title: Text(
-            "El-Salam fields",
+          title: const Text(
+            "Fields",
             style: TextStyle(color: Colors.black, fontSize: 22),
           ),
           centerTitle: true,
         ),
-        body: FutureBuilder<List<ClubModel>>(
-          future: GetOwnerClubsService().getOwnerClubs(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final ownerClubs = snapshot.data!;
-              return ListView.builder(
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.builder(
                 itemCount: ownerClubs.length,
                 itemBuilder: (context, index) {
-                  final ownerClub = ownerClubs[index];
-                  final areaID = ownerClub.areaId;
-                  return OwnerPlaygrounds(
-                    nameOnwer: "${ownerClub.name}",
-                    nameArea: "${areasModel[areaID!].name}",
-                    price: ownerClub.price!,
-                  );
+                  return StadiumItem(stadium: ownerClubs[index]);
                 },
-              );
-            } else if (snapshot.hasError) {
-              return Center(child: Text('${snapshot.error}'));
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ));
+              ));
   }
 }
+
+class StadiumItem extends StatelessWidget {
+  final OwnerClubsModel stadium;
+
+  StadiumItem({required this.stadium});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        // leading: Image.network(stadium.image),
+        title: Text(stadium.name),
+        subtitle: Text('${stadium.price}'),
+        trailing: Text('${stadium.rate}'),
+      ),
+    );
+  }
+}
+
+// Consumer<ClubProvider>(builder: (context, provider, child) {
+//         if (provider.ownerClubs.isEmpty) {
+//           return const Center(
+//             child: CircularProgressIndicator(),
+//           );
+//         } else {
+//           // final List<ClubModel> ownerClubs = provider.ownerClubs;
+
+//           return ListView.builder(
+//             itemCount: provider.ownerClubs.length,
+//             itemBuilder: (context, index) {
+//               final ownerClub = provider.ownerClubs[index];
+
+//               int? areaID = ownerClub.areaId;
+//               String name = '';
+//               final matchingCities = cities.where((city) => city.id == areaID);
+//               if (matchingCities.isNotEmpty) {
+//                 name = matchingCities.first.name;
+//               }
+//               return OwnerPlaygrounds(
+//                 nameOnwer: ownerClub.name!,
+//                 nameArea: name,
+//                 price: ownerClub.price!,
+//               );
+//             },
+//           );
+//         }
+//       }),
+
 //  SingleChildScrollView(
 //               child: Column(
 //                 children: [

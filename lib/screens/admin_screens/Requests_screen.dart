@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
 
 class RequestsScreen extends StatelessWidget {
-  const RequestsScreen({super.key});
+  RequestsScreen({
+    super.key,
+    required this.requestNumber,
+    required this.username,
+    // required this.userLname,
+    required this.userPhone,
+    required this.date,
+    required this.hours,
+    required this.approve,
+  });
+  String requestNumber;
+  String username;
+  // String userLname;
+  String userPhone;
+  String date;
+  String hours;
+  bool approve;
 
   @override
   Widget build(BuildContext context) {
@@ -28,65 +44,88 @@ class RequestsScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(top: 20),
         child: SingleChildScrollView(
-           scrollDirection: Axis.horizontal,
+          scrollDirection: Axis.horizontal,
           child: DataTable(
-          columns: [       
-            DataColumn(label: Column(
-              children: [
-                Text('Request \n Number '),
-                
-              ],
-            ),
-            ),
-            DataColumn(label: Column(
-              children: [
-                Text('User'),
-                Text('Name'),
-              ],
-            )),
-            DataColumn(label: Column(
-              children: [
-                Text('User'),
-                Text('Phone'),
-              ],
-            )),
-            DataColumn(label: Text('Date')),
-            DataColumn(label: Text('Status')),
-          ],
-          rows: [
-           DataRow(cells: [
-              DataCell(Text("1")),
-              DataCell(Column(
-                children: [
-                  Text("yyyyyy"),
-                  Text("hhhhhhh"),
+            columns: const [
+              DataColumn(
+                label: Text('Request\nNumber '),
+              ),
+              DataColumn(label: Text('User\nName')),
+              DataColumn(label: Text('User\nPhone')),
+              DataColumn(label: Text('Date')),
+              DataColumn(label: Text('Status')),
+            ],
+            rows: [
+              DataRow(
+                cells: [
+                  DataCell(Text(requestNumber)),
+                  DataCell(Text(username)),
+                  DataCell(Text(userPhone)),
+                  DataCell(Text(date)),
+                  DataCell(
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                            )),
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.cancel,
+                              color: Colors.red,
+                            )),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              ),
-              DataCell(Text("000000000")),
-              DataCell(Column(
-                children: [
-                  SizedBox(height: 10,),
-                  Text("333333"),
-                  Text("333333"),
-                ],
-              ),
-              ),
-              DataCell( Row(
-                children: [
-                  IconButton(onPressed: (){}, icon: Icon(Icons.check_circle , color: Colors.green,)),
-                  IconButton(onPressed: (){}, icon: Icon(Icons.cancel , color: Colors.red,)),
-                ],
-                ),
-                ),
-          ],
+            ],
           ),
-          ],
-            ),
         ),
       ),
-      
     );
   }
 }
+
+
+List<DataRow> requests = [];
+buildDataRow({
+ required String requestNumber,
+ required String username,
+  // String userLname;
+ required String userPhone,
+ required String date,
+ required String hours,
+  bool approve = false,
+}
+ ) => DataRow(
+      cells: [
+        DataCell(Text(requestNumber)),
+        DataCell(Text(username)),
+        DataCell(Text(userPhone)),
+        DataCell(Text(date)),
+        DataCell(
+          Row(
+            children: [
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                  )),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.cancel,
+                    color: Colors.red,
+                  )),
+            ],
+          ),
+        ),
+      ],
+    ); 
+
 // approve==true? Text("Approved") : Text("Canceled")

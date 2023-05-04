@@ -9,15 +9,18 @@ class OwnerPlaygrounds extends StatelessWidget {
       {super.key,
       required this.nameOnwer,
       required this.nameArea,
-      required this.price});
+      required this.price,  
+      required this.id,  
+      });
   String nameOnwer;
   String nameArea;
   int price;
+  int id ;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        navigateTO(context, SoccerFieldScreen());
+        navigateTO(context, SoccerFieldScreen( id: id,));
       },
       child: Padding(
         padding: const EdgeInsets.all(6),

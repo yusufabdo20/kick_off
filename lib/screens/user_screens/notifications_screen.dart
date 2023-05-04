@@ -7,9 +7,9 @@ class NotificationsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff082D4F),
+        backgroundColor: const Color(0xff082D4F),
         elevation: 0,
-        title: Text(
+        title: const Text(
           "NotificationsScreen",
           style: TextStyle(color: Colors.white, fontSize: 22),
         ),
@@ -19,7 +19,7 @@ class NotificationsScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset("assets/images/no-alarm.png"),
-            Text(
+            const Text(
               "Don't have any NotificationsScreen",
               style: TextStyle(
                 color: Color(0xff082D4F),

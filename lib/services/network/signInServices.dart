@@ -12,9 +12,7 @@ class SignInService {
     String email,
     String password,
   ) async {
-    // 127.0.0.1:80000
-    final url = 'http://192.168.1.8/api/login';
-    print(url);
+    final url = 'http://10.0.2.2:8000/api/login';
     Map<String, dynamic> data = await Api().post(
       apiUrl: url,
       body: {
@@ -23,7 +21,7 @@ class SignInService {
       },
     token: userToken,
     );
-    print("Login Method ---- GOOD");
+    print("Login Method ---- DONE");
     print(data);
     return data ;
   //   if (data['code'] == 201){

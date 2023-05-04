@@ -26,10 +26,10 @@ class _HomeState extends State<Home> {
   // ];
 
   final List<Widget> _tabs = <Widget>[
-    HomeScreen(),
-    RequestsScreen(),
-    FavoritesScreen(),
-    SettingsScreen(),
+    const HomeScreen(),
+    const RequestsScreen(),
+    const FavoritesScreen(),
+    const SettingsScreen(),
     
   ];
 
@@ -43,7 +43,7 @@ class _HomeState extends State<Home> {
       bottomNavigationBar:
        Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(30), topRight: Radius.circular(30)),
             color: primaryColor,
             boxShadow: [
@@ -62,7 +62,7 @@ class _HomeState extends State<Home> {
                 });
               },
                 gap: 0,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),       
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),       
                 activeColor: Colors.black,
                 duration: const Duration(milliseconds: 300),
                 tabBackgroundColor: Colors.grey[100]!,

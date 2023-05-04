@@ -1,22 +1,14 @@
-class Area {
-  int? id;
-  String? name;
-  DateTime? createdAt;
-  DateTime? updatedAt;
 
-  Area({
-    required this.id,
-    required this.name,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+class AreaModel {
+  final int id;
+  final String name;
 
-  factory Area.fromJson(Map<String, dynamic> json) {
-    return Area(
-      id: json['id'] as int,
-      name: json['name'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
+  AreaModel({required this.id, required this.name});
+
+  factory AreaModel.fromJson(Map<String, dynamic> json) {
+    return AreaModel(
+      id: json['id'],
+      name: json['name'],
     );
   }
 }

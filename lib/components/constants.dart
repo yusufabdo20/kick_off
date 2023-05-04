@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import '../screens/signIn_screen.dart';
 import '../services/local/cash.dart';
 import 'components.dart';
-final userToken='' ;
-final baseUrl='http://192.168.1.8/api'; 
+
+final userToken = ""; 
+const baseUrl = 'http://10.0.2.2:8000/api';
 const primaryColor = Color.fromRGBO(6, 41, 70, 1);
-var primary  = Colors.transparent;
+var primary = Colors.transparent;
 var logoImage = "asset s/images/logo.jpeg";
 // String? baseUrl= ;
 List patterns = [

@@ -47,103 +47,140 @@ class _SignInScreenState extends State<SignInScreen> {
             fit: BoxFit.cover,
           ),
         ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: formKey,
-                child: Column(
-                  // crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset("assets/images/Card.png"),
-                    const SizedBox(height: 50),
-                    buildHeadLine1Text(
-                      text: "Sign In",
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    buildFormFieldText(
+        child: SingleChildScrollView(
+          // reverse: true,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: formKey,
+              child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Image.asset("assets/images/Card.png"),
+                  const SizedBox(height: 50),
+                  buildHeadLine1Text(
+                    text: "Sign In",
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  buildFormFieldText(
+                    validate: (value) {
+                      if (value!.isEmpty) {
+                        return "Please Enter email";
+                      }
+
+                      if (!RegExp(patterns[1]['emailPattern'])
+                          .hasMatch(value)) {
+                        return "Please Enter a valid email address.";
+                      }
+                    },
+                    onSubmit: (value) {
+                      if (formKey.currentState!.validate()) {
+                        value = emailController.text;
+                      }
+                    },
+                    onChange: (value) {
+                      if (formKey.currentState!.validate()) {
+                        value = emailController.text;
+                      }
+                    },
+                    controller: emailController,
+                    // labelText: "Email",
+                    hintText: "Email",
+                    prefixIcon: Icons.email,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  buildFormFieldText(
+                      hintText: "Password",
                       validate: (value) {
                         if (value!.isEmpty) {
-                          return "Please Enter email";
-                        }
-
-                        if (!RegExp(patterns[1]['emailPattern'])
-                            .hasMatch(value)) {
-                          return "Please Enter a valid email address.";
+                          return 'please enter a valid password ';
                         }
                       },
                       onSubmit: (value) {
                         if (formKey.currentState!.validate()) {
-                          value = emailController.text;
+                          value = passwordController.text;
                         }
                       },
-                      onChange: (value) {
-                        if (formKey.currentState!.validate()) {
-                          value = emailController.text;
-                        }
-                      },
-                      controller: emailController,
-                      // labelText: "Email",
-                      hintText: "Email",
-                      prefixIcon: Icons.email,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    buildFormFieldText(
-                        hintText: "Password",
-                        validate: (value) {
-                          if (value!.isEmpty) {
-                            return 'please enter a valid password ';
-                          }
-                        },
-                        onSubmit: (value) {
+                      controller: passwordController,
+                      // labelText: "Password",
+                      prefixIcon: Icons.lock,
+                      keyboardType: TextInputType.visiblePassword,
+                      isSecure: isPassword,
+                      suffix:
+                          isPassword ? Icons.visibility_off : Icons.visibility,
+                      suffixPressed: () {
+                        setState(() {
+                          isPassword = !isPassword;
+                        });
+                      }),
+                  Container(
+                    width: double.infinity,
+                    child: buildElevatedTextButton(
+                        onPressedFunction: () async {
+                          // try {
                           if (formKey.currentState!.validate()) {
-                            value = passwordController.text;
+                            emailController.text;
+                            passwordController.text;
+                            print("_signInValidator Function ");
+                            final data = await SignInService().login(
+                              emailController.text,
+                              passwordController.text,
+                              
+                            );
+
+                            var userDataSignIn = data['data']['userData'];
+                            print(userDataSignIn);
+                            if (data['code'] == 201) {
+                              if (userDataSignIn['roll_id'] == 1) {
+                                print('${userDataSignIn['roll_id']}');
+                                print("Owner >>>>>>>> OWNER ");
+                                navigateTO(context, AdminHomeScreen());
+                              } else {
+                                print('${userDataSignIn['roll_id']}');
+
+                                print("USER >>>>>>>> USER ");
+                                navigateTO(context, const Home());
+                              }
+                              Cash.saveData(
+                                key: 'userToken',
+                                value: data['data']['token'],
+                              ).then((value) {
+                                print(value);
+                              });
+                              buildFlutterToast(
+                                  message: "Thank you for your Registration",
+                                  state: ToastStates.SUCCESS);
+                            } else {
+                              buildFlutterToast(
+                                  message:
+                                      "${userDataSignIn['data']['password']}",
+                                  state: ToastStates.ERROR);
+                            }
                           }
+                          // }
+                          //  catch (e) {
+                          //   print("Error in LOGIN Method ++>> $e");
+                          // }
                         },
-                        controller: passwordController,
-                        // labelText: "Password",
-                        prefixIcon: Icons.lock,
-                        keyboardType: TextInputType.visiblePassword,
-                        isSecure: isPassword,
-                        suffix: isPassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        suffixPressed: () {
-                          setState(() {
-                            isPassword = !isPassword;
-                          });
-                        }),
-                    Container(
-                      width: double.infinity,
-                      child: buildElevatedTextButton(
-                          onPressedFunction: () async {
-                            // try {
-                            await _signInValidator();
-                            // } catch (e) {
-                            //   print("Error in LOGIN Method ++>> $e");
-                            // }
-                          },
-                          titleOfButton: "Sign in"),
-                    ),
-                    const SizedBox(height: 10),
-                    TextButton(
-                      onPressed: () {
-                        navigateTOAndReplacement(
-                          context,
-                          SignUpScreen(),
-                        );
-                      },
-                      child: Text("Dont have an account ? | Join us now"),
-                    )
-                  ],
-                ),
+                        titleOfButton: "Sign in"),
+                  ),
+                  const SizedBox(height: 10),
+                  TextButton(
+                    onPressed: () {
+                      navigateTOAndReplacement(
+                        context,
+                        SignUpScreen(),
+                      );
+                    },
+                    child: Text("Dont have an account ? | Join us now"),
+                  )
+                ],
               ),
             ),
           ),
@@ -156,14 +193,16 @@ class _SignInScreenState extends State<SignInScreen> {
     Cash.saveData(
       key: 'userToken',
       value: tokenValue,
-    );
+    ).then((value) {
+      print(value);
+    });
   }
 
   _signInValidator() async {
     if (formKey.currentState!.validate()) {
       emailController.text;
       passwordController.text;
-      print("Validate Checked ");
+      print("_signInValidator Function ");
       final userDataSignIn = await SignInService().login(
         emailController.text,
         passwordController.text,
@@ -175,13 +214,13 @@ class _SignInScreenState extends State<SignInScreen> {
   void _checkStatusCodeAndUserType(Map<String, dynamic> userDataSignIn) {
     if (userDataSignIn['code'] == 201) {
       if (userDataSignIn['data']['roll_id'] == 1) {
+        print("Owner >>>>>>>> OWNER ");
         navigateTO(context, AdminHomeScreen());
       } else {
-        navigateTO(context, Home());
+        print("USER >>>>>>>> USER ");
+        navigateTO(context, const Home());
       }
-      _saveToken(userDataSignIn['data']['token']).then((value) {
-        print(userDataSignIn['data']['token']);
-      });
+      _saveToken(userDataSignIn['data']['token']);
       buildFlutterToast(
           message: "Thank you for your Registration",
           state: ToastStates.SUCCESS);

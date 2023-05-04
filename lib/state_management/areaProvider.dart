@@ -1,14 +1,24 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:kick_off/services/network/user_services/areaService.dart';
 
+import '../components/constants.dart';
 import '../models/areaModel.dart';
 
-class AreaProvider with ChangeNotifier {
-  List<Area> areas = [];
+class AreaProvider extends ChangeNotifier {
+  List<AreaModel> _cities = [];
 
-  List<Area> get locations => [...areas];
-  getAreas() async {
-    areas = await GetAreaService().getAllArea();
-    notifyListeners();
+  List<AreaModel> get cities => _cities;
+
+  Future<void> fetchCities() async {
+    try {
+      final response = await Dio().get('$baseUrl/area');
+      if (response.statusCode == 200) {
+        final data = response.data['data'] as List<dynamic>;
+        _cities = data.map((city) => AreaModel.fromJson(city)).toList();
+        notifyListeners();
+      }
+    } catch (error) {
+      print(error);
+    }
   }
 }

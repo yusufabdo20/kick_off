@@ -1,35 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kick_off/components/components.dart';
+import 'package:kick_off/state_management/clubProvider.dart';
+import 'package:provider/provider.dart';
 
+import '../../models/clubModel.dart';
 import '../../screens/user_screens/owner_clubs_screen.dart';
 
-class PlaygroundsCategories extends StatelessWidget {
+class HomePlaygroundsCategories extends StatelessWidget {
   String nameOnwer;
   String nameArea;
   String image;
   String rate;
+  int? price;
 
-  PlaygroundsCategories(
+  HomePlaygroundsCategories(
       {super.key,
       required this.nameOnwer,
       required this.nameArea,
       required this.image,
+      this.price,
       required this.rate});
 
   @override
   Widget build(BuildContext context) {
+    final clubs = Provider.of<ClubProvider>(context).allClubs;
+    var adminId;
+    final matchingClubs = clubs.where((club) => adminId ==club.adminId );
+    if (matchingClubs.isNotEmpty) {
+      adminId = matchingClubs.first.adminId;
+    }
     return InkWell(
       onTap: () {
-        navigateTO(context, OwnerScreen());
+        navigateTO(
+            context,
+            OwnerScreen(
+              adminId: 1,
+            ));
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 20),
+        margin: const EdgeInsets.only(bottom: 20),
         height: 200,
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage('$image'),
+            image: NetworkImage(image),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(20),
@@ -41,29 +56,37 @@ class PlaygroundsCategories extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  padding: EdgeInsets.all(10),
-                  margin: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Color(0xff496179).withOpacity(0.9),
+                    color: const Color(0xff496179).withOpacity(0.8),
                     borderRadius: BorderRadius.circular(5),
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.location_on_outlined,
                         color: Colors.white,
                         size: 15,
                       ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          nameArea,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                          ),
+                      Text(
+                        nameArea,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
                         ),
                       ),
+                      price != null
+                          ? Text(
+                              '$price Egy/hou',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Container(),
                     ],
                   ),
                 ),
@@ -75,8 +98,8 @@ class PlaygroundsCategories extends StatelessWidget {
                   // allowHalfRating: true,
                   itemSize: 20,
                   itemCount: 5,
-                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                  itemBuilder: (context, _) => Icon(
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => const Icon(
                     Icons.star,
                     color: Colors.amber,
                   ),
@@ -91,8 +114,8 @@ class PlaygroundsCategories extends StatelessWidget {
               height: 40,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Color(0xff224A4A).withOpacity(0.8),
-                borderRadius: BorderRadius.only(
+                color: const Color(0xff224A4A).withOpacity(0.8),
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                 ),
@@ -104,9 +127,9 @@ class PlaygroundsCategories extends StatelessWidget {
                   children: [
                     Text(
                       nameOnwer,
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                    Text(
+                    const Text(
                       "Click for More filelds",
                       style: TextStyle(color: Colors.white, fontSize: 16),
                     )
