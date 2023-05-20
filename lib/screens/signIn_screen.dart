@@ -161,7 +161,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 print(value);
                               });
                               buildFlutterToast(
-                                  message: "Thank you for your Registration",
+                                  message: "Sign in Successfully",
                                   state: ToastStates.SUCCESS);
                             } else {
                               buildFlutterToast(

@@ -69,7 +69,7 @@ class Api {
     }
   }
 
-  Future<dynamic> muliPartPost({
+  Future<dynamic> multiPartPost({
     required String apiUrl,
     dynamic body,
     String? token,
