@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:kick_off/screens/admin_screens/add_services.dart';
+import 'package:kick_off/models/UserModels/areaModel.dart';
+import 'package:kick_off/services/network/owner_services/addClubServices.dart';
+import 'package:kick_off/state_management/areaProvider.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 import '../../components/components.dart';
 import '../../components/constants.dart';
-import 'ImagePicker.dart';
 
 class AddSoccerFieldScreen extends StatefulWidget {
   AddSoccerFieldScreen({super.key});
@@ -26,27 +29,40 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
   var nameController = TextEditingController();
 
   var addressController = TextEditingController();
+  var notesController = TextEditingController();
 
   var priceController = TextEditingController();
 
   var mobilePhoneController = TextEditingController();
-
-  List<String> cities = [
-    'Cairo',
-    'Alex',
-  ];
-  List<String> areas = [
-    'Area1',
-    'Area2',
-    'Area3',
-    'Area4',
-  ];
-
-  String? selectedCity = "Cairo";
-  String? selectedArea = "Area1";
+  File? _imageFile;
+  String? _imageUrl;
+  bool wc = false, cafe = false;
+  Future<void> _uploadImage(File image) async {
+    final url = Uri.parse('$baseUrl/club');
+    final request = http.MultipartRequest('POST', url);
+    request.files.add(await http.MultipartFile.fromPath('image', image.path));
+    final response = await request.send();
+    if (response.statusCode == 200) {
+      final responseData = await response.stream.toBytes();
+      final responseString = String.fromCharCodes(responseData);
+      setState(() {
+        _imageUrl = responseString;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<AreaModel> areas = Provider.of<AreaProvider>(context).cities;
+    //   List<String> cities = [
+    //   'Cairo',
+    //   'Alex',
+    // ];
+    // List<String> areas = areas
+
+    // String? selectedCity = "Cairo";
+    // String selectedArea = areas[0].toString();
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       // backgroundColor: rgbBahgaPurple1,
@@ -60,7 +76,6 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
           child: Column(
             children: [
               Expanded(
-                // flex: 3,
                 child: SingleChildScrollView(
                   child: Form(
                     key: formKey,
@@ -69,53 +84,25 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
                       child: Column(
                         children: [
                           buildFormFieldText(
-                            // backgroundOfTextFeild: Colors.transparent,
-                            validate: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter name";
-                              }
-                            },
                             controller: nameController,
-                            // labelText: "Name",
-                            // prefixIcon: Icons.person,
                             keyboardType: TextInputType.text,
                             hintText: "Name",
                           ),
                           const SizedBox(
                             height: 15,
                           ),
-                          buildDropdownButtonFormField(
-                            items: cities,
-                            selectValue: selectedCity!,
-                            borderColor: primaryColor,
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          buildDropdownButtonFormField(
-                            items: areas,
-                            selectValue: selectedArea!,
-                            borderColor: primaryColor,
+                          buildFormFieldText(
+                            controller: addressController,
+                            hintText: "Address in details",
+                            keyboardType: TextInputType.streetAddress,
                           ),
                           const SizedBox(
                             height: 15,
                           ),
                           buildFormFieldText(
-                            validate: (value) {
-                              if (value!.isEmpty) {
-                                return "Please enter Address";
-                              }
-                            },
-                            onSubmit: (value) {
-                              if (formKey.currentState!.validate()) {
-                                value = addressController.text;
-                              }
-                            },
-                            controller: addressController,
-                            // labelText: "Address",
-                            hintText: "Address in details",
-                            // prefixIcon:,
-                            keyboardType: TextInputType.streetAddress,
+                            controller: notesController,
+                            hintText: "Add notes",
+                            keyboardType: TextInputType.multiline,
                           ),
                           const SizedBox(
                             height: 15,
@@ -126,6 +113,7 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
                               if (value!.isEmpty) {
                                 return 'please enter a valid mobile phone ';
                               }
+                              return null;
                             },
                             onSubmit: (value) {
                               if (formKey.currentState!.validate()) {
@@ -146,6 +134,7 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
                               if (value!.isEmpty) {
                                 return 'please enter a Price';
                               }
+                              return null;
                             },
                             onSubmit: (value) {
                               if (formKey.currentState!.validate()) {
@@ -154,98 +143,111 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
                             },
                             hintText: "Price per hour",
                             controller: priceController,
-                            // labelText: "Price",
-                            // prefixIcon: Icons.phone_android_outlined,
                             suffix: Icons.attach_money_rounded,
                             keyboardType: TextInputType.number,
                           ),
                           const SizedBox(
                             height: 15,
                           ),
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                // color: Colors.white,
-                                // boxShadow: [
-                                //   BoxShadow(
-                                //     color: Colors.grey.withOpacity(0.5),
-                                //     spreadRadius: 0,
-                                //     blurRadius: 0,
-                                //     offset: Offset(
-                                //         0, 0), // changes position of shadow
-                                //   ),
-                                // ],
-                                ),
-                            child: buildElevatedTextButton(
+                          if (_imageFile != null) ...[
+                            Image.file(_imageFile!),
+                            Container(
+                              width: double.infinity,
+                              child: buildElevatedTextButton(
+                                titleOfButton: "Clear",
+                                onPressedFunction: () {
+                                  setState(() {
+                                    _imageFile = null;
+                                    _imageUrl = "";
+                                  });
+                                },
+                              ),
+                            )
+                          ] else ...[
+                            Container(
+                              width: double.infinity,
+                              child: buildElevatedTextButton(
                                 titleOfButton: "Add image of soccer field",
                                 titleOfButtonColor: Colors.grey,
                                 backgroundColor: Color(0xFFCACC),
+                                onPressedFunction: () async {
+                                  final pickedFile =
+                                      await ImagePicker().pickImage(
+                                    source: ImageSource.gallery,
+                                  );
+                                  setState(() {
+                                    _imageFile = File(pickedFile!.path);
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                          if (_imageUrl != null) Text(_imageUrl!),
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              buildElevatedTextButton(
+                                titleOfButton: 'WC',
                                 onPressedFunction: () {
-                                  _pickImage(ImageSource.gallery);
-                                }),
-                          ),
-                          Container(
-                            width: 200,
-                            height: 100,
-                            child: _imageFile == null
-                                ? Center(child: Text('No image selected.'))
-                                : Image.file(_imageFile!),
+                                  setState(() {
+                                    wc = !wc;
+                                  });
+                                },
+                                backgroundColor:
+                                    wc == false ? Colors.grey : primaryColor,
+                              ),
+                              buildElevatedTextButton(
+                                titleOfButton: 'Cafe',
+                                onPressedFunction: () {
+                                  setState(() {
+                                    cafe = !cafe;
+                                  });
+                                },
+                                backgroundColor:
+                                    cafe == false ? Colors.grey : primaryColor,
+                              ),
+                            ],
                           ),
                           buildElevatedTextButton(
-                              titleOfButton: "Available Services",
-                              titleOfButtonColor: Colors.grey,
-                              backgroundColor: Color(0xFFCACC),
-                              onPressedFunction: () {
-                                navigateTO(context, AddServicesScreen());
+                              titleOfButton: "Submit",
+                              // titleOfButtonColor: Colors.grey,
+                              // backgroundColor: Color(0xFFCACC),
+                              onPressedFunction: () async {
+                                try {
+                                  print(_imageFile!.uri);
+
+                                  if (formKey.currentState!.validate()) {
+                                    nameController.text;
+                                    addressController;
+                                    mobilePhoneController;
+                                    priceController;
+                                    var clubAdded =
+                                        await AddClubServices().addClub(
+                                      name: nameController.text,
+                                      address: addressController.text,
+                                      phone: mobilePhoneController.text,
+                                      price: priceController.text,
+                                      image: _imageFile!,
+                                      wc: wc == false ? '0' : '1',
+                                      cafe: cafe == false ? '0' : '1',
+                                    );
+
+                                    // _uploadImage(_imageFile!);
+
+                                    print(clubAdded);
+                                    if (clubAdded['status'] == "success") {
+                                      buildFlutterToast(
+                                        message: "Playground Uplaoded",
+                                        state: ToastStates.SUCCESS,
+                                      );
+                                    }
+                                  }
+                                } catch (e) {
+                                  print(
+                                      'Error in Add Club>>>> ' + e.toString());
+                                }
                               }),
-                          Container(
-                            // width: double.infinity,
-                            child: buildElevatedTextButton(
-                              // onPressedFunction: () async {
-                              //   try {
-                              //     if (formKey.currentState!.validate()) {
-                              //       emailController.text;
-                              //       passwordController.text;
-                              //       var userDataSignUp = await SignUpService()
-                              //           .register(
-                              //               email: emailController.text,
-                              //               password: passwordController.text,
-                              //               name: usernameController.text,
-                              //               phone: mobilePhoneController.text,
-                              //               roll_id: selectedItem == 'Owner'
-                              //                   ? "1"
-                              //                   : "2" //1 for Owner 2 for user
-                              //               );
-                              //       print(userDataSignUp);
-                              //       if (userDataSignUp['code'] == 201) {
-                              //         buildFlutterToast(
-                              //             message:
-                              //                 "Thank you for your Registration",
-                              //             state: ToastStates.SUCCESS);
-                              //       Cash.saveData(
-                              //         key: 'token',
-                              //         value: userDataSignUp['data']['token'],
-                              //       ).then((value) {
-                              //         navigateTOAndReplacement(
-                              //             context, PreferredDataScreen());
-                              //       });
-                              //       } else {
-                              //         buildFlutterToast(
-                              //             message:
-                              //                 "${userDataSignUp['data']['password']}",
-                              //             state: ToastStates.ERROR);
-                              //       }
-                              //       print(userDataSignUp.toString());
-                              //     }
-                              //   } catch (e) {
-                              //     print("Error in Register Method ++>> $e");
-                              //   }
-                              // },
-                              backgroundColor: Color(0x46D876),
-                              titleOfButton: "Upload",
-                            ),
-                          ),
-                          const SizedBox(height: 10),
                         ],
                       ),
                     ),
@@ -257,17 +259,5 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _pickImage(ImageSource source) async {
-    final pickedFile = await _picker.getImage(source: source);
-
-    setState(() {
-      if (pickedFile != null) {
-        _imageFile = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
   }
 }

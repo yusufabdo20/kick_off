@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import '../components/constants.dart';
-import '../models/areaModel.dart';
+import '../models/UserModels/areaModel.dart';
 
 class AreaProvider extends ChangeNotifier {
   List<AreaModel> _cities = [];

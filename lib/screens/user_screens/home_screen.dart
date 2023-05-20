@@ -3,7 +3,7 @@ import 'package:kick_off/components/constants.dart';
 import 'package:kick_off/components/home_component/Search_field.dart';
 import 'package:kick_off/components/home_component/areas_categories.dart';
 import 'package:kick_off/components/home_component/playgrounds_categories.dart';
-import 'package:kick_off/models/areaModel.dart';
+import 'package:kick_off/models/UserModels/areaModel.dart';
 import 'package:kick_off/services/network/user_services/areaService.dart';
 import 'package:kick_off/services/network/user_services/get_all_clubs_for_home_sevice.dart';
 import 'package:kick_off/state_management/areaProvider.dart';

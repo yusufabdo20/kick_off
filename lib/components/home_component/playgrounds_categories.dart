@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:kick_off/components/components.dart';
-import 'package:kick_off/state_management/clubProvider.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/clubModel.dart';
+import 'package:kick_off/components/components.dart';
+import 'package:kick_off/state_management/clubProvider.dart';
+
 import '../../screens/user_screens/owner_clubs_screen.dart';
 
 class HomePlaygroundsCategories extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kick_off/screens/user_screens/home.dart';
+import 'package:kick_off/services/local/cash.dart';
 
 import '../components/components.dart';
 import '../components/constants.dart';
@@ -33,6 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     'User',
   ];
   String? selectedItem = "Owner";
+  bool? isOwner;
 
   @override
   Widget build(BuildContext context) {
@@ -190,11 +192,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               phone: mobilePhoneController.text,
                                               roll_id: selectedItem == 'Owner'
                                                   ? '1'
-                                                  : '2' //1 for Owner 2 for user
+                                                  : '2'//1 for Owner 2 for user
                                               );
                                       print(userDataSignUp);
+                                      // if (userDataSignUp['data']['roll_id'] ==
+                                      //     1) {
+                                      //   Cash.saveData(
+                                      //       key: 'isOwner', value: true);
+                                      // }
                                       if (userDataSignUp['code'] == 201) {
-                                        
                                         buildFlutterToast(
                                             message:
                                                 "Thank you for your Registration",
@@ -209,7 +215,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       print(userDataSignUp.toString());
                                     }
                                   } catch (e) {
-                                    print("Error in Register Method In UI ++>> $e");
+                                    print(
+                                        "Error in Register Method In UI ++>> $e");
                                   }
                                 },
                                 titleOfButton: "Register"),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kick_off/components/constants.dart';
-import 'package:kick_off/screens/soccer_field_screen.dart';
+import 'package:kick_off/screens/admin_screens/admin_pannel.dart';
+import 'package:kick_off/screens/signIn_screen.dart';
 
 import 'package:kick_off/screens/user_screens/home.dart';
 
 import 'package:kick_off/state_management/areaProvider.dart';
+import 'package:kick_off/state_management/ownerProviders/ownerProvidser.dart';
 import 'package:kick_off/z.dart';
 import 'package:provider/provider.dart';
 
@@ -20,12 +22,17 @@ void main() async {
 
   await Cash.init();
   bool? onBoarding = Cash.getData(key: "onBoarding");
-  String? token = Cash.getData(key: "userToken");
+  userToken = Cash.getData(key: "userToken")??"";
+  bool? isOwner = Cash.getData(key: "isOwner");
   Widget widget;
 
   if (onBoarding != null) {
-    if (token != null) {
-      widget = Home();
+    if (userToken != null) {
+      if (isOwner != null) {
+        widget = AdminHomeScreen();
+      } else {
+        widget = Home();
+      }
     } else {
       widget = SignUpScreen();
     }
@@ -36,10 +43,11 @@ void main() async {
     providers: [
       ChangeNotifierProvider<AreaProvider>(create: (_) => AreaProvider()),
       ChangeNotifierProvider<ClubProvider>(create: (_) => ClubProvider()),
+      ChangeNotifierProvider<OwnerProvider>(create: (_) => OwnerProvider()),
       // ChangeNotifierProvider<CitiesProvider>(create: (_) => CitiesProvider()),
       // ChangeNotifierProvider(create: (_) => AreaProvider()),
     ],
-    child: KickOff(startWidget:widget),
+    child: KickOff(startWidget: widget),
   ));
 }
 
@@ -52,7 +60,7 @@ class KickOff extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: SplashScreen.id,
       // routes: appRoutes,
-      home:startWidget,
+      home:SignUpScreen(),
     );
   }
 }

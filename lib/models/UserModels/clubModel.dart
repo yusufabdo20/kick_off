@@ -1,4 +1,4 @@
-import 'package:kick_off/models/userModel.dart';
+import 'package:kick_off/models/UserModels/userModel.dart';
 
 class ClubModel {
   int? id;
@@ -11,6 +11,9 @@ class ClubModel {
   String? image;
   int? adminId;
   int? areaId;
+  String? address;
+  String? notes;
+  // Admin? phoneNumber;
   Admin admin;
 
   ClubModel(
@@ -24,6 +27,9 @@ class ClubModel {
       this.image,
       this.adminId,
       this.areaId,
+      this.address,
+      this.notes,
+      // this.phoneNumber,
       required this.admin});
 
   factory ClubModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +44,9 @@ class ClubModel {
         image: json['image'],
         adminId: json['admin_id'],
         areaId: json['area_id'],
+        address: json['address'],
+        notes: json['notes'],
+        // phoneNumber: Admin.fromJson(json['admin']['phone']),
         admin: Admin.fromJson(json['admin']));
   }
 }

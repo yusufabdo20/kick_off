@@ -1,6 +1,6 @@
-import 'package:kick_off/models/clubModel.dart';
 
 import '../../../components/constants.dart';
+import '../../../models/UserModels/clubModel.dart';
 import '../../api.dart';
 
 class GetAllClubsForHome {

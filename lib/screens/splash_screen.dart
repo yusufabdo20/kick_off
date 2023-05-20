@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kick_off/components/components.dart';
 import 'package:kick_off/screens/onBoarding_screen.dart';
-import 'package:kick_off/screens/signIn_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   static String id = "SplashScreen";

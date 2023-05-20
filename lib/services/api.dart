@@ -22,7 +22,7 @@ class Api {
 
     if (response.statusCode == 200) {
       print("Respone IN GET METHOD  ===== 200");
-      Map<String,dynamic> data = jsonDecode(response.body);
+      Map<String, dynamic> data = jsonDecode(response.body);
 
       print("Data In GET METHOD : $data");
       return data;
@@ -59,8 +59,50 @@ class Api {
     if (response.statusCode == 200) {
       print("Respone ===== 200");
       Map<String, dynamic> data = jsonDecode(response.body);
-      print("Data In POST METHOD : $data");
+      // print("Data In POST METHOD : $data");
       return data;
+    } else {
+      print("POST Respone !!!!!!!!!= 200");
+
+      return throw Exception(
+          "There is PROBLEM in Status Code in POST Method is =! 200 ====>>>>>${response.statusCode} ");
+    }
+  }
+
+  Future<dynamic> muliPartPost({
+    required String apiUrl,
+    dynamic body,
+    String? token,
+  }) async {
+
+    print("Enter to POST METHOD API");
+    var requset = http.MultipartRequest(
+      'POST',
+      Uri.parse(apiUrl),
+    );
+
+    print("Finish POST METHOD API");
+    print(
+        "Check response statusCode if is 200 ? return data else throw Exception ");
+    requset.files
+        .add(await http.MultipartFile.fromPath('image', body.image.path));
+    requset.fields['phone'] = body.phone.toString();
+    requset.fields['name'] = body.name.toString();
+    requset.fields['address'] = body.address.toString();
+    requset.fields['notes'] = body.notes.toString();
+    requset.fields['price'] = body.price.toString();
+    requset.fields['wc'] = body.wc.toString();
+    requset.fields['cafe'] = body.cafe.toString();
+      //  Map<String, String> requset.headers;
+    if (token != null) {
+      requset.headers.addAll({'Authorization': token});
+    }
+    // requset.headers={'Authorization': token};
+    var response = await requset.send();
+    
+    if (response.statusCode == 200) {
+      print("Respone ===== 200");
+      print(response);
     } else {
       print("POST Respone !!!!!!!!!= 200");
 

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:kick_off/models/ownerClubsModel.dart';
+import 'package:kick_off/models/UserModels/ownerClubsModel.dart';
 import 'package:provider/provider.dart';
 
-import 'package:kick_off/models/clubModel.dart';
 import 'package:kick_off/services/network/user_services/areaService.dart';
 import 'package:kick_off/services/network/user_services/get_owner_clubs.dart';
 import 'package:kick_off/state_management/clubProvider.dart';
 
 import '../../components/owner_playgrounds.dart';
-import '../../models/areaModel.dart';
+import '../../models/UserModels/areaModel.dart';
 import '../../state_management/areaProvider.dart';
 
 class OwnerScreen extends StatefulWidget {
@@ -41,6 +40,7 @@ class _OwnerScreenState extends State<OwnerScreen> {
   Widget build(BuildContext context) {
     final ownerClubsData = Provider.of<ClubProvider>(context);
     final ownerClubs = ownerClubsData.ownerClubs;
+    final cities= Provider.of<AreaProvider>(context).cities;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -68,7 +68,23 @@ class _OwnerScreenState extends State<OwnerScreen> {
             : ListView.builder(
                 itemCount: ownerClubs.length,
                 itemBuilder: (context, index) {
-                  return StadiumItem(stadium: ownerClubs[index]);
+                  final ownerClub = ownerClubs[index];
+
+                  int? areaID = ownerClub.areaId;
+                  String name = '';
+                 
+                  final matchingCities =
+                      cities.where((city) => city.id == areaID);
+                  if (matchingCities.isNotEmpty) {
+                    name = matchingCities.first.name;
+                  }
+                  return OwnerPlaygrounds(
+                    nameOnwer: ownerClub.name,
+                    nameArea: name,
+                    price: ownerClub.price, id:ownerClub.id,
+                    image:ownerClub.image ,
+                    rate: ownerClub.rate ,
+                  );
                 },
               ));
   }

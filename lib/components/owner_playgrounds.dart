@@ -2,25 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:kick_off/components/components.dart';
-import 'package:kick_off/screens/soccer_field_screen.dart';
+import 'package:kick_off/screens/specific_soccer_field_screen.dart';
+import 'package:kick_off/state_management/clubProvider.dart';
+import 'package:provider/provider.dart';
 
 class OwnerPlaygrounds extends StatelessWidget {
   OwnerPlaygrounds(
       {super.key,
       required this.nameOnwer,
       required this.nameArea,
-      required this.price,  
-      required this.id,  
-      });
+      required this.price,
+      required this.id,
+      required this.image,
+      required this.rate});
   String nameOnwer;
   String nameArea;
   int price;
-  int id ;
+  int id;
+  String image;
+  int rate;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        navigateTO(context, SoccerFieldScreen( id: id,));
+      onTap: () async {
+        await Provider.of<ClubProvider>(context, listen: false)
+            .getSpecificClub(id);
+        navigateTO(context, SoccerFieldScreen());
       },
       child: Padding(
         padding: const EdgeInsets.all(6),
@@ -30,7 +37,7 @@ class OwnerPlaygrounds extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/Playgrounds.png"),
+              image: NetworkImage(image!),
               fit: BoxFit.cover,
             ),
             borderRadius: BorderRadius.circular(16),
@@ -47,8 +54,7 @@ class OwnerPlaygrounds extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     margin: EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color:
-                      Color(0xff496179).withOpacity(0.7),
+                      color: Color(0xff496179).withOpacity(0.7),
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Column(
@@ -66,13 +72,15 @@ class OwnerPlaygrounds extends StatelessWidget {
                               ),
                             ),
                             Icon(
-                        Icons.location_on_outlined,
-                         color: Colors.
-                         white,size: 15,
-                         ),
+                              Icons.location_on_outlined,
+                              color: Colors.white,
+                              size: 15,
+                            ),
                           ],
                         ),
-                        SizedBox(height: 5,),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Text(
                           "$price EGP/ Hour",
                           style: TextStyle(
@@ -80,7 +88,7 @@ class OwnerPlaygrounds extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
-                     const   Divider(
+                        const Divider(
                           thickness: 5.0,
                           height: 10,
                           color: Colors.black,
@@ -97,26 +105,25 @@ class OwnerPlaygrounds extends StatelessWidget {
                       ],
                     ),
                   ),
-                 
                 ],
               ),
+        
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: RatingBar.builder(
-                  initialRating: 3,
-                  minRating: 1,
+                  initialRating: (rate).toDouble(),
+                  minRating: (rate).toDouble(),
+                  maxRating: (rate).toDouble(),
                   direction: Axis.horizontal,
-                  allowHalfRating: true,
                   itemSize: 20,
                   itemCount: 5,
+                  ignoreGestures: true,
                   itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                   itemBuilder: (context, _) => Icon(
                     Icons.star,
                     color: Colors.amber,
                   ),
-                  onRatingUpdate: (rating) {
-                    print(rating);
-                  },
+                  onRatingUpdate: (rating) {},
                 ),
               ),
               // Container(

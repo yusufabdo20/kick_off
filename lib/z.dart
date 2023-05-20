@@ -1,110 +1,156 @@
-// import 'package:dio/dio.dart';
+// import 'dart:convert';
+// import 'dart:io';
+
 // import 'package:flutter/material.dart';
-// import 'package:kick_off/components/constants.dart';
-// import 'package:provider/provider.dart';
+// import 'package:http/http.dart' as http;
+// import 'package:image_picker/image_picker.dart';
+// import 'package:mime_type/mime_type.dart';
+// class Product {
+//   final String name;
+//   final String address;
+//   final String phone;
+//   final double price;
+//   final String image;
 
-// class Stadium {
-//   int id;
-//   int price;
-//   String name;
-//   int wc;
-//   int cafe;
-//   String creationDate;
-//   String image;
-//   int adminId;
-//   int areaId;
-//   int rate;
-
-//   Stadium({
-//     required this.id,
-//     required this.price,
-//     required this.name,
-//     required this.wc,
-//     required this.cafe,
-//     required this.creationDate,
-//     required this.image,
-//     required this.adminId,
-//     required this.areaId,
-//     required this.rate,
-//   });
+//   Product({required this.name, required this.address, required this.phone, required this.price, required this.image});
+// }
+// class ProductForm extends StatefulWidget {
+//   @override
+//   _ProductFormState createState() => _ProductFormState();
 // }
 
-// class StadiumProvider with ChangeNotifier {
-//   List<Stadium> _stadiums = [];
+// class _ProductFormState extends State<ProductForm> {
+//   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+//  final ImagePicker _imagePicker = ImagePicker();
+//   late XFile? _pickedImage;
 
-//   List<Stadium> get stadiums => _stadiums;
+//   // Rest of the code
 
-//   Future<void> fetchStadiumsByAdminId(int adminId) async {
-//     try {
-//       final response = await Dio().post(
-//         '$baseUrl/clubs/admin',
-//         data: {'admin_id': adminId},
-//         options: Options(headers: {'Authorization':'Bearer $userToken'})
-//       );
-//       if (response.statusCode == 200) {
-//         final List<dynamic> responseData = response.data['data'];
-//         _stadiums = responseData
-//             .map(
-//               (stadium) => Stadium(
-//                 id: stadium['id'],
-//                 price: stadium['price'],
-//                 name: stadium['name'],
-//                 wc: stadium['wc'],
-//                 cafe: stadium['cafe'],
-//                 creationDate: stadium['creationDate'],
-//                 image: stadium['image'],
-//                 adminId: stadium['admin_id'],
-//                 areaId: stadium['area_id'],
-//                 rate: stadium['rate'],
-//               ),
-//             )
-//             .toList();
-//         notifyListeners();
-//       }
-//     } catch (error) {
-//       print(error);
+//   void _pickImage() async {
+//     final pickedImage = await _imagePicker.pickImage(source: ImageSource.gallery);
+//     setState(() {
+//       _pickedImage = pickedImage;
+//     });
+//   }
+//   String _name = '';
+//   String _address = '';
+//   String _phone = '';
+//   double _price = 0.0;
+//   String _image = '';
+
+//   void _submitForm() {
+//     if (_formKey.currentState!.validate()) {
+//       // If the form is valid, create a Product instance and post it to the API
+//       final product = Product(name: _name, address: _address, phone: _phone, price: _price, image: _image);
+//       postProductData(product);
 //     }
 //   }
-// }
+// Future<void> postProductData(Product product) async {
+//   final url = 'https://example.com/api/products'; // Replace with your API endpoint
 
-// class StadiumScreen extends StatefulWidget {
-//   final int adminId;
+//   final headers = {'Content-Type': 'application/json'};
+//   final body = jsonEncode({
+//     'name': product.name,
+//     'address': product.address,
+//     'phone': product.phone,
+//     'price': product.price,
+//     'image': product.image,
+//   });
 
-//   StadiumScreen({required this.adminId});
+//   try {
+//     final response = await http..post(Uri.parse(url), headers: headers, body: body);
 
-//   @override
-//   _StadiumScreenState createState() => _StadiumScreenState();
-// }
-
-// class _StadiumScreenState extends State<StadiumScreen> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     Provider.of<StadiumProvider>(context, listen: false)
-//         .fetchStadiumsByAdminId(widget.adminId);
+//     if (response.statusCode == 200) {
+//       // Successful API request
+//       print('Product posted successfully');
+//       // Add any further actions you want to perform on success
+//     } else {
+//       // API request failed
+//       print('Failed to post product: ${response.statusCode}');
+//       // Handle the error or show an appropriate message to the user
+//     }
+//   } catch (error) {
+//     // Exception occurred during the API request
+//     print('Error posting product: $error');
+//     // Handle the error or show an appropriate message to the user
 //   }
-
+// }
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
-//         appBar: AppBar(
-//           title: Text('Stadiums'),
-//         ),
-//         body: Consumer<StadiumProvider>(
-//             builder: (context, stadiumProvider, child) {
-//           final stadiums = stadiumProvider.stadiums;
-//           return ListView.builder(
-//             itemCount: stadiums.length,
-//             itemBuilder: (context, index) {
-//               final stadium = stadiums[index];
-//               return ListTile(
-//                 title: Text(stadium.name),
-//                 subtitle: Text('Price: ${stadium.price}'),
-//                 leading: Image.network(stadium.image),
-//                 trailing: Text('Rate: ${stadium.rate}'),
-//               );
-//             },
-//           );
-//         }));
+//       appBar: AppBar(title: Text('Product Form')),
+//       body: Padding(
+//         padding: EdgeInsets.all(16.0),
+//         child: Form(
+//   key: _formKey,
+//   child: Column(
+//     children: [
+//       TextFormField(
+//         decoration: InputDecoration(labelText: 'Name'),
+//         validator: (value) {
+//           if (value!.isEmpty) {
+//             return 'Please enter a name';
+//           }
+//           return null;
+//         },
+//         onSaved: (value) {
+//           _name = value!;
+//         },
+//       ),
+//       TextFormField(
+//         decoration: InputDecoration(labelText: 'Address'),
+//         validator: (value) {
+//           if (value!.isEmpty) {
+//             return 'Please enter an address';
+//           }
+//           return null;
+//         },
+//         onSaved: (value) {
+//           _address = value!;
+//         },
+//       ),
+//       TextFormField(
+//         decoration: InputDecoration(labelText: 'Phone'),
+//         validator: (value) {
+//           if (value!.isEmpty) {
+//             return 'Please enter a phone number';
+//           }
+//           return null;
+//         },
+//         onSaved: (value) {
+//           _phone = value!;
+//         },
+//       ),
+//       TextFormField(
+//         decoration: InputDecoration(labelText: 'Price'),
+//         validator: (value) {
+//           if (value!.isEmpty) {
+//             return 'Please enter a price';
+//           }
+//           return null;
+//         },
+//         keyboardType: TextInputType.number,
+//         onSaved: (value) {
+//           _price = double.parse(value!);
+//         },
+//       ),
+//       _pickedImage != null
+//                   ? Image.file(File(_pickedImage!.path))
+//                   : Placeholder(fallbackHeight: 200),
+
+//           ElevatedButton(
+//                 child: Text('Pick Image'),
+//                 onPressed: _pickImage,
+//               ),
+//       ElevatedButton(
+//         child: Text('Post to API'),
+//         onPressed: _submitForm,
+//       ),
+//     ],
+//   ),
+// ),
+
+//       ),
+//     );
 //   }
 // }

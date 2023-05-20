@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:intl/intl.dart';
 import 'package:kick_off/components/components.dart';
 import 'package:kick_off/components/constants.dart';
 import 'package:kick_off/screens/user_screens/home.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../soccer_field_screen.dart';
-import 'owner_clubs_screen.dart';
 
 class BookingScreen extends StatefulWidget {
   BookingScreen({super.key});

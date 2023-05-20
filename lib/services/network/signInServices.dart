@@ -2,24 +2,22 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import '../../components/constants.dart';
-import '../../models/userModel.dart';
+import '../../models/UserModels/userModel.dart';
 import '../api.dart';
 
 class SignInService {
-  final token='' ;
-
   Future<Map<String,dynamic>> login(
     String email,
     String password,
   ) async {
-    final url = 'http://10.0.2.2:8000/api/login';
+    final url = '$baseUrl/login';
     Map<String, dynamic> data = await Api().post(
       apiUrl: url,
       body: {
         'email': email,
         'password': password,
       },
-    token: userToken,
+    token:  "Bearer $userToken",
     );
     print("Login Method ---- DONE");
     print(data);

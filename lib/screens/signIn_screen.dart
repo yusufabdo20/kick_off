@@ -23,6 +23,7 @@ class _SignInScreenState extends State<SignInScreen> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+
   bool isPassword = true;
   @override
   Widget build(BuildContext context) {
@@ -131,21 +132,27 @@ class _SignInScreenState extends State<SignInScreen> {
                             final data = await SignInService().login(
                               emailController.text,
                               passwordController.text,
-                              
                             );
 
                             var userDataSignIn = data['data']['userData'];
+
                             print(userDataSignIn);
                             if (data['code'] == 201) {
                               if (userDataSignIn['roll_id'] == 1) {
-                                print('${userDataSignIn['roll_id']}');
+                                print(
+                                    'ROLL ID >>>>> ${userDataSignIn['roll_id']}');
                                 print("Owner >>>>>>>> OWNER ");
-                                navigateTO(context, AdminHomeScreen());
+                                if (userDataSignIn['roll_id'] == 1) {
+                                  Cash.saveData(key: 'isOwner', value: true);
+                                }
+                                adminName = userDataSignIn['name'];
+                                navigateTOAndReplacement(
+                                    context, AdminHomeScreen());
                               } else {
                                 print('${userDataSignIn['roll_id']}');
 
                                 print("USER >>>>>>>> USER ");
-                                navigateTO(context, const Home());
+                                navigateTOAndReplacement(context, const Home());
                               }
                               Cash.saveData(
                                 key: 'userToken',
