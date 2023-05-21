@@ -10,7 +10,7 @@ class SignUpService {
     required String email,
     required String password,
     required String phone,
-    required  String roll_id,
+    required  int roll_id,
   }) async {
     // final url = 'http://197.60.240.5/api/register/';
     final url = '$baseUrl/register';
@@ -22,7 +22,7 @@ class SignUpService {
         'password': password,
         "name": name,
         "phone": phone,
-        "roll_id": roll_id
+        "roll_id": roll_id.toString()
       },
     );
     print(data);

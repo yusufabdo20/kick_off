@@ -34,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     'User',
   ];
   String? selectedItem = "Owner";
-  bool? isOwner;
+  // bool? isOwner;
 
   @override
   Widget build(BuildContext context) {
@@ -170,16 +170,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          buildDropdownButtonFormField(
-                            items: items,
-                            selectValue: selectedItem!,
-                            borderColor: primaryColor,
+                          // buildDropdownButtonFormField(
+                          //   items: items,
+                          //   selectValue: selectedItem!,
+                          //   borderColor: primaryColor,
+                          // ),
+                          DropdownButtonFormField<String>(
+                            value: selectedItem,
+                            decoration: InputDecoration(
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(16.0),
+                                // borderSide: BorderSide(color: borderColor, width: 3),
+                              ),
+                              border: const OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(width: 2, color: Colors.grey),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16))),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                  borderSide:
+                                      BorderSide(width: 2, color: Colors.grey)),
+                            ),
+                            onChanged: (item) {
+                              setState(() {
+                                selectedItem = item!;
+                              });
+                            },
+                            items: items.map((String item) {
+                              return DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
                           Container(
                             width: double.infinity,
                             child: buildElevatedTextButton(
                                 onPressedFunction: () async {
-                                  // navigateTO(context, Home());
                                   try {
                                     if (formKey.currentState!.validate()) {
                                       emailController.text;
@@ -190,17 +218,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               password: passwordController.text,
                                               name: usernameController.text,
                                               phone: mobilePhoneController.text,
-                                              roll_id: selectedItem == 'Owner'
-                                                  ? '1'
-                                                  : '2'//1 for Owner 2 for user
+                                              roll_id: selectedItem == 'User'
+                                                  ? 2
+                                                  : 1 //1 for Owner 2 for user
                                               );
+
                                       print(userDataSignUp);
-                                      // if (userDataSignUp['data']['roll_id'] ==
-                                      //     1) {
-                                      //   Cash.saveData(
-                                      //       key: 'isOwner', value: true);
-                                      // }
+
                                       if (userDataSignUp['code'] == 201) {
+                                        if (selectedItem == 'Owner') {
+                                          Cash.saveData(
+                                              key: 'isOwner', value: true);
+                                          print("OWner in register ");
+                                        } else {
+                                          Cash.saveData(
+                                              key: 'isOwner', value: false);
+                                          print("User in register ");
+                                        }
                                         buildFlutterToast(
                                             message:
                                                 "Thank you for your Registration",
@@ -212,7 +246,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                 "${userDataSignUp['data']}",
                                             state: ToastStates.ERROR);
                                       }
-                                      print(userDataSignUp.toString());
                                     }
                                   } catch (e) {
                                     print(
