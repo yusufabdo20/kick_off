@@ -6,6 +6,7 @@ import 'package:kick_off/components/constants.dart';
 import 'package:kick_off/screens/admin_screens/ImagePicker.dart';
 import 'package:kick_off/screens/admin_screens/add_services.dart';
 import 'package:kick_off/screens/admin_screens/add_soccer_field.dart';
+import 'package:kick_off/screens/logout.dart';
 import 'package:kick_off/screens/signIn_screen.dart';
 
 import '../register_screen.dart';
@@ -20,7 +21,7 @@ class _AdminPannelScreenState extends State<AdminHomeScreen> {
   int _selectedIndex = 2;
 
   final List<Widget> _widgetOptions = [
-    Text("Setting Screen"),
+    LogoutScreen(),
     Text("Reports Screen"),
     AddSoccerFieldScreen(),
     Text("Fields Screen"),

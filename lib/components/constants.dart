@@ -5,7 +5,6 @@ import 'components.dart';
 
 String adminName = '';
 String? userToken ;
-// bool isOwner= false ;
 // const baseUrl = 'http://161.35.97.26/api';
 const baseUrl = 'http://10.0.2.2:8000/api';
 const primaryColor = Color.fromRGBO(6, 41, 70, 1);

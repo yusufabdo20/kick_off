@@ -23,9 +23,11 @@ void main() async {
   await Cash.init();
   bool? onBoarding = Cash.getData(key: "onBoarding");
   userToken = Cash.getData(key: "userToken") ?? "";
+  print(Cash.getData(key: "userToken")) ;
   // userToken = SharedPreferencesHelper.getUserToken();
   // bool? isOwner =SharedPreferencesHelper.getIsOwner();
    bool? isOwner = Cash.getData(key: 'isOwner');
+   print('Cash IS OWNER >>>>'+Cash.getData(key: 'isOwner').toString()) ;
   Widget widget;
 
   if (onBoarding != null) {
@@ -62,7 +64,7 @@ class KickOff extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: SplashScreen.id,
       // routes: appRoutes,
-      home: SignUpScreen(),
+      home:SignUpScreen(),
     );
   }
 }

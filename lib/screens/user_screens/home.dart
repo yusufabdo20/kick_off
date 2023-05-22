@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:kick_off/components/constants.dart';
+import 'package:kick_off/screens/logout.dart';
 
 import 'favorites_screen.dart';
 import 'home_screen.dart';
@@ -29,7 +30,7 @@ class _HomeState extends State<Home> {
     const HomeScreen(),
     const RequestsScreen(),
     const FavoritesScreen(),
-    const SettingsScreen(),
+     LogoutScreen(),
     
   ];
 

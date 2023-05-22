@@ -13,7 +13,8 @@ class GetOwnerClubsService {
         'admin_id': adminId.toString(),
       },
       apiUrl: url,
-      token: "Bearer $userToken",
+      // token: "Bearer $userToken",
+      token: 'Bearer $userToken'
     ); // NOTE :: in UI will use FutureBuilder
     List<OwnerClubsModel> clubsList = [];
     for (int i = 0; i < data['data'].length; i++) {
@@ -21,6 +22,8 @@ class GetOwnerClubsService {
       print('----------------------------------------------');
       print(data['data'][i]);
     }
+    print('object') ;
+    print(userToken) ;
 
     return clubsList;
   }
