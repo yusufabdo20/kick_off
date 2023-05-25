@@ -27,14 +27,14 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     context.read<AreaProvider>().fetchCities();
     context.read<ClubProvider>().getAllClubsForHome();
-    // context.read<ClubProvider>().getOwnerClubs(adminId);
   }
+
+  String _searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
     // final areaProvider = Provider.of<AreaProvider>(context);
     // final clubProvider = Provider.of<ClubProvider>(context);
-    String _searchQuery = '';
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -77,11 +77,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                     onSubmitted: (value) {
-                      if (value.isEmpty) {
-                        setState(() {
-                          _searchQuery = '';
-                        });
-                      }
+                      // if (value.isNotEmpty) {
+                      //   Provider.of<ClubProvider>(context).setClubs(
+                      //       Provider.of<ClubProvider>(context).allClubsB);
+                      //   setState(() {
+                      //     Provider.of<ClubProvider>(context).setClubs(
+                      //         Provider.of<ClubProvider>(context)
+                      //             .allClubs
+                      //             .where((element) {
+                      //       return element.name!.contains(_searchQuery);
+                      //     }).toList());
+                      //   });
+                      // } else {
+                      //   setState(() {
+                      //     Provider.of<ClubProvider>(context).setClubs(
+                      //         Provider.of<ClubProvider>(context).allClubsB);
+                      //   });
+                      // }
+
                     },
                     decoration: InputDecoration(
                       hintText: 'Search...',
@@ -170,19 +183,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               }
 
                               if (_searchQuery.isEmpty ||
-                                  provider.allClubs[index].name!
-                                     
-                                      .contains(_searchQuery)) {
+                                  provider.allClubs[index].name!.toLowerCase()
+                                      .contains(_searchQuery.toLowerCase())) {
                                 return HomePlaygroundsCategories(
                                   nameOnwer: "${club.name}",
                                   nameArea: name,
                                   image: "${club.image}",
                                   rate: "${club.rate}",
-                                  admin_id:provider.allClubs[index].adminId.toString() ,
-
+                                  admin_id: provider.allClubs[index].adminId
+                                      .toString(),
                                 );
                               } else {
-                                return Container(child: Text("Not Found"),);
+                                return Container();
                               }
                             },
                           ),
