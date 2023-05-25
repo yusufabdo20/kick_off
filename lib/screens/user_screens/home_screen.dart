@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     // final areaProvider = Provider.of<AreaProvider>(context);
     // final clubProvider = Provider.of<ClubProvider>(context);
-
+    String _searchQuery = '';
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -67,7 +67,26 @@ class _HomeScreenState extends State<HomeScreen> {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  SearchTextField(),
+                  // SearchTextField(searchQuery: '',),
+                  TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        // _searchQuery = value.toLowerCase();
+                        _searchQuery = value;
+                        print(_searchQuery);
+                      });
+                    },
+                    onSubmitted: (value) {
+                      if (value.isEmpty) {
+                        setState(() {
+                          _searchQuery = '';
+                        });
+                      }
+                    },
+                    decoration: InputDecoration(
+                      hintText: 'Search...',
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -141,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             itemBuilder: (context, index) {
                               final club = provider.allClubs[index];
                               // provider.getOwnerClubs(club.adminId);
-                             
+
                               int? areaID = club.areaId;
                               String name = '';
                               final matchingCities =
@@ -149,12 +168,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               if (matchingCities.isNotEmpty) {
                                 name = matchingCities.first.name;
                               }
-                              return HomePlaygroundsCategories(
-                                nameOnwer: "${club.name}",
-                                nameArea: name,
-                                image: "${club.image}",
-                                rate: "${club.rate}",
-                              );
+
+                              if (_searchQuery.isEmpty ||
+                                  provider.allClubs[index].name!
+                                     
+                                      .contains(_searchQuery)) {
+                                return HomePlaygroundsCategories(
+                                  nameOnwer: "${club.name}",
+                                  nameArea: name,
+                                  image: "${club.image}",
+                                  rate: "${club.rate}",
+                                  admin_id:provider.allClubs[index].adminId.toString() ,
+
+                                );
+                              } else {
+                                return Container(child: Text("Not Found"),);
+                              }
                             },
                           ),
                         );

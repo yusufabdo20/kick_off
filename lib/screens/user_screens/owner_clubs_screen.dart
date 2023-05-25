@@ -12,7 +12,7 @@ import '../../models/UserModels/areaModel.dart';
 import '../../state_management/areaProvider.dart';
 
 class OwnerScreen extends StatefulWidget {
-  final int adminId;
+  final String adminId;
   OwnerScreen({required this.adminId});
   @override
   State<OwnerScreen> createState() => _OwnerScreenState();
@@ -40,7 +40,7 @@ class _OwnerScreenState extends State<OwnerScreen> {
   Widget build(BuildContext context) {
     final ownerClubsData = Provider.of<ClubProvider>(context);
     final ownerClubs = ownerClubsData.ownerClubs;
-    final cities= Provider.of<AreaProvider>(context).cities;
+    final cities = Provider.of<AreaProvider>(context).cities;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -69,22 +69,23 @@ class _OwnerScreenState extends State<OwnerScreen> {
                 itemCount: ownerClubs.length,
                 itemBuilder: (context, index) {
                   final ownerClub = ownerClubs[index];
-
                   int? areaID = ownerClub.areaId;
                   String name = '';
-                 
+
                   final matchingCities =
                       cities.where((city) => city.id == areaID);
                   if (matchingCities.isNotEmpty) {
                     name = matchingCities.first.name;
                   }
-                  return OwnerPlaygrounds(
-                    nameOnwer: ownerClub.name,
-                    nameArea: name,
-                    price: ownerClub.price, id:ownerClub.id,
-                    image:ownerClub.image ,
-                    rate: ownerClub.rate ,
-                  );
+                  return  OwnerPlaygrounds(
+                          nameOnwer: ownerClub.name,
+                          nameArea: name,
+                          price: ownerClub.price,
+                          id: ownerClub.id,
+                          image: ownerClub.image,
+                          rate: ownerClub.rate,
+                        );
+                     
                 },
               ));
   }

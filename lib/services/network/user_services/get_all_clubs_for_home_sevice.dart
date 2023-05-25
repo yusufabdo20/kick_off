@@ -17,4 +17,5 @@ class GetAllClubsForHome {
     }
     return clubsList;
   }
+  
 }

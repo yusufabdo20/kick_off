@@ -16,6 +16,15 @@ class AdminPannelScreen extends StatefulWidget {
 }
 
 class _AdminPannelScreenState extends State<AdminPannelScreen> {
+  void initState() {
+    super.initState();
+    context.read<OwnerProvider>().getNumberOfRequests();
+    context.read<OwnerProvider>().getNumberOfArea();
+    context.read<OwnerProvider>().getNumberOfCalls();
+    context.read<OwnerProvider>().getNumberOfClubs();
+    context.read<OwnerProvider>().getNumberOfViews();
+  }
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<OwnerProvider>(context);
@@ -64,9 +73,14 @@ class _AdminPannelScreenState extends State<AdminPannelScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Welcome $adminName",
+                      "Welcome ",
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      adminName,
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold ,color: primaryColor),
                     ),
                   ],
                 ),
@@ -139,34 +153,6 @@ class _AdminPannelScreenState extends State<AdminPannelScreen> {
       ),
     );
   }
-
-// List<AdminPannelComponent> items = [
-//   AdminPannelComponent(
-//     icon: Icons.phone,
-//     number:12 ,
-//     title: "Number of calls",
-//     report: "Reports",
-//     reportFunction: () {},
-//     onTapFunction: () {},
-//   ),
-//   AdminPannelComponent(
-//     icon: Icons.remove_red_eye_outlined,
-//     number: 66,
-//     title: "Fields View",
-//     report: "Reports",
-//     reportFunction: () {},
-//   ),
-//   AdminPannelComponent(
-//     icon: Icons.location_on_outlined,
-//     number: 100,
-//     title: "Areas",
-//   ),
-//   AdminPannelComponent(
-//     icon: Icons.shopping_cart_outlined,
-//     number: 50,
-//     title: "Soccer fields",
-//   ),
-// ];
 }
 
 class AdminPannelComponent extends StatelessWidget {

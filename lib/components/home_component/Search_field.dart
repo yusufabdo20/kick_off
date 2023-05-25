@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-class SearchTextField extends StatelessWidget {
-  const SearchTextField({super.key});
+class SearchTextField extends StatefulWidget {
+   SearchTextField({required this.searchQuery});
+ String searchQuery ;
+
+  @override
+  State<SearchTextField> createState() => _SearchTextFieldState();
+}
+
+class _SearchTextFieldState extends State<SearchTextField> {
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +20,10 @@ class SearchTextField extends StatelessWidget {
       ),
       child: TextFormField(
         onChanged: (value) {
-          
+                  setState(() {
+          widget.searchQuery = value.toLowerCase();
+        });
+
         },
         decoration: InputDecoration(
           border: const OutlineInputBorder(

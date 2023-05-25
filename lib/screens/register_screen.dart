@@ -219,8 +219,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                               name: usernameController.text,
                                               phone: mobilePhoneController.text,
                                               roll_id: selectedItem == 'User'
-                                                  ? 2
-                                                  : 1 //1 for Owner 2 for user
+                                                  ? '2'
+                                                  : '1' //1 for Owner 2 for user
                                               );
 
                                       print(userDataSignUp);

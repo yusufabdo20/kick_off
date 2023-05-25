@@ -4,12 +4,11 @@ import '../services/local/cash.dart';
 import 'components.dart';
 
 String adminName = '';
-String? userToken ;
+String? userToken;
 // const baseUrl = 'http://161.35.97.26/api';
 const baseUrl = 'http://10.0.2.2:8000/api';
 const primaryColor = Color.fromRGBO(6, 41, 70, 1);
 var primary = Colors.transparent;
-var logoImage = "asset s/images/logo.jpeg";
 // String? baseUrl= ;
 List patterns = [
   {'phonePattern': r'^(?:[0]1)?[0-9]{11}$'},
@@ -20,7 +19,15 @@ List patterns = [
   {'passwordPattern': r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'}
 ];
 void signOut(context) {
-  Cash.removeData(key: 'token').then((value) {
+  Cash.removeData(key: 'isOwner');
+
+  // print(Cash.removeData(key: 'isOwner').toString());
+  // Cash.removeData(key: 'onboard');
+  Cash.removeData(key: 'userToken').then((value) {
+    print(value);
+    print(Cash.getData(key: "userToken"));
+    print(Cash.getData(key: "isOwner"));
+
     navigateTOAndReplacement(context, SignInScreen());
   });
 }

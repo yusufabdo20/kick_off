@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -6,9 +5,49 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:kick_off/services/api.dart';
+import 'package:kick_off/services/network/owner_services/addClubServices.dart';
+import 'package:kick_off/state_management/areaProvider.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
 import '../../components/constants.dart';
+import '../../models/UserModels/areaModel.dart';
+import '../../state_management/ownerProviders/ownerProvidser.dart';
+
+class Service {
+  Future<bool> addData(Map<String, String> body, File filepath) async {
+    String url = '$baseUrl/club';
+    
+    Map<String, String> headers = {
+      'Authorization': 'Bearer $userToken',
+    };
+    var request = http.MultipartRequest('POST', Uri.parse(url))
+      ..fields.addAll(body)
+      ..headers.addAll(headers)
+      ..files.add(await http.MultipartFile.fromPath('image', filepath.path));
+    var response = await request.send();
+
+    var r = response.stream;
+    if (response.statusCode == 200) {
+      String responseBody = await response.stream.bytesToString();
+      print(responseBody);
+      print("Status Code is 200 OK ");
+      // print(request.fields);
+      // print(r);
+
+      buildFlutterToast(
+          message: "message IS UPLOADED ", state: ToastStates.SUCCESS);
+      return true;
+    } else {
+      print("Status Code is NOT 200 NOT OK >> ${response.statusCode}");
+      buildFlutterToast(
+          message: "message IS NOT UPLOADED ", state: ToastStates.ERROR);
+
+      return false;
+    }
+  }
+}
 
 class AddSoccerFieldScreen extends StatefulWidget {
   const AddSoccerFieldScreen({Key? key}) : super(key: key);
@@ -24,59 +63,23 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
   final _priceController = TextEditingController();
   final _phoneController = TextEditingController();
   final _notesController = TextEditingController();
+  Service service = Service();
 
-  File? _imageFile;
-  String? _imageUrl;
+  File? _image;
+  final picker = ImagePicker();
+  Future getImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   bool _hasWC = false;
   bool _hasCafe = false;
-
-  Future<void> _uploadImage(File image) async {
-    final url = Uri.parse('$baseUrl/club');
-    final request = http.MultipartRequest('POST', url);
-    request.files.add(await http.MultipartFile.fromPath('image', image.path));
-    final response = await request.send();
-    if (response.statusCode == 200) {
-      final responseData = await response.stream.toBytes();
-      final responseString = String.fromCharCodes(responseData);
-      setState(() {
-        _imageUrl = responseString;
-      });
-    }
-  }
-
-  Future<void> _submitForm() async {
-    if (_formKey.currentState!.validate()) {
-      final url = Uri.parse('$baseUrl/club');
-      final request = http.MultipartRequest('POST', url);
-      request.headers['Authorization'] = 'Bearer $userToken';
-      request.fields['name'] = _nameController.text;
-      request.fields['address'] = _addressController.text;
-      request.fields['price'] = _priceController.text;
-      request.fields['phone'] = _phoneController.text;
-      request.fields['notes'] = _notesController.text;
-      request.fields['wc'] = _hasWC == false ? "0" : "1";
-      request.fields['cafe'] = _hasCafe == false ? "0" : "1";
-
-      if (_imageFile != null) {
-        request.files.add(await http.MultipartFile.fromPath(
-          'image',
-          _imageFile!.path,
-        ));
-      }
-
-      final response = await request.send();
-      print(request.fields);
-      print(response.headers);
-      if (response.statusCode == 200) {
-        print(
-            'RESPONSE STATUS CODE IS 200 ...... ${response.statusCode.toString()}');
-      } else {
-        print(
-            'RESPONSE STATUS CODE IS NOT !!!!!!!!200 ...... ${response.statusCode.toString()}');
-      }
-    }
-  }
 
   @override
   void dispose() {
@@ -86,6 +89,26 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
     _phoneController.dispose();
     _notesController.dispose();
     super.dispose();
+  }
+
+  List<AreaModel> areas = [];
+  String dropdownValue = 'Option 1';
+  List<String> options = ['Option 1',];
+  Future<void> getAreas() async {
+    await Provider.of<AreaProvider>(context, listen: false).fetchCities();
+    areas = Provider.of<AreaProvider>(context, listen: false).cities;
+    options=[];
+    for (int i = 0; i < areas.length; i++) {
+      options.add(areas[i].name);
+    }
+    dropdownValue=areas[0].name;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAreas();
   }
 
   @override
@@ -115,6 +138,21 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
                     }
                     return null;
                   },
+                ),
+                DropdownButton<String>(
+                  value: dropdownValue,
+                  onChanged: (newValue) {
+                    setState(() {
+                      dropdownValue = newValue!;
+                      
+                    });
+                  },
+                  items: options.map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
                 const SizedBox(height: 16.0),
                 buildFormFieldText(
@@ -158,14 +196,14 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
                   keyboardType: TextInputType.multiline,
                 ),
                 const SizedBox(height: 16.0),
-                if (_imageFile != null) ...[
-                  Image.file(_imageFile!),
+                if (_image != null) ...[
+                  Image.file(_image!),
                   const SizedBox(height: 8.0),
                   buildElevatedTextButton(
                       onPressedFunction: () {
                         setState(() {
-                          _imageFile = null;
-                          _imageUrl = null;
+                          _image = null;
+                          // _imageUrl = null;
                         });
                       },
                       titleOfButton: "Clear Image",
@@ -174,13 +212,14 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
                 ] else ...[
                   buildElevatedTextButton(
                       onPressedFunction: () async {
-                        final pickedFile = await ImagePicker()
-                            .pickImage(source: ImageSource.gallery);
-                        if (pickedFile != null) {
-                          setState(() {
-                            _imageFile = File(pickedFile.path);
-                          });
-                        }
+                        // final pickedFile = await ImagePicker()
+                        //     .pickImage(source: ImageSource.gallery);
+                        // if (pickedFile != null) {
+                        //   setState(() {
+                        //     _image = File(pickedFile.path);
+                        //   });
+                        // }
+                        getImage();
                       },
                       titleOfButton: "Add Image",
                       titleOfButtonColor: Colors.black54,
@@ -215,7 +254,32 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
                 ),
                 const SizedBox(height: 32.0),
                 buildElevatedTextButton(
-                    onPressedFunction: _submitForm,
+                    onPressedFunction: () async {
+                      try {
+                        if (_formKey.currentState!.validate()) {
+                          _nameController.text;
+                          _phoneController.text;
+                          _priceController;
+                          Map<String, String> body = {
+                            "name": _nameController.text,
+                            "price": _priceController.text,
+                            "phone": _phoneController.text,
+                            "address": _addressController.text,
+                            "notes": _notesController.text,
+                            "area_id": options.indexOf(dropdownValue).toString(),
+                            'wc': _hasWC == true ? '1' : '0',
+                            'cafe': _hasCafe == true ? '1' : '0',
+                          };
+                          setState(() {
+                            service.addData(body, _image!);
+                          });
+                        }
+                      } catch (e) {
+                        print("Error in Add Club in UI  $e");
+                        buildFlutterToast(
+                            message: "$e", state: ToastStates.ERROR);
+                      }
+                    },
                     titleOfButton: "Submit",
                     // titleOfButtonColor: Colors.black54,
                     backgroundColor: primaryColor),

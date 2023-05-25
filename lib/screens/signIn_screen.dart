@@ -128,7 +128,6 @@ class _SignInScreenState extends State<SignInScreen> {
                             if (formKey.currentState!.validate()) {
                               emailController.text;
                               passwordController.text;
-                              print("_signInValidator Function ");
                               final data = await SignInService().login(
                                 emailController.text,
                                 passwordController.text,
@@ -142,15 +141,15 @@ class _SignInScreenState extends State<SignInScreen> {
                                   print(
                                       'Owner >>>>>> ${userDataSignIn['roll_id']}');
 
-                                  // Cash.saveData(key: 'isOwner', value: true);
-
                                   adminName = userDataSignIn['name'];
+                                  Cash.saveData(key: 'isOwner', value: true);
+
                                   navigateTOAndReplacement(
                                       context, AdminHomeScreen());
                                 } else {
                                   print(
                                       'USER >>>>>>>> ${userDataSignIn['roll_id']}');
-                                  // Cash.saveData(key: 'isOwner', value: false);
+                                  Cash.saveData(key: 'isOwner', value: false);
                                   navigateTOAndReplacement(context, Home());
                                 }
                                 Cash.saveData(

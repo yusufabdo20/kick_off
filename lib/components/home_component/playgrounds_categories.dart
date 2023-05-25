@@ -13,6 +13,7 @@ class HomePlaygroundsCategories extends StatelessWidget {
   String image;
   String rate;
   int? price;
+  String admin_id;
 
   HomePlaygroundsCategories(
       {super.key,
@@ -20,22 +21,24 @@ class HomePlaygroundsCategories extends StatelessWidget {
       required this.nameArea,
       required this.image,
       this.price,
-      required this.rate});
+      required this.rate,
+      required this.admin_id
+      });
 
   @override
   Widget build(BuildContext context) {
     final clubs = Provider.of<ClubProvider>(context).allClubs;
-    var adminId;
-    final matchingClubs = clubs.where((club) => adminId ==club.adminId );
+    int adminId = 0;
+    final matchingClubs = clubs.where((club) => adminId == club.adminId);
     if (matchingClubs.isNotEmpty) {
-      adminId = matchingClubs.first.adminId;
+      adminId = matchingClubs.first.adminId!;
     }
     return InkWell(
       onTap: () {
         navigateTO(
             context,
             OwnerScreen(
-              adminId: 1,
+              adminId: admin_id,
             ));
       },
       child: Container(

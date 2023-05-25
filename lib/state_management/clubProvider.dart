@@ -17,8 +17,8 @@ import 'package:http/http.dart' as http;
 class ClubProvider extends ChangeNotifier {
   List<ClubModel> _allClubs = [];
   List<ClubModel> get allClubs => [..._allClubs];
-  List<ClubModel>  _specificClub=[];
-  List<ClubModel>  get specificClub => _specificClub;
+  List<ClubModel> _specificClub = [];
+  List<ClubModel> get specificClub => _specificClub;
   List<OwnerClubsModel> _ownerClubs = [];
   List<OwnerClubsModel> get ownerClubs => _ownerClubs;
   Future<void> getAllClubsForHome() async {
@@ -33,8 +33,20 @@ class ClubProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getOwnerClubs(adminID) async {
+  Future<void> getOwnerClubs(String adminID) async {
     _ownerClubs = await GetOwnerClubsService().getOwnerClubs(adminID);
+    // changeSelectedAdminId(adminID);
     notifyListeners();
   }
+
+  // var adminId = 0;
+
+  // changeSelectedAdminId(id) {
+  //   adminId = id;
+  //   notifyListeners();
+  // }
+
+  // getSelectedAdminId() {
+  //   return adminId;
+  // }
 }

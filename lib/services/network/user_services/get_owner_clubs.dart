@@ -6,24 +6,27 @@ import '../../api.dart';
 import '../../local/cash.dart';
 
 class GetOwnerClubsService {
-  Future<List<OwnerClubsModel>> getOwnerClubs(int adminId) async {
+  Future<List<OwnerClubsModel>> getOwnerClubs(String adminId) async {
     final url = '$baseUrl/clubs/admin';
+    var tookeen = Cash.getData(key: "userToken").toString();
+    print(tookeen);
+    print(adminId) ;
+    // String admin_id = "1";
     Map<String, dynamic> data = await Api().post(
       body: {
-        'admin_id': adminId.toString(),
+        'admin_id': adminId,
       },
       apiUrl: url,
-      // token: "Bearer $userToken",
-      token: 'Bearer $userToken'
-    ); // NOTE :: in UI will use FutureBuilder
+      token: "Bearer $userToken",
+    );
     List<OwnerClubsModel> clubsList = [];
-    for (int i = 0; i < data['data'].length; i++) {
+    for (int i = data['data'].length - 1; i >= 0; i--) {
       clubsList.add(OwnerClubsModel.fromJson(data['data'][i]));
       print('----------------------------------------------');
       print(data['data'][i]);
     }
-    print('object') ;
-    print(userToken) ;
+    print('object in API ');
+    print(userToken);
 
     return clubsList;
   }

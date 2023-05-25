@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kick_off/services/network/owner_services/ownerServices.dart';
 
 class OwnerProvider extends ChangeNotifier {
-  int _numberOfRequests = 0;
+  int _numberOfRequests =0;
   get numberOfRequests => _numberOfRequests;
   Future<void> getNumberOfRequests() async {
     _numberOfRequests = await GetOwnerNumbers().get_numberOfRequests();
@@ -11,7 +11,7 @@ class OwnerProvider extends ChangeNotifier {
   int _numberOfViews = 0;
   get numberOfViews => _numberOfViews;
   Future<void> getNumberOfViews() async {
-    _numberOfRequests = await GetOwnerNumbers().get_numberOfViews();
+    _numberOfViews = await GetOwnerNumbers().get_numberOfViews();
     notifyListeners();
   }
   int _numberOfArea = 0;
@@ -32,10 +32,5 @@ class OwnerProvider extends ChangeNotifier {
     _numberOfCalls = await GetOwnerNumbers().get_numberOfCalls();
     notifyListeners();
   }
-  // int _numberOfViews = 0;
-  // get numberOfViews => _numberOfViews;
-  // Future<void> getNumberOfViews() async {
-  //   _numberOfRequests = await GetOwnerNumbers().get_numberOfViews();
-  //   notifyListeners();
-  // }
+
 }
