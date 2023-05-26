@@ -21,24 +21,25 @@ class OnBoardingScreen extends StatefulWidget {
   static String id = "on-boarding-screen";
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
-
 }
 
 class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<BoardingModel> boardings = [
     BoardingModel(
-      imagePath: 'assets/images/shop1.png',
-      title: "title 1",
-      body: "body1",
+      imagePath: 'assets/images/whatsapp.png',
+      title: "",
+      body:
+          "Now soccer fields become around you everywhere and you can call the owner directly or sent him message thru WhatsApp",
     ),
     BoardingModel(
-        imagePath: 'assets/images/ecommerce.png',
-        title: "title2",
-        body: "body2"),
+        imagePath: 'assets/images/field.png',
+        title: "",
+        body:
+            "You can view images of the soccer field and book online with only one click button"),
     BoardingModel(
-      imagePath: 'assets/images/sale.png',
-      title: "title3",
-      body: "body3",
+      imagePath: 'assets/images/digital-marketing.png',
+      title: "",
+      body: "You can market your own soccer fields and track the kips",
     ),
   ];
 
@@ -107,7 +108,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               onPressed: () {
                 if (isLast == true) {
                   setState(() {
-                    navigateTOAndReplacement(context,  SignUpScreen());
+                    navigateTOAndReplacement(context, SignUpScreen());
                   });
                   submit();
                 } else {
