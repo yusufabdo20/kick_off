@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:kick_off/components/admin_component/number_of_views.dart';
+import 'package:kick_off/models/OwnerModels/requestReportModel.dart';
+import 'package:kick_off/state_management/ownerProviders/ownerProvidser.dart';
+import 'package:provider/provider.dart';
 
+class ViewsReportScreen extends StatefulWidget {
+  ViewsReportScreen();
 
+  @override
+  State<ViewsReportScreen> createState() => _ViewsReportScreenState();
+}
 
-class NumbersOfViewsScreen extends StatelessWidget {
-  const NumbersOfViewsScreen({super.key});
+class _ViewsReportScreenState extends State<ViewsReportScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<OwnerProvider>().get_viewsReport();
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<ViewsReportModel> viewsReport =
+        Provider.of<OwnerProvider>(context).viewsReport;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -23,186 +37,37 @@ class NumbersOfViewsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "N.of Views",
+          "Views",
           style: TextStyle(color: Colors.black, fontSize: 22),
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      Text(
-                        "N.of",
-                        style: TextStyle(
-                            fontSize: 14, color: Colors.grey.shade700),
-                      ),
-                      Text(
-                        "Views",
-                        style: TextStyle(
-                            fontSize: 14, color: Colors.grey.shade700),
-                      ),
-                    ],
-                  ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              columns: const [
+                DataColumn(
+                  label: Text('View\nNumber '),
                 ),
-                Column(
-                  children: [
-                    Text(
-                      "User",
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                    ),
-                    Text(
-                      "Name",
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      "User",
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                    ),
-                    Text(
-                      "Phone",
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                    ),
-                  ],
-                ),
-                Text(
-                  "Date",
-                  style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Text(
-                    "Field Name",
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                  ),
-                ),
+                DataColumn(label: Text('User\nName')),
+                DataColumn(label: Text('User\nPhone')),
+                // DataColumn(label: Text('Date')),
+                DataColumn(label: Text('Field Name')),
               ],
+              rows: viewsReport
+                  .map((data) {
+                return DataRow(cells: [
+                  DataCell(Text('${data.id}')),
+                  DataCell(Text('${data.user!.name}')),
+                  DataCell(Text('${data.user!.phone}')),
+                  DataCell(Text('${data.user!.email}')),
+                ]);
+              }).toList(),
             ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            NumbersOfViewsComponent(
-              nofViews: "1",
-              userFname: "Diaa Eldien",
-              userLname: "Essam",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El salaam 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            NumbersOfViewsComponent(
-              nofViews: "1",
-              userFname: "Diaa Eldien",
-              userLname: "Essam",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El salaam 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            NumbersOfViewsComponent(
-              nofViews: "2",
-              userFname: "Yousef",
-              userLname: "Hassan Amr",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El Turky 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            NumbersOfViewsComponent(
-              nofViews: "2",
-              userFname: "Youssef",
-              userLname: "Hassan Amr",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El Turky 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            NumbersOfViewsComponent(
-              nofViews: "3",
-              userFname: "Youssef",
-              userLname: "Essam",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El salaam 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            NumbersOfViewsComponent(
-              nofViews: "3",
-              userFname: "Yousef ",
-              userLname: "Essam",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El salaam 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            
-          ],
+          ),
         ),
       ),
     );

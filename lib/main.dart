@@ -63,8 +63,7 @@ class KickOff extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // initialRoute: SplashScreen.id,
-      // routes: appRoutes,
+      
       home:startWidget,
     );
   }

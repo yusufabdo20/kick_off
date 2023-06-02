@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kick_off/screens/admin_screens/admin_pannel.dart';
 import 'package:kick_off/screens/register_screen.dart';
 import 'package:kick_off/screens/user_screens/home.dart';
+import 'package:kick_off/state_management/ownerProviders/ownerProvidser.dart';
+import 'package:provider/provider.dart';
 
 import '../components/components.dart';
 import '../components/constants.dart';
@@ -141,7 +143,8 @@ class _SignInScreenState extends State<SignInScreen> {
                                   print(
                                       'Owner >>>>>> ${userDataSignIn['roll_id']}');
 
-                                  adminName = userDataSignIn['name'];
+                                  Provider.of<OwnerProvider>(context,listen: false)
+                                      .getAdminName(userDataSignIn['name']);
                                   Cash.saveData(key: 'isOwner', value: true);
 
                                   navigateTOAndReplacement(

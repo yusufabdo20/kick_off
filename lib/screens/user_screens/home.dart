@@ -5,7 +5,6 @@ import 'package:kick_off/screens/logout.dart';
 
 import 'favorites_screen.dart';
 import 'home_screen.dart';
-import 'requests_screen.dart';
 import 'settings_screen.dart';
 
 class Home extends StatefulWidget {
@@ -28,7 +27,7 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _tabs = <Widget>[
     const HomeScreen(),
-    const RequestsScreen(),
+    const Text("dd"),
     const FavoritesScreen(),
      LogoutScreen(),
     

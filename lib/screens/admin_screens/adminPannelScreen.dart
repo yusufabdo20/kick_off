@@ -3,10 +3,12 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:kick_off/components/components.dart';
 import 'package:kick_off/screens/admin_screens/number_of_calls_screen.dart';
+import 'package:kick_off/screens/admin_screens/number_of_views_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/constants.dart';
 import '../../state_management/ownerProviders/ownerProvidser.dart';
+import 'Requests_screen.dart';
 
 class AdminPannelScreen extends StatefulWidget {
   const AdminPannelScreen({super.key});
@@ -35,7 +37,9 @@ class _AdminPannelScreenState extends State<AdminPannelScreen> {
         number: provider.numberOfCalls,
         title: "Number of calls",
         report: "Reports",
-        reportFunction: () {},
+        reportFunction: () {
+          navigateTO(context, CallReportScreen());
+        },
         onTapFunction: () {},
       ),
       AdminPannelComponent(
@@ -43,7 +47,9 @@ class _AdminPannelScreenState extends State<AdminPannelScreen> {
         number: provider.numberOfViews,
         title: "Fields View",
         report: "Reports",
-        reportFunction: () {},
+        reportFunction: () {
+          navigateTO(context, ViewsReportScreen());
+        },
       ),
       AdminPannelComponent(
         icon: Icons.location_on_outlined,
@@ -78,15 +84,20 @@ class _AdminPannelScreenState extends State<AdminPannelScreen> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      adminName,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold ,color: primaryColor),
+                      provider.adminName,
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: primaryColor),
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    // Provider.of<OwnerProvider>(context).get_requestReport();
+                    navigateTO(context, RequestsScreen());
+                  },
                   child: Container(
                     margin: const EdgeInsets.all(10),
                     padding: const EdgeInsets.all(40),

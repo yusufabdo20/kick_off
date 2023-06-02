@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:kick_off/models/OwnerModels/requestReportModel.dart';
+import 'package:kick_off/state_management/ownerProviders/ownerProvidser.dart';
+import 'package:provider/provider.dart';
 
-import '../../components/admin_component/number_of_calls.dart';
+class CallReportScreen extends StatefulWidget {
+  CallReportScreen();
 
-class NumbersOfCallsScreen extends StatelessWidget {
-  const NumbersOfCallsScreen({super.key});
+  @override
+  State<CallReportScreen> createState() => _CallReportScreenState();
+}
+
+class _CallReportScreenState extends State<CallReportScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<OwnerProvider>().get_callsReport();
+  }
 
   @override
   Widget build(BuildContext context) {
+    List<CallsReportModel> callsReport =
+        Provider.of<OwnerProvider>(context).callsReport;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -22,186 +37,37 @@ class NumbersOfCallsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "N.of Calls",
+          "Views",
           style: TextStyle(color: Colors.black, fontSize: 22),
         ),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    children: [
-                      Text(
-                        "N.of",
-                        style: TextStyle(
-                            fontSize: 14, color: Colors.grey.shade700),
-                      ),
-                      Text(
-                        "Calls",
-                        style: TextStyle(
-                            fontSize: 14, color: Colors.grey.shade700),
-                      ),
-                    ],
-                  ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 20),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              columns: const [
+                DataColumn(
+                  label: Text('Call\nNumber '),
                 ),
-                Column(
-                  children: [
-                    Text(
-                      "User",
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                    ),
-                    Text(
-                      "Name",
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      "User",
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                    ),
-                    Text(
-                      "Phone",
-                      style:
-                          TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                    ),
-                  ],
-                ),
-                Text(
-                  "Date",
-                  style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: Text(
-                    "Field Name",
-                    style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
-                  ),
-                ),
+                DataColumn(label: Text('User\nName')),
+                DataColumn(label: Text('User\nPhone')),
+                DataColumn(label: Text('Date')),
+                DataColumn(label: Text('Field Name')),
               ],
+              rows: callsReport.map((data) {
+                return DataRow(cells: [
+                  DataCell(Text('${data.id}')),
+                  DataCell(Text('${data.user!.name}')),
+                  DataCell(Text('${data.user!.phone}')),
+                  DataCell(Text('${data.club!.creationDate}')),
+                  DataCell(Text('${data.club!.name}')),
+                ]);
+              }).toList(),
             ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            NumbersOfCallsComponent(
-              nofCalls: "1",
-              userFname: "Diaa Eldien",
-              userLname: "Essam",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El salaam 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            NumbersOfCallsComponent(
-              nofCalls: "1",
-              userFname: "Diaa Eldien",
-              userLname: "Essam",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El salaam 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            NumbersOfCallsComponent(
-              nofCalls: "2",
-              userFname: "Yousef",
-              userLname: "Hassan Amr",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El Turky 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            NumbersOfCallsComponent(
-              nofCalls: "2",
-              userFname: "Youssef",
-              userLname: "Hassan Amr",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El Turky 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            NumbersOfCallsComponent(
-              nofCalls: "3",
-              userFname: "Youssef",
-              userLname: "Essam",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El salaam 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            NumbersOfCallsComponent(
-              nofCalls: "3",
-              userFname: "Yousef ",
-              userLname: "Essam",
-              userPhone: "01153136656",
-              date: "4/11/2023",
-              hours: "11:15 PM",
-              fieldName: "El salaam 2",
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(
-              thickness: 1.0,
-              color: Colors.grey,
-            ),
-            
-          ],
+          ),
         ),
       ),
     );
