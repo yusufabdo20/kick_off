@@ -1,3 +1,5 @@
+import 'package:kick_off/models/UserModels/clubModel.dart';
+
 class RequestReportModel {
   int? id;
   int? status;
@@ -46,6 +48,7 @@ class ViewsReportModel {
   int? adminId;
   int? userId;
   User? user;
+  Club? club ;
 
   ViewsReportModel({this.id, this.adminId, this.userId, this.user});
 
@@ -54,6 +57,8 @@ class ViewsReportModel {
     adminId = json['admin_id'];
     userId = json['user_id'];
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    club = json['club'] != null ? new Club.fromJson(json['club']) : null;
+
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +68,9 @@ class ViewsReportModel {
     data['user_id'] = this.userId;
     if (this.user != null) {
       data['user'] = this.user!.toJson();
+    }
+    if (this.club != null) {
+      data['club'] = this.club!.toJson();
     }
     return data;
   }

@@ -26,7 +26,7 @@ class OwnerPlaygrounds extends StatelessWidget {
     return InkWell(
       onTap: () async {
         await Provider.of<ClubProvider>(context, listen: false)
-            .getSpecificClub(id);
+            .getSpecificClub();
         navigateTO(context, SoccerFieldScreen());
       },
       child: Padding(

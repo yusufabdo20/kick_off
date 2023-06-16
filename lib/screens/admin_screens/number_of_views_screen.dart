@@ -42,30 +42,37 @@ class _ViewsReportScreenState extends State<ViewsReportScreen> {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columns: const [
-                DataColumn(
-                  label: Text('View\nNumber '),
-                ),
-                DataColumn(label: Text('User\nName')),
-                DataColumn(label: Text('User\nPhone')),
-                // DataColumn(label: Text('Date')),
-                DataColumn(label: Text('Field Name')),
-              ],
-              rows: viewsReport
-                  .map((data) {
-                return DataRow(cells: [
-                  DataCell(Text('${data.id}')),
-                  DataCell(Text('${data.user!.name}')),
-                  DataCell(Text('${data.user!.phone}')),
-                  DataCell(Text('${data.user!.email}')),
-                ]);
-              }).toList(),
+      body: Container(
+        decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("assets/images/back33.png"),
+            fit: BoxFit.cover,
+          )),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                columns: const [
+                  DataColumn(
+                    label: Text('View\nNumber '),
+                  ),
+                  DataColumn(label: Text('User\nName')),
+                  DataColumn(label: Text('User\nPhone')),
+                  // DataColumn(label: Text('Date')),
+                  DataColumn(label: Text('Field Name')),
+                ],
+                rows: viewsReport
+                    .map((data) {
+                  return DataRow(cells: [
+                    DataCell(Text('${data.id}')),
+                    DataCell(Text('${data.user!.name}')),
+                    DataCell(Text('${data.user!.phone}')),
+                    DataCell(Text('${data.club!.name}')),
+                  ]);
+                }).toList(),
+              ),
             ),
           ),
         ),

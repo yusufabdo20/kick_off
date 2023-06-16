@@ -37,35 +37,42 @@ class _CallReportScreenState extends State<CallReportScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "Views",
+          "Calls",
           style: TextStyle(color: Colors.black, fontSize: 22),
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columns: const [
-                DataColumn(
-                  label: Text('Call\nNumber '),
-                ),
-                DataColumn(label: Text('User\nName')),
-                DataColumn(label: Text('User\nPhone')),
-                DataColumn(label: Text('Date')),
-                DataColumn(label: Text('Field Name')),
-              ],
-              rows: callsReport.map((data) {
-                return DataRow(cells: [
-                  DataCell(Text('${data.id}')),
-                  DataCell(Text('${data.user!.name}')),
-                  DataCell(Text('${data.user!.phone}')),
-                  DataCell(Text('${data.club!.creationDate}')),
-                  DataCell(Text('${data.club!.name}')),
-                ]);
-              }).toList(),
+      body: Container(
+        decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("assets/images/back4.png"),
+            fit: BoxFit.cover,
+          )),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                columns: const [
+                  DataColumn(
+                    label: Text('Call\nNumber '),
+                  ),
+                  DataColumn(label: Text('User\nName')),
+                  DataColumn(label: Text('User\nPhone')),
+                  DataColumn(label: Text('Date')),
+                  DataColumn(label: Text('Field Name')),
+                ],
+                rows: callsReport.map((data) {
+                  return DataRow(cells: [
+                    DataCell(Text('${data.id}')),
+                    DataCell(Text('${data.user!.name}')),
+                    DataCell(Text('${data.user!.phone}')),
+                    DataCell(Text('${data.club!.creationDate}')),
+                    DataCell(Text('${data.club!.name}')),
+                  ]);
+                }).toList(),
+              ),
             ),
           ),
         ),

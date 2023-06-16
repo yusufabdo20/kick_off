@@ -31,8 +31,8 @@ class ClubProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getSpecificClub(int clubID) async {
-    _specificClub = await GetSpecificClubService().getSpecificClub(clubID);
+  Future<void> getSpecificClub() async {
+    _specificClub = await GetSpecificClubService().getSpecificClub();
     notifyListeners();
   }
 

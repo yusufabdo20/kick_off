@@ -6,9 +6,11 @@ import 'package:kick_off/components/constants.dart';
 import 'package:kick_off/screens/user_screens/home.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class BookingScreen extends StatefulWidget {
-  BookingScreen({super.key});
+import '../../services/network/user_services/bookingSevices.dart';
 
+class BookingScreen extends StatefulWidget {
+  BookingScreen({super.key, required this.club_id});
+  int club_id;
   @override
   State<BookingScreen> createState() => _BookingScreenState();
 }
@@ -130,7 +132,12 @@ class _BookingScreenState extends State<BookingScreen> {
                 formatedDate != null && _endTime != null && _startTime != null
                     ? buildElevatedTextButton(
                         titleOfButton: "Submit",
-                        onPressedFunction: () {
+                        onPressedFunction: () async {
+                          BookingClubService().bookClub(
+                              widget.club_id,
+                              formatedDate.toString(),
+                              _startTime.toString(),
+                              _endTime.toString());
                           showAlertDialog(context);
                         })
                     : buildElevatedTextButton(

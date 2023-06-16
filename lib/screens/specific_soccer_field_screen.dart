@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../services/network/user_services/callingServices.dart';
 import '../state_management/clubProvider.dart';
 
 class SoccerFieldScreen extends StatelessWidget {
@@ -129,6 +130,8 @@ class SoccerFieldScreen extends StatelessWidget {
                         ),
                         ElevatedButton.icon(
                           onPressed: () async {
+                            CallingClubService().callingClub(
+                                specificClub.id!, specificClub.adminId!);
                             final Uri url = Uri(
                               scheme: "tel",
                               path: specificClub.admin.phone,
@@ -138,6 +141,8 @@ class SoccerFieldScreen extends StatelessWidget {
                             } else {
                               print("can not launch this url");
                             }
+                                 CallingClubService().callingClub(
+                                specificClub.id!, specificClub.adminId!);
                           },
                           icon: const Icon(
                             Icons.phone,
@@ -150,19 +155,11 @@ class SoccerFieldScreen extends StatelessWidget {
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            // DateTime? pickedDate = await showDatePicker(
-                            //     context: context,
-                            //     initialDate: DateTime.now(),
-                            //     firstDate: DateTime(2023),
-                            //     //DateTime.now() - not to allow to choose before today.
-                            //     lastDate: DateTime(2100));
-                            // if (pickedDate != null) {
-                            //   String formattedDate =
-                            //       DateFormat('yyyy-MM-dd').format(pickedDate);
-                            //   // controller.text = formattedDate; //set output date to TextField value.
-                            //   print(formattedDate);
-                            // }
-                            navigateTO(context, BookingScreen());
+                            navigateTO(
+                                context,
+                                BookingScreen(
+                                  club_id: specificClub.id!,
+                                ));
                           },
                           icon: const Icon(
                             Icons.book_online,

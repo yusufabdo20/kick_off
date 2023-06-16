@@ -77,23 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       });
                     },
                     onSubmitted: (value) {
-                      // if (value.isNotEmpty) {
-                      //   Provider.of<ClubProvider>(context).setClubs(
-                      //       Provider.of<ClubProvider>(context).allClubsB);
-                      //   setState(() {
-                      //     Provider.of<ClubProvider>(context).setClubs(
-                      //         Provider.of<ClubProvider>(context)
-                      //             .allClubs
-                      //             .where((element) {
-                      //       return element.name!.contains(_searchQuery);
-                      //     }).toList());
-                      //   });
-                      // } else {
-                      //   setState(() {
-                      //     Provider.of<ClubProvider>(context).setClubs(
-                      //         Provider.of<ClubProvider>(context).allClubsB);
-                      //   });
-                      // }
+
 
                     },
                     decoration: InputDecoration(

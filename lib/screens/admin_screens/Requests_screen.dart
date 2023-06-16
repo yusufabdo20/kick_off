@@ -54,57 +54,64 @@ class _RequestsScreenState extends State<RequestsScreen> {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              columns: const [
-                DataColumn(
-                  label: Text('Request\nNumber '),
-                ),
-                DataColumn(label: Text('User\nName')),
-                DataColumn(label: Text('User\nPhone')),
-                DataColumn(label: Text('Date')),
-                // DataColumn(label: Text('Status')),
-              ],
-              rows: requestsReport.map((data) {
-                return DataRow(cells: [
-                  DataCell(Text('${data.id}')),
-                  DataCell(Text('${data.user!.name}')),
-                  DataCell(Text('${data.user!.phone}')),
-                  DataCell(Text('${data.bookDate}')),
-                ]);
-              }).toList(),
-              // [
-              //   DataRow(
-              //     cells: [
-              //       DataCell(Text('${requestsReport[0].id}')),
-              //       DataCell(Text('${requestsReport[0].user!.name}')),
-              //       DataCell(Text('${requestsReport[0].user!.phone}')),
-              //       DataCell(Text('${requestsReport[0].bookDate}')),
-              //       // DataCell(
-              //       //   Row(
-              //       //     children: [
-              //       //       IconButton(
-              //       //           onPressed: () {},
-              //       //           icon: Icon(
-              //       //             Icons.check_circle,
-              //       //             color: Colors.green,
-              //       //           )),
-              //       //       IconButton(
-              //       //           onPressed: () {},
-              //       //           icon: Icon(
-              //       //             Icons.cancel,
-              //       //             color: Colors.red,
-              //       //           )),
-              //       //     ],
-              //       //   ),
-              //       // ),
-              //     ],
-              //   ),
-              // ],
+      body: Container(
+        decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage("assets/images/back4.png"),
+            fit: BoxFit.cover,
+          )),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTable(
+                columns: const [
+                  DataColumn(
+                    label: Text('Request\nNumber '),
+                  ),
+                  DataColumn(label: Text('User\nName')),
+                  DataColumn(label: Text('User\nPhone')),
+                  DataColumn(label: Text('Date')),
+                  // DataColumn(label: Text('Status')),
+                ],
+                rows: requestsReport.map((data) {
+                  return DataRow(cells: [
+                    DataCell(Text('${data.id}')),
+                    DataCell(Text('${data.user!.name}')),
+                    DataCell(Text('${data.user!.phone}')),
+                    DataCell(Text('${data.bookDate}')),
+                  ]);
+                }).toList(),
+                // [
+                //   DataRow(
+                //     cells: [
+                //       DataCell(Text('${requestsReport[0].id}')),
+                //       DataCell(Text('${requestsReport[0].user!.name}')),
+                //       DataCell(Text('${requestsReport[0].user!.phone}')),
+                //       DataCell(Text('${requestsReport[0].bookDate}')),
+                //       // DataCell(
+                //       //   Row(
+                //       //     children: [
+                //       //       IconButton(
+                //       //           onPressed: () {},
+                //       //           icon: Icon(
+                //       //             Icons.check_circle,
+                //       //             color: Colors.green,
+                //       //           )),
+                //       //       IconButton(
+                //       //           onPressed: () {},
+                //       //           icon: Icon(
+                //       //             Icons.cancel,
+                //       //             color: Colors.red,
+                //       //           )),
+                //       //     ],
+                //       //   ),
+                //       // ),
+                //     ],
+                //   ),
+                // ],
+              ),
             ),
           ),
         ),

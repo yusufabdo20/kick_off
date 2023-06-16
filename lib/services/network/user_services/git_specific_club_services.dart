@@ -3,8 +3,8 @@ import '../../../models/UserModels/clubModel.dart';
 import '../../api.dart';
 
 class GetSpecificClubService {
-  Future<List<ClubModel>> getSpecificClub(int clubId) async {
-    final url = '$baseUrl/clubs/$clubId';
+  Future<List<ClubModel>> getSpecificClub() async {
+    final url = '$baseUrl/clubs/';
 
     Map<String, dynamic> data = await Api().get(
       apiUrl: url,
