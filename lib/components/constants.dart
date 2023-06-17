@@ -7,7 +7,8 @@ String adminName = '';
 String? userToken;
 // const baseUrl = 'http://161.35.97.26/api';
 const baseUrl = 'http://10.0.2.2:8000/api';
-const primaryColor = Color.fromRGBO(6, 41, 70, 1);
+// const primaryColor = Color.fromRGBO(6, 41, 70, 1);
+const primaryColor = Color.fromRGBO(26, 116, 130, 1);
 var primary = Colors.transparent;
 // String? baseUrl= ;
 List patterns = [

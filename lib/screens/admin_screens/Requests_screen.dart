@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kick_off/components/constants.dart';
 import 'package:kick_off/models/OwnerModels/requestReportModel.dart';
 import 'package:kick_off/state_management/ownerProviders/ownerProvidser.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +30,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
     context.read<OwnerProvider>().get_requestReport();
   }
 
+  bool approved = false;
   @override
   Widget build(BuildContext context) {
     List<RequestReportModel> requestsReport =
@@ -56,10 +58,10 @@ class _RequestsScreenState extends State<RequestsScreen> {
       ),
       body: Container(
         decoration: const BoxDecoration(
-              image: DecorationImage(
-            image: AssetImage("assets/images/back4.png"),
-            fit: BoxFit.cover,
-          )),
+            image: DecorationImage(
+          image: AssetImage("assets/images/back4.png"),
+          fit: BoxFit.cover,
+        )),
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(top: 20),
@@ -73,7 +75,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
                   DataColumn(label: Text('User\nName')),
                   DataColumn(label: Text('User\nPhone')),
                   DataColumn(label: Text('Date')),
-                  // DataColumn(label: Text('Status')),
+                  DataColumn(label: Text('Status')),
                 ],
                 rows: requestsReport.map((data) {
                   return DataRow(cells: [
@@ -81,6 +83,30 @@ class _RequestsScreenState extends State<RequestsScreen> {
                     DataCell(Text('${data.user!.name}')),
                     DataCell(Text('${data.user!.phone}')),
                     DataCell(Text('${data.bookDate}')),
+                    DataCell(
+                      Row(
+                        children: [
+                        approved==false?  IconButton(
+                            onPressed: () {
+                              setState(() {
+                                approved = true;
+                              });
+                            },
+                            icon: Icon(
+                              Icons.check_circle,
+                              color: primaryColor,
+                            ),
+                          ): Text('data'),
+                          // IconButton(
+                          //   onPressed: () {},
+                          //   icon: Icon(
+                          //     Icons.cancel,
+                          //     color: Colors.red,
+                          //   ),
+                          // ),
+                        ],
+                      ),
+                    ),
                   ]);
                 }).toList(),
                 // [
@@ -90,23 +116,23 @@ class _RequestsScreenState extends State<RequestsScreen> {
                 //       DataCell(Text('${requestsReport[0].user!.name}')),
                 //       DataCell(Text('${requestsReport[0].user!.phone}')),
                 //       DataCell(Text('${requestsReport[0].bookDate}')),
-                //       // DataCell(
-                //       //   Row(
-                //       //     children: [
-                //       //       IconButton(
-                //       //           onPressed: () {},
-                //       //           icon: Icon(
-                //       //             Icons.check_circle,
-                //       //             color: Colors.green,
-                //       //           )),
-                //       //       IconButton(
-                //       //           onPressed: () {},
-                //       //           icon: Icon(
-                //       //             Icons.cancel,
-                //       //             color: Colors.red,
-                //       //           )),
-                //       //     ],
-                //       //   ),
+                // DataCell(
+                // Row(
+                //   children: [
+                //     IconButton(
+                //         onPressed: () {},
+                //         icon: Icon(
+                //           Icons.check_circle,
+                //           color: Colors.green,
+                //         )),
+                //     IconButton(
+                //         onPressed: () {},
+                //         icon: Icon(
+                //           Icons.cancel,
+                //           color: Colors.red,
+                //         )),
+                //   ],
+                // ),
                 //       // ),
                 //     ],
                 //   ),

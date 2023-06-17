@@ -116,6 +116,7 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Soccer Field'),
+        backgroundColor: primaryColor,
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -124,11 +125,12 @@ class _AddSoccerFieldScreenState extends State<AddSoccerFieldScreen> {
           fit: BoxFit.cover,
         )),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.symmetric(horizontal:16),
           child: Form(
             key: _formKey,
             child: ListView(
               children: [
+                SizedBox(height: 20,),
                 buildFormFieldText(
                   controller: _nameController,
                   labelText: 'Name',
